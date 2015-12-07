@@ -1,0 +1,984 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.uoc.tdp.pac4.client.estadisticas;
+
+import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Matricula;
+import edu.uoc.tdp.pac4.beans.Usuario;
+import edu.uoc.tdp.pac4.exceptions.eAssistenciaException;
+import edu.uoc.tdp.pac4.remote.Estadisticas;
+import edu.uoc.tdp.pac4.util.LanguageUtils;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+/**
+ *
+ * @author eSupport Netbeans
+ */
+public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
+
+   private Estadisticas manager;
+   private LanguageUtils language;
+   private Usuario usuario;
+   private java.awt.Frame parent;
+   DefaultListModel modelo ;
+   DefaultListModel modelo2 ;
+   ArrayList<Curso> listaCurso;
+   ArrayList<Matricula> matriculas;
+    /**
+     * Creates new form PnlFiltroProfesor
+     */
+    public PnlFiltroPersonalAcademico(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        this.manager = manager;
+        this.language = language;
+        this.parent=parent;
+        //Cargar textos
+        btnAceptar.setText(language.getProperty("estadisticas.profesor.btn.profesores"));
+        btnCurso.setText(language.getProperty("estadisticas.profesor.btn.curso"));
+        btnCancelar.setText(language.getProperty("form.common.close"));
+        btnSolapamiento.setText(language.getProperty("mantenimiento.usermain.dofilter"));
+        btnHoras.setText(language.getProperty("mantenimiento.usermain.dofilter"));
+        btnCerrar.setText(language.getProperty("form.common.close"));
+        btnCerrarH.setText(language.getProperty("form.common.close"));
+        lblFecha.setText(language.getProperty("estadisticas.form.fechaInicio"));
+        lblSelCursos.setText(language.getProperty("estadisticas.form.selCursos"));
+        opTodosCursos.setText(language.getProperty("estadisticas.form.opTodosCursos"));
+        opSelCursos.setText(language.getProperty("estadisticas.form.opFiltrarCursos"));
+        lblMatriculacion.setText(language.getProperty("estadisticas.fotm.fechaMat"));
+        opTodosAlumnos.setText(language.getProperty("estadisticas.form.opTodos"));
+        opFiltroAlumno.setText(language.getProperty("estadisticas.form.opDni"));
+        opSelHoras.setText(language.getProperty("estadisticas.form.opFiltrarHoras"));
+        opTodasHoras.setText(language.getProperty("estadisticas.form.opTodas"));
+        lblDe.setText(language.getProperty("estadisticas.form.horas.txtDe"));
+        lblA.setText(language.getProperty("estadisticas.form.horas.txtA"));
+        this.setTitle(language.getProperty("estadisticas.form.personalAcademico"));
+        tabSolapamiento.setTitleAt(0, language.getProperty("estadisticas.tab.profesores"));
+        tabSolapamiento.setTitleAt(1, language.getProperty("estadisticas.tab.solapamiento"));
+        tabSolapamiento.setTitleAt(2, language.getProperty("estadisticas.tab.horas"));
+        
+        opcionesAlumno.add(opTodosAlumnos);
+        opcionesAlumno.add(opFiltroAlumno);
+        opTodosAlumnos.setSelected(true);
+       
+        opcionesCursos.add(opTodosCursos);
+        opcionesCursos.add(opSelCursos);
+        opTodosCursos.setSelected(true);
+        
+        opcionesHoras.add(opTodasHoras);
+        opcionesHoras.add(opSelHoras);
+        opTodasHoras.setSelected(true);
+        
+        
+        
+        
+        //modelos para la jList
+        modelo = new DefaultListModel();
+        modelo2 = new DefaultListModel();
+
+        cargarTablaSolapados("","");
+        cargarTablaHoras("","");
+        
+        //carga los cursos de un centro
+        try {    
+        
+        listaCurso = manager.consultarCursos();
+        cargarLista(listCursos, listaCurso);
+        
+        } catch (RemoteException e) {
+            
+            Logger.getLogger(PnlFiltroPersonalAcademico.class.getName()).log(Level.SEVERE, null, e);
+            
+        } catch (Exception e) {
+            //Logger.getLogger(PnlFiltroProfesor.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PnlFiltroPersonalAcademico.class.getName()).log(Level.SEVERE, null, "Error al cargar la lista");
+        
+        }
+            
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        opcionesAlumno = new javax.swing.ButtonGroup();
+        opcionesCursos = new javax.swing.ButtonGroup();
+        jButton1 = new javax.swing.JButton();
+        opcionesHoras = new javax.swing.ButtonGroup();
+        tabSolapamiento = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        lblSelCursos = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listCursos = new javax.swing.JList();
+        opTodosCursos = new javax.swing.JRadioButton();
+        opSelCursos = new javax.swing.JRadioButton();
+        txtData = new javax.swing.JTextField();
+        lblFecha = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
+        btnCurso = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lblMatriculacion = new javax.swing.JLabel();
+        txtFecha2 = new javax.swing.JTextField();
+        opTodosAlumnos = new javax.swing.JRadioButton();
+        opFiltroAlumno = new javax.swing.JRadioButton();
+        jPanel4 = new javax.swing.JPanel();
+        lblDni = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaSolapados = new javax.swing.JTable();
+        txtDni = new javax.swing.JTextField();
+        btnSolapamiento = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaHoras = new javax.swing.JTable();
+        txtHoraDe = new javax.swing.JTextField();
+        txtHoraA = new javax.swing.JTextField();
+        lblDe = new javax.swing.JLabel();
+        lblA = new javax.swing.JLabel();
+        btnHoras = new javax.swing.JButton();
+        btnCerrarH = new javax.swing.JButton();
+        opTodasHoras = new javax.swing.JRadioButton();
+        opSelHoras = new javax.swing.JRadioButton();
+
+        jButton1.setText("jButton1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblSelCursos.setText("Seleccionar curso/os");
+
+        listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(listCursos);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblSelCursos)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblSelCursos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        opTodosCursos.setText("Todos los cursos");
+        opTodosCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opTodosCursosActionPerformed(evt);
+            }
+        });
+
+        opSelCursos.setText("Filtrar por curso");
+        opSelCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opSelCursosActionPerformed(evt);
+            }
+        });
+
+        lblFecha.setText("Fecha de inicio:");
+
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/users.png"))); // NOI18N
+        btnAceptar.setText("Estadísticas Profesores");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/books-stack.png"))); // NOI18N
+        btnCurso.setText("Estadísticas curso/os");
+        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
+        btnCancelar.setText("Cerrar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(opSelCursos)
+                    .addComponent(opTodosCursos))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(opTodosCursos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(opSelCursos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptar)
+                .addGap(18, 18, 18)
+                .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelar)
+                .addGap(74, 74, 74))
+        );
+
+        tabSolapamiento.addTab("tab1", jPanel2);
+
+        lblMatriculacion.setText("Fecha de matriculación :");
+
+        opTodosAlumnos.setText("Todos");
+        opTodosAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opTodosAlumnosActionPerformed(evt);
+            }
+        });
+
+        opFiltroAlumno.setText("Filtrar por alumno");
+        opFiltroAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opFiltroAlumnoActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblDni.setText("DNI:");
+
+        tablaSolapados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaSolapados);
+
+        txtDni.setEnabled(false);
+
+        btnSolapamiento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/funnel.png"))); // NOI18N
+        btnSolapamiento.setText("Buscar solapamiento");
+        btnSolapamiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolapamientoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblDni)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSolapamiento))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDni)
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSolapamiento))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(opTodosAlumnos)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(opFiltroAlumno)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(lblMatriculacion)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCerrar)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatriculacion)
+                    .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opFiltroAlumno)
+                    .addComponent(opTodosAlumnos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerrar)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        tabSolapamiento.addTab("tab2", jPanel3);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        tablaHoras.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaHoras);
+
+        txtHoraDe.setEnabled(false);
+
+        txtHoraA.setEnabled(false);
+
+        lblDe.setText("De:");
+
+        lblA.setText("a:");
+
+        btnHoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/funnel.png"))); // NOI18N
+        btnHoras.setText("jButton3");
+        btnHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHorasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(lblDe)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtHoraDe, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblA)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtHoraA, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHoras)))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHoraDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDe)
+                    .addComponent(lblA)
+                    .addComponent(btnHoras))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        btnCerrarH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
+        btnCerrarH.setText("Cerrar");
+        btnCerrarH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarHActionPerformed(evt);
+            }
+        });
+
+        opTodasHoras.setText("Todas");
+        opTodasHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opTodasHorasActionPerformed(evt);
+            }
+        });
+
+        opSelHoras.setText("Filtrar por horas");
+        opSelHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opSelHorasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 518, Short.MAX_VALUE)
+                        .addComponent(btnCerrarH))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(opTodasHoras)
+                        .addGap(43, 43, 43)
+                        .addComponent(opSelHoras)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opTodasHoras)
+                    .addComponent(opSelHoras))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerrarH)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tabSolapamiento.addTab("tab3", jPanel5);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabSolapamiento)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tabSolapamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void opTodosCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodosCursosActionPerformed
+        // TODO add your handling code here:
+
+        if(opSelCursos.isSelected()){
+
+            listCursos.setModel(modelo);
+            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+        }
+        else {listCursos.setModel(modelo2);
+            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        }
+    }//GEN-LAST:event_opTodosCursosActionPerformed
+
+    private void opSelCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelCursosActionPerformed
+        // TODO add your handling code here:
+
+        if(opTodosCursos.isSelected()){
+            listCursos.setModel(modelo2);
+            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        }
+        else {listCursos.setModel(modelo);
+            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+
+        }
+    }//GEN-LAST:event_opSelCursosActionPerformed
+
+    
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+
+        llamarAcciones(0);
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+        // TODO add your handling code here:
+        
+        llamarAcciones(1);
+        
+    }//GEN-LAST:event_btnCursoActionPerformed
+
+    private void opTodosAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodosAlumnosActionPerformed
+        if(opTodosAlumnos.isSelected()){
+
+            txtDni.setText("");
+            txtDni.setEnabled(false);
+            
+        }
+        
+    }//GEN-LAST:event_opTodosAlumnosActionPerformed
+
+    private void opFiltroAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opFiltroAlumnoActionPerformed
+        // TODO add your handling code here:
+        if(opFiltroAlumno.isSelected()){
+
+            txtDni.setEnabled(true);
+        }
+     
+        
+    }//GEN-LAST:event_opFiltroAlumnoActionPerformed
+
+    private void btnSolapamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolapamientoActionPerformed
+            cargarTablaSolapados(txtFecha2.getText(),txtDni.getText());
+    }//GEN-LAST:event_btnSolapamientoActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnCerrarHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarHActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarHActionPerformed
+
+    private void opSelHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelHorasActionPerformed
+        // TODO add your handling code here:
+        if(opSelHoras.isSelected()){
+
+            txtHoraDe.setEnabled(true);
+            txtHoraA.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_opSelHorasActionPerformed
+
+    private void opTodasHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodasHorasActionPerformed
+        // TODO add your handling code here:
+        if(opTodasHoras.isSelected()){
+            txtHoraA.setText("");
+            txtHoraDe.setText("");
+            txtHoraDe.setEnabled(false);
+            txtHoraA.setEnabled(false);
+        }
+        
+    }//GEN-LAST:event_opTodasHorasActionPerformed
+
+    private void btnHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorasActionPerformed
+        // TODO add your handling code here:
+       cargarTablaHoras(txtHoraDe.getText(), txtHoraA.getText());
+    }//GEN-LAST:event_btnHorasActionPerformed
+
+     /**
+    * carga la tabla de solapados a parti de los datos que recibe
+    */
+    
+    public void cargarTablaSolapados(String sdata, String sdni){
+        // Rellena la tabla
+      Date data;
+      String dni;
+      String turno="";
+      ArrayList<String> header = new ArrayList<String>();   // cabecera
+      header.add(language.getProperty("mantenimiento.usermain.DNI"));
+      header.add(language.getProperty("mantenimiento.usermain.name"));
+      header.add(language.getProperty("mantenimiento.main.curse"));
+      header.add(language.getProperty("estadisticas.table.personalAcademico.grupo"));
+    
+      String[][] gridData;
+      List<String> row;
+    try 
+      {
+         
+          if(sdata.equals("")){
+              data=null;
+          }
+          
+          else{
+              SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                data = formato.parse(sdata);
+          }
+          
+          if(sdni.equals(""))dni=null;
+          else dni=txtDni.getText();
+                
+          matriculas= manager.consultarSolapados(data,dni);
+          gridData = new String[matriculas.size()][4];
+   
+         int i = 0;
+         float total;
+         float stat;
+         float cos=0;
+        
+
+         
+         for (Matricula matricula : matriculas)
+         {
+                if(matricula.getTurno()==1)turno=language.getProperty("estatisticas.table.personalAcademico.turnoMañana");
+                if(matricula.getTurno()==2)turno=language.getProperty("estatisticas.table.personalAcademico.turnoTarde");
+                gridData[i][0] = matricula.getUsuarioNif();
+                gridData[i][1] = matricula.getUsuarioNombre();
+                gridData[i][2] = matricula.getCursoNombre();
+                gridData[i][3] = turno;
+            
+            i++;
+         }
+         //hace que no se pueda editar la tabla
+         tablaSolapados.setModel(new DefaultTableModel(gridData, header.toArray())
+                 { 
+                     @Override public boolean isCellEditable(int row, int column)
+                    { return false; } 
+                 });
+      
+      } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null,
+                language.getProperty("err.formatoData"),
+                language.getProperty("app.title"),
+                JOptionPane.ERROR_MESSAGE);
+        }
+      catch (SQLException ex)
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      catch (RemoteException ex)
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      catch (Exception ex) 
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    
+      
+      
+      
+    
+    }
+    /**
+    * carga la tabla de asistencia por horas
+    */
+    
+    private void cargarTablaHoras(String inici, String fi){
+          
+      java.sql.Time hInici;
+      java.sql.Time hFin;
+      SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
+      SimpleDateFormat formato3 = new SimpleDateFormat("HH:mm");
+      DecimalFormat formato2 = new DecimalFormat("0");
+      ArrayList<String> header = new ArrayList<String>();   // cabecera
+      header.add(language.getProperty("estadisticas.table.personalAcademico.horas"));
+      header.add(language.getProperty("estadisticas.table.personalAcademico.asistencia"));
+      
+    
+      String[][] gridData;
+      List<String> row;
+      
+    try{
+        if(inici.equals(""))hInici=null;
+        else hInici = new java.sql.Time(formato.parse(inici).getTime());
+
+        if(fi.equals(""))hFin=null;
+        else hFin = new java.sql.Time(formato3.parse(fi).getTime());;
+    
+        
+        matriculas= manager.consultarHoras(hInici,hFin);
+          gridData = new String[matriculas.size()][4];
+   
+         int i = 0;
+         float total;
+         float cos=0;
+         
+         for (Matricula matricula : matriculas)
+         {
+                cos=matricula.getAsis()+matricula.getNoAsis();
+                total=matricula.getAsis()/cos;
+                total=total*100;
+                gridData[i][0] = formato.format(matricula.getHoraInicio());
+                gridData[i][1] = formato2.format(total)+"%";
+                i++;
+         }
+         
+         tablaHoras.setModel(new DefaultTableModel(gridData, header.toArray())
+                 { 
+                     @Override public boolean isCellEditable(int row, int column)
+                    { return false; } 
+                 });
+        
+    
+    
+    }
+    
+        catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null,
+                language.getProperty("err.formatoHora"),
+                language.getProperty("app.title"),
+                JOptionPane.ERROR_MESSAGE);
+        }
+    
+         catch (SQLException ex)
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      catch (RemoteException ex)
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+      catch (Exception ex) 
+      {
+         JOptionPane.showMessageDialog(null, 
+                                       language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                       language.getProperty("app.title"), 
+                                       JOptionPane.ERROR_MESSAGE);
+         
+         // Registra el error en un archivo de LOG
+         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    
+    
+    }
+    
+    
+        /*
+     * manda todos los datos de filtro para listarPersonalAcademico
+     */
+    
+    
+    private void llamarAcciones(int opcion){
+        
+        
+        ArrayList<Curso> listaCursoSel = null;
+        Curso curso;
+       
+        Object s[];
+
+        //Cargar a una ArrayList los cursos seleccionados
+        try{
+            if(opSelCursos.isSelected()){
+                if(listCursos.getSelectedValue()==null){
+
+                    JOptionPane.showMessageDialog(null,
+                        language.getProperty("err.curso.noselect"),
+                        language.getProperty("app.title"),
+                        JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+                else{
+                    listaCursoSel = new ArrayList<Curso>();
+                    s=listCursos.getSelectedValues();
+                    for(int i =0 ; i< s.length; i++)
+                    {
+                        String prova=s[i].toString();
+
+                        curso = new Curso();
+                        curso.setNombre(prova);
+                        listaCursoSel.add(curso);
+                    }
+
+                }
+            }
+
+            Date data = null;
+            String txt = txtData.getText();
+            if(txt.equals(""))
+            {
+                data=null;
+            }
+            else
+            {
+
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                data = formato.parse(txt);
+            }
+         
+            PnlListadoPersonalAcademico form = new PnlListadoPersonalAcademico(parent, true, manager, language, usuario ,data, listaCursoSel, opcion);
+            form.setLocationRelativeTo(null);
+            form.setVisible(true);
+
+        }catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null,
+                language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
+                language.getProperty("app.title"),
+                JOptionPane.ERROR_MESSAGE);
+
+
+        }
+        
+    }
+    
+    //carga lista a partir de una ArrayList
+    private void cargarLista(JList listas, ArrayList lista) {
+        String item;
+        for (Object obj : lista) {
+            if (obj instanceof Curso) {
+                item = ((Curso) obj).getNombre();
+                modelo.addElement(item);
+            } 
+        }
+    }
+    /**
+     * @param args the command line arguments
+     */
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnCerrarH;
+    private javax.swing.JButton btnCurso;
+    private javax.swing.JButton btnHoras;
+    private javax.swing.JButton btnSolapamiento;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblA;
+    private javax.swing.JLabel lblDe;
+    private javax.swing.JLabel lblDni;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblMatriculacion;
+    private javax.swing.JLabel lblSelCursos;
+    private javax.swing.JList listCursos;
+    private javax.swing.JRadioButton opFiltroAlumno;
+    private javax.swing.JRadioButton opSelCursos;
+    private javax.swing.JRadioButton opSelHoras;
+    private javax.swing.JRadioButton opTodasHoras;
+    private javax.swing.JRadioButton opTodosAlumnos;
+    private javax.swing.JRadioButton opTodosCursos;
+    private javax.swing.ButtonGroup opcionesAlumno;
+    private javax.swing.ButtonGroup opcionesCursos;
+    private javax.swing.ButtonGroup opcionesHoras;
+    private javax.swing.JTabbedPane tabSolapamiento;
+    private javax.swing.JTable tablaHoras;
+    private javax.swing.JTable tablaSolapados;
+    private javax.swing.JTextField txtData;
+    private javax.swing.JTextField txtDni;
+    private javax.swing.JTextField txtFecha2;
+    private javax.swing.JTextField txtHoraA;
+    private javax.swing.JTextField txtHoraDe;
+    // End of variables declaration//GEN-END:variables
+}
