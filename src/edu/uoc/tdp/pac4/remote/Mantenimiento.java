@@ -3,7 +3,7 @@ package edu.uoc.tdp.pac4.remote;
 import java.rmi.Remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -227,83 +227,83 @@ public interface Mantenimiento extends Remote
    public int checkGruposAula(int id) throws SQLException, Exception;
    
    /**
-    * Devuelve una lista de Cursos del centro.
+    * Devuelve una lista de Actividadess del centro.
     * 
-    * @return Una lista de instancias {@link Curso} que representan los Cursos del centro.
+    * @return Una lista de instancias {@link Actividad} que representan los Actividades del centro.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Curso> getCursos() throws SQLException, Exception;
+   public ArrayList<Actividad> getActividades() throws SQLException, Exception;
    
    /**
-    * Devuelve una lista de Cursos inactivos del centro.
+    * Devuelve una lista de Actividades inactivos del centro.
     * 
-    * @return Una lista de instancias {@link Curso} que representan los Cursos del centro.
+    * @return Una lista de instancias {@link Actividad} que representan los Actividades del centro.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Curso> getCursosInactivos() throws SQLException, Exception;
+   public ArrayList<Actividad> getActividadesInactivas() throws SQLException, Exception;
    
    /**
-    * Obtiene un determinado Curso.
+    * Obtiene un determinado Actividad.
     * 
-    * @param  id Identificador único del Curso.
-    * @return Una instancia de {@link Curso} que representa el Curso solicitado.
+    * @param  id Identificador único del Actividad.
+    * @return Una instancia de {@link Actividad} que representa el Actividad solicitado.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public Curso getCurso(int id) throws SQLException, Exception;
+   public Actividad getActividad(int id) throws SQLException, Exception;
    
    /**
-    * Agrega un nuevo Curso al centro.
+    * Agrega un nuevo Actividad al centro.
     * 
-    * @param curso Una instancia de {@link Curso} que contiene los datos del Curso.
+    * @param actividad Una instancia de {@link Actividad} que contiene los datos del Actividad.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public boolean addCurso(Curso curso) throws SQLException, Exception;
+   public boolean addActividad(Actividad actividad) throws SQLException, Exception;
    
    /**
-    * Actualiza los datos de un Curso.
+    * Actualiza los datos de un Actividad.
     * 
-    * @param curso Una instancia de {@link Curso} que contiene los datos actualizados del Curso.
+    * @param actividad Una instancia de {@link Actividad} que contiene los datos actualizados del Actividad.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public boolean updateCurso(Curso curso) throws SQLException, Exception;
+   public boolean updateActividad(Actividad actividad) throws SQLException, Exception;
    
    /**
-    * Elimina un Curso.
+    * Elimina un Actividad.
     * 
-    * @param id Identificador del Curso a eliminar.
+    * @param id Identificador del Actividad a eliminar.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public boolean deleteCurso(int id) throws SQLException, Exception;
+   public boolean deleteActividad(int id) throws SQLException, Exception;
    
    /**
-    * Recupera un Curso.
+    * Recupera un Actividad.
     * 
-    * @param id Identificador del Curso a recuperar.
+    * @param id Identificador del Actividad a recuperar.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   public boolean undeleteCurso(int id) throws SQLException, Exception;
+   public boolean undeleteActividad(int id) throws SQLException, Exception;
            
    /**
-    * Comprueba si un curso tiene grupos asignados
+    * Comprueba si un actividad tiene grupos asignados
     * 
-    * @param id Identificador del Curso
+    * @param id Identificador del Actividad
     * @return
     * @throws SQLException
     * @throws Exception 
     */
-   public int checkGruposCurso(int id) throws SQLException, Exception;
+   public int checkGruposActividad(int id) throws SQLException, Exception;
 }

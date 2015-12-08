@@ -331,7 +331,7 @@ public class PnlConsultaMatricula extends javax.swing.JDialog
          {            
             gridData[i][0] = matricula.getUsuarioNif();
             gridData[i][1] = matricula.getUsuarioNombre();
-            gridData[i][2] = matricula.getCursoNombre();
+            gridData[i][2] = matricula.getActividadNombre();
             gridData[i][3] = matricula.getGrupoNombre();
             gridData[i][4] = (matricula.getFechaInicio() == null ? "?" : sdf.format(matricula.getFechaInicio()));
             gridData[i][5] = (matricula.getFechaFinal() == null ? "?" : sdf.format(matricula.getFechaFinal()));

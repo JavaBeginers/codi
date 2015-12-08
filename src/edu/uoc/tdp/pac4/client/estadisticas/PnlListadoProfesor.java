@@ -4,7 +4,7 @@
  */
 package edu.uoc.tdp.pac4.client.estadisticas;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
@@ -29,7 +29,7 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
 
    private Estadisticas manager;
    private LanguageUtils language;
-   private ArrayList<Curso> cursos;
+   private ArrayList<Actividad> actividades;
    private ArrayList<Matricula> matriculas;
    private Usuario usr;
    private Date data;
@@ -37,7 +37,7 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
     /**
      * Creates new form PnlListadoProfesor
      */
-    public PnlListadoProfesor(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr, Date data, ArrayList<Curso> cursos, int opcion) {
+    public PnlListadoProfesor(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr, Date data, ArrayList<Actividad> actividades, int opcion) {
         super(parent, modal);
         initComponents();
         this.usr=usr;  
@@ -45,7 +45,7 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
         this.language = language;
         this.opcion=opcion;
         this.data=data;
-        this.cursos=cursos;
+        this.actividades=actividades;
         //carga todos los textos
         btnExport.setText(language.getProperty("form.common.export"));
         btnCerrar.setText(language.getProperty("form.common.close"));
@@ -159,7 +159,7 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
       
       // Rellena la tabla
       ArrayList<String> header2 = new ArrayList<String>();   // cabecera
-      header2.add(language.getProperty("estadisticas.table.alumno.curso"));
+      header2.add(language.getProperty("estadisticas.table.alumno.actividad"));
       header2.add(language.getProperty("estadisticas.table.alumno.fInicio"));
       header2.add(language.getProperty("estadisticas.table.alumno.fFinal"));
       if(op==0)header2.add(language.getProperty("estadisticas.table.profesor.nombreAlumno"));
@@ -168,18 +168,18 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
       header2.add(language.getProperty("estadisticas.table.alumno.asistenciatotal"));
       header2.add(language.getProperty("estadisticas.table.alumno.status"));
       if(op==0)this.setTitle(language.getProperty("estadisticas.form.title.alumnos"));        
-      else this.setTitle(language.getProperty("estadisticas.form.title.cursos"));
+      else this.setTitle(language.getProperty("estadisticas.form.title.actividades"));
       String[][] gridData;
       List<String> row;
 
       try 
       {
          if(op==0){
-          matriculas= manager.consultarAlumnosProfesor(usr.getId(), data,cursos);
+          matriculas= manager.consultarAlumnosProfesor(usr.getId(), data,actividades);
             gridData = new String[matriculas.size()][8];
          }
          else{
-         matriculas= manager.consultarEstCursProfesor(usr.getId(), data,cursos);
+         matriculas= manager.consultarEstCursProfesor(usr.getId(), data,actividades);
             gridData = new String[matriculas.size()][7];
          }
          
@@ -201,7 +201,7 @@ public class PnlListadoProfesor extends javax.swing.JDialog {
              float diff = Math.abs(matricula.getFechaFinal().getTime() - matricula.getFechaInicio().getTime());
              diff = diff / 1000 / 86400;
              
-            gridData[i][0] = matricula.getCursoNombre();
+            gridData[i][0] = matricula.getActividadNombre();
             gridData[i][1] = df.format(matricula.getFechaInicio()).toString();
             gridData[i][2] = df.format(matricula.getFechaFinal()).toString();
             

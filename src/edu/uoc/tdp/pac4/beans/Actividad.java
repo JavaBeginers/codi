@@ -5,6 +5,9 @@
  */
 package edu.uoc.tdp.pac4.beans;
 
+import edu.uoc.tdp.pac4.eAcademiaEU;
+import edu.uoc.tdp.pac4.util.LanguageUtils;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,9 +15,11 @@ import java.util.Date;
  *
  * @author Ivan
  */
-public class Actividad {
+public class Actividad implements Serializable {
 
-    private long id;
+    private static final long serialVersionUID = 1L;
+
+    private int id;
     private long universitatId;
     private long centreId;
     private long aulaId;
@@ -31,6 +36,13 @@ public class Actividad {
     private double minimPercentatge;
     private boolean cancelada;
 
+    // Definición de tipos
+    public static final int ACTIVIDAD_TIPO_NO_DEFINIDO_ID = 0;
+    public static final int ACTIVIDAD_TIPO_CONGRESO_ID = 1;
+    public static final int ACTIVIDAD_TIPO_JORNADA_ID = 2;
+    public static final int ACTIVIDAD_TIPO_MASTER_ID = 3;
+    public static final int ACTIVIDAD_TIPO_CONFERENCIA_ID = 4;
+    
     //==========================================
     // Constructors
     //==========================================
@@ -44,14 +56,14 @@ public class Actividad {
     /**
      * @return the id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -268,6 +280,31 @@ public class Actividad {
     //==========================================
     // Methods
     //==========================================
+    
+   /**
+    * Convierte un código de estado a un texto descriptivo.
+    * 
+    * @param status Código de estado. Corresponde a una de las constantes {@code MATRICULA_ESTADO_XXX}.
+    * @return Una cadena que corresponde al nombre del estado especificado.
+    */
+   public static String getTipoActividadName(int status, LanguageUtils language)
+   {
+      switch (status)
+      {
+         case ACTIVIDAD_TIPO_CONGRESO_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_TIPO_CONGRESO);
+         case ACTIVIDAD_TIPO_JORNADA_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_TIPO_JORNADA);
+         case ACTIVIDAD_TIPO_MASTER_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_TIPO_MASTER);
+         case ACTIVIDAD_TIPO_CONFERENCIA_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_TIPO_CONFERENCIA);
+         default:
+            return "";
+      }
+      
+   }
+    
     /**
      * Convierte la instancia en una cadena que representa el objeto.
      */

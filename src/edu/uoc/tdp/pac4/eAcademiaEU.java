@@ -52,7 +52,7 @@ public interface eAcademiaEU
    public static final String FORM_PNLASISTENCIA_TITLE = "form.pnlAsistencia.title";
    public static final String FORM_PNLASISTENCIA_GRUPO = "form.pnlAsistencia.grupo";
    public static final String FORM_PNLASISTENCIA_RECUENTO = "form.pnlAsistencia.recuento";
-   public static final String FORM_PNLASISTENCIA_CURSO = "form.pnlAsistencia.curso";
+   public static final String FORM_PNLASISTENCIA_ACTIVIDAD = "form.pnlAsistencia.actividad";
    public static final String FORM_PNLASISTENCIA_PROFESOR = "form.pnlAsistencia.profesor";
    public static final String FORM_PNLASISTENCIA_TURNO = "form.pnlAsistencia.turno";
    public static final String FORM_PNLASISTENCIA_FECHA = "form.pnlAsistencia.fecha";
@@ -67,7 +67,7 @@ public interface eAcademiaEU
    
    public static final String FORM_PNLGROUP_TITLE = "form.pnlGroup.title";
    public static final String FORM_PNLGROUP_NOMBRE = "form.pnlGroup.nombre";
-   public static final String FORM_PNLGROUP_CURSO = "form.pnlGroup.curso";
+   public static final String FORM_PNLGROUP_ACTIVIDAD = "form.pnlGroup.actividad";
    public static final String FORM_PNLGROUP_PROFESOR = "form.pnlGroup.profesor";
    public static final String FORM_PNLGROUP_AULA = "form.pnlGroup.aula";
    public static final String FORM_PNLGROUP_MAXALUMNOS = "form.pnlGroup.maxAlumnos";
@@ -76,9 +76,9 @@ public interface eAcademiaEU
    public static final String FORM_PNLGROUP_TARDE = "form.pnlGroup.turnoTarde";
    public static final String FORM_PNLGROUP_FECHAINI = "form.pnlGroup.fechaIni";
    public static final String FORM_PNLGROUP_FECHAFIN = "form.pnlGroup.fechaFin";
-   public static final String FORM_PNLGROUP_SELECTCURSO = "form.pnlGroup.selectCurso";
+   public static final String FORM_PNLGROUP_SELECTACTIVIDAD = "form.pnlGroup.selectActividad";
    public static final String FORM_PNLGROUP_WARN_NOMBRE = "form.pnlGroup.warning.nombre";
-   public static final String FORM_PNLGROUP_WARN_CURSO = "form.pnlGroup.warning.curso";
+   public static final String FORM_PNLGROUP_WARN_ACTIVIDAD = "form.pnlGroup.warning.actividad";
    public static final String FORM_PNLGROUP_WARN_PROFESOR = "form.pnlGroup.warning.profesor";
    public static final String FORM_PNLGROUP_WARN_AULA = "form.pnlGroup.warning.aula";
    public static final String FORM_PNLGROUP_WARN_MAXALUMNOS = "form.pnlGroup.warning.maxAlumnos";
@@ -88,7 +88,7 @@ public interface eAcademiaEU
    public static final String FORM_PNLGROUPGESTOR_EDIT = "form.pnlGroupGestor.edit";
    public static final String FORM_PNLGROUPGESTOR_DELETE = "form.pnlGroupGestor.delete";
    public static final String FORM_PNLGROUPGESTOR_FILTER = "form.pnlGroupGestor.filter";
-   public static final String FORM_PNLGROUPGESTOR_CURSO = "form.pnlGroupGestor.curso";
+   public static final String FORM_PNLGROUPGESTOR_ACTIVIDAD = "form.pnlGroupGestor.actividad";
    public static final String FORM_PNLGROUPGESTOR_TURNO = "form.pnlGroupGestor.turno";
    public static final String FORM_PNLGROUPGESTOR_NOMBRE = "form.pnlGroupGestor.nombre";
    public static final String FORM_PNLGROUPGESTOR_MAXALUMNOS = "form.pnlGroupGestor.maxAlumnos";
@@ -105,7 +105,7 @@ public interface eAcademiaEU
    public static final String FORM_PNLMATRICULA_ALUMNO = "form.pnlMatricula.alumno";
    public static final String FORM_PNLMATRICULA_GRUPO = "form.pnlMatricula.grupo";
    public static final String FORM_PNLMATRICULA_ESTADO = "form.pnlMatricula.estado";
-   public static final String FORM_PNLMATRICULA_CURSO = "form.pnlMatricula.curso";
+   public static final String FORM_PNLMATRICULA_ACTIVIDAD = "form.pnlMatricula.actividad";
    public static final String FORM_PNLMATRICULA_FECHAS = "form.pnlMatricula.fechas";
    public static final String FORM_PNLMATRICULA_TURNO = "form.pnlMatricula.turno";
    public static final String FORM_PNLMATRICULA_PLAZAS = "form.pnlMatricula.plazas";
@@ -127,7 +127,7 @@ public interface eAcademiaEU
    public static final String FORM_PNLMATRICULAGESTOR_ALUMNO = "form.pnlMatriculaGestor.alumno";
    public static final String FORM_PNLMATRICULAGESTOR_NIF = "form.pnlMatriculaGestor.nif";
    public static final String FORM_PNLMATRICULAGESTOR_ESTADO = "form.pnlMatriculaGestor.estado";
-   public static final String FORM_PNLMATRICULAGESTOR_CURSO = "form.pnlMatriculaGestor.curso";
+   public static final String FORM_PNLMATRICULAGESTOR_ACTIVIDAD = "form.pnlMatriculaGestor.actividad";
    public static final String FORM_PNLMATRICULAGESTOR_GRUPO = "form.pnlMatriculaGestor.grupo";
    public static final String FORM_PNLMATRICULAGESTOR_ESTADO_NOFILTER = "form.pnlMatriculaGestor.estadoNoFilter";
    public static final String FORM_PNLMATRICULAGESTOR_WARN_SELECTMATRICULA = "form.pnlMatriculaGestor.warning.selectMatricula";
@@ -143,4 +143,10 @@ public interface eAcademiaEU
    
    public static final String GRUPO_ASISTENCIA_ABIERTO = "group.asistencia.estado.open";
    public static final String GRUPO_ASISTENCIA_CERRADO = "group.asistencia.estado.closed";
+   
+   public static final String FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA = "form.pnlMantenimientoActividad.tipo.actividad.selecciona";
+   public static final String ACTIVIDAD_TIPO_CONGRESO = "actividad.tipo.congreso";
+   public static final String ACTIVIDAD_TIPO_JORNADA = "actividad.tipo.jornada";
+   public static final String ACTIVIDAD_TIPO_MASTER = "actividad.tipo.master";
+   public static final String ACTIVIDAD_TIPO_CONFERENCIA = "actividad.tipo.conferencia";
 }

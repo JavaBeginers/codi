@@ -406,7 +406,7 @@ public class PnlMatriculaGestor extends javax.swing.JDialog
       header.add("ID");
       header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_NIF));
       header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_ALUMNO));
-      header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_CURSO));
+      header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_ACTIVIDAD));
       header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_GRUPO));
       header.add(language.getProperty(eAcademiaEU.FORM_PNLMATRICULAGESTOR_ESTADO));
       
@@ -423,7 +423,7 @@ public class PnlMatriculaGestor extends javax.swing.JDialog
             gridData[i][0] = df.format(matricula.getId());
             gridData[i][1] = matricula.getUsuarioNif();
             gridData[i][2] = matricula.getUsuarioNombre();
-            gridData[i][3] = matricula.getCursoNombre();
+            gridData[i][3] = matricula.getActividadNombre();
             gridData[i][4] = matricula.getGrupoNombre();
             gridData[i][5] = Matricula.getStatusName(matricula.getEstado(), language);
             i++;

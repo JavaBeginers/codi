@@ -7,6 +7,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -124,14 +125,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblLabelTurno" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblLabelFechas" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblLabelCurso" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLabelActividad" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblPlazas" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblFechas" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTurno" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblCurso" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblActividad" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblManana" min="-2" max="-2" attributes="0"/>
@@ -153,8 +154,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblLabelCurso" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblCurso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLabelActividad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblActividad" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -209,13 +210,13 @@
             <Property name="text" type="java.lang.String" value="Turno solicitado:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblLabelCurso">
+        <Component class="javax.swing.JLabel" name="lblLabelActividad">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Curso:"/>
+            <Property name="text" type="java.lang.String" value="Actividad:"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblCurso">
+        <Component class="javax.swing.JLabel" name="lblActividad">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>

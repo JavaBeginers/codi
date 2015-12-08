@@ -285,7 +285,7 @@ public class PnlAsistencia extends javax.swing.JDialog
       {
          Grupo grupo = manager.getGrupo(((Grupo) cboGrupo.getSelectedItem()).getId());
          
-         lblCurso.setText(grupo.getNombreCurso());
+         lblCurso.setText(grupo.getNombreActividad());
          lblProfesor.setText(grupo.getNombreProfesor());
          lblTurno.setText(Grupo.getTurnoName(grupo.getTurno(), language));
          
@@ -407,7 +407,7 @@ public class PnlAsistencia extends javax.swing.JDialog
       this.setTitle(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_TITLE));
       lblGrupo.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_GRUPO));
       lblRecuento.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_RECUENTO));
-      lblLabelCurso.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_CURSO) + ":");
+      lblLabelCurso.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_ACTIVIDAD) + ":");
       lblCurso.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_SELECTGRUPO));
       lblLabelProfe.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_PROFESOR) + ":");
       lblProfesor.setText(language.getProperty(eAcademiaEU.FORM_PNLASISTENCIA_SELECTGRUPO));

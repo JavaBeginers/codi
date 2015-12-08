@@ -3,14 +3,14 @@ package edu.uoc.tdp.pac4.remote;
 import edu.uoc.tdp.pac4.beans.Alumno;
 import edu.uoc.tdp.pac4.beans.Asistencia;
 import edu.uoc.tdp.pac4.beans.Aula;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Profesor;
 import edu.uoc.tdp.pac4.dao.GestorAlumno;
 import edu.uoc.tdp.pac4.dao.GestorAsistencia;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
-import edu.uoc.tdp.pac4.dao.GestorCurso;
+import edu.uoc.tdp.pac4.dao.GestorActividad;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
 import edu.uoc.tdp.pac4.dao.GestorGrupo;
 import edu.uoc.tdp.pac4.dao.GestorMatricula;
@@ -64,16 +64,16 @@ public class GestAcademicaImpl extends UnicastRemoteObject implements GestAcadem
    /**
     * Obtiene una lista completa de los grupos del centro.
     * 
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public ArrayList<Curso> getCursos() throws RemoteException, SQLException, Exception 
+   public ArrayList<Actividad> getActividades() throws RemoteException, SQLException, Exception 
    {
-      GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
-		return gc.getCursos();
+      GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+		return gc.getActividades();
    }
 
    /**
@@ -85,9 +85,9 @@ public class GestAcademicaImpl extends UnicastRemoteObject implements GestAcadem
     * @throws Exception 
     */
    @Override
-   public Curso getCurso(int id) throws SQLException, Exception
+   public Actividad getActividad(int id) throws SQLException, Exception
    {
-      GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+      GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
       return gc.get(id);
    }
    
@@ -366,7 +366,7 @@ public class GestAcademicaImpl extends UnicastRemoteObject implements GestAcadem
    @Override
    public int getPlazasDisponibles(int idCurso, int turno) throws NoGroupFoundException, SQLException, Exception 
    {
-      GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+      GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
       return gc.getPlazasDisponibles(idCurso, turno);
    }
 

@@ -1,6 +1,6 @@
 package edu.uoc.tdp.pac4.client.conexion;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
@@ -307,7 +307,7 @@ public class PnlSolicitaMatricula extends javax.swing.JDialog
         // Inserta datos en matrícula
         matricula.setUsuarioId(alumno.getId());        
         matricula.setGrupoId(grupo.getId());
-        matricula.setCursoId(grupo.getIdCurso());
+        matricula.setactividadId(grupo.getIdActividad());
         matricula.setEstado(Matricula.MATRICULA_ESTADO_PENDIENTE);
         try 
         {
@@ -387,7 +387,7 @@ public class PnlSolicitaMatricula extends javax.swing.JDialog
 
     private void cmdSetFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSetFilterActionPerformed
 
-        int idCurso = (cboCurso.getSelectedIndex() >= 0 ? ((Curso)cboCurso.getSelectedItem()).getId() : -1);
+        int idCurso = (cboCurso.getSelectedIndex() >= 0 ? ((Actividad)cboCurso.getSelectedItem()).getId() : -1);
         int idTurno = (cboTurno.getSelectedIndex() >= 0 ? ((ComboItem)cboTurno.getSelectedItem()).getId() : -1);
 
         fillForm(idCurso, idTurno, (Date) spnFechaInicio.getValue(), (Date) spnFechaFin.getValue());
@@ -436,7 +436,7 @@ public class PnlSolicitaMatricula extends javax.swing.JDialog
         
          // Rellena la lista de cursos
          cboCurso.removeAll();
-         cboCurso.setModel(new DefaultComboBoxModel(manager.getCursos().toArray()));
+         cboCurso.setModel(new DefaultComboBoxModel(manager.getActividades().toArray()));
          cboCurso.setSelectedIndex(-1);
 
          // Rellena el combo de filtros
@@ -494,15 +494,15 @@ public class PnlSolicitaMatricula extends javax.swing.JDialog
          int i = 0;
          for (Grupo grupo : grupos)
          {
-            gridData[i][0] = grupo.getNombreCurso();
+            gridData[i][0] = grupo.getNombreActividad();
             gridData[i][1] = grupo.getNombreProfesor();
             gridData[i][2] = grupo.getNombreAula();
             gridData[i][3] = (grupo.getTurno() == Grupo.TURNO_MANANA ? "Mañana" : "Tarde");
-            gridData[i][4] = (grupo.getFechaInicioCurso() == null ? "?" : df.format(grupo.getFechaInicioCurso()));
-            gridData[i][5] = (grupo.getFechaFinCurso() == null ? "?" : df.format(grupo.getFechaFinCurso()));
+            gridData[i][4] = (grupo.getFechaFinActividad() == null ? "?" : df.format(grupo.getFechaInicioActividad()));
+            gridData[i][5] = (grupo.getFechaFinActividad() == null ? "?" : df.format(grupo.getFechaFinActividad()));
             gridData[i][6] = String.valueOf(grupo.getMaxAlumnos());
             gridData[i][7] = String.valueOf(grupo.getPlazasDisponibles());
-            gridData[i][8] = String.valueOf(grupo.getMinimoAsistenciaCurso()) + "%";              
+            gridData[i][8] = String.valueOf(grupo.getMinimoAsistenciaActividad()) + "%";
             i++;
          }
          
@@ -587,7 +587,7 @@ public class PnlSolicitaMatricula extends javax.swing.JDialog
                 
         // Si el curso ha ya comenzado, se impide la solicitud. Para pruebas, se permite
         //realizar la solicitud el mismo día que empieza el curso.
-        if (grupo.getFechaInicioCurso().before(new Date()))
+        if (grupo.getFechaInicioActividad().before(new Date()))
         {
                         
             JOptionPane.showMessageDialog(null,

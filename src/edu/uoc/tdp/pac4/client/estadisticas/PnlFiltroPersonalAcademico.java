@@ -4,15 +4,13 @@
  */
 package edu.uoc.tdp.pac4.client.estadisticas;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
-import edu.uoc.tdp.pac4.exceptions.eAssistenciaException;
 import edu.uoc.tdp.pac4.remote.Estadisticas;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +35,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
    private java.awt.Frame parent;
    DefaultListModel modelo ;
    DefaultListModel modelo2 ;
-   ArrayList<Curso> listaCurso;
+   ArrayList<Actividad> listaActividad;
    ArrayList<Matricula> matriculas;
     /**
      * Creates new form PnlFiltroProfesor
@@ -52,16 +49,16 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         this.parent=parent;
         //Cargar textos
         btnAceptar.setText(language.getProperty("estadisticas.profesor.btn.profesores"));
-        btnCurso.setText(language.getProperty("estadisticas.profesor.btn.curso"));
+        btnActividad.setText(language.getProperty("estadisticas.profesor.btn.actividad"));
         btnCancelar.setText(language.getProperty("form.common.close"));
         btnSolapamiento.setText(language.getProperty("mantenimiento.usermain.dofilter"));
         btnHoras.setText(language.getProperty("mantenimiento.usermain.dofilter"));
         btnCerrar.setText(language.getProperty("form.common.close"));
         btnCerrarH.setText(language.getProperty("form.common.close"));
         lblFecha.setText(language.getProperty("estadisticas.form.fechaInicio"));
-        lblSelCursos.setText(language.getProperty("estadisticas.form.selCursos"));
-        opTodosCursos.setText(language.getProperty("estadisticas.form.opTodosCursos"));
-        opSelCursos.setText(language.getProperty("estadisticas.form.opFiltrarCursos"));
+        lblSelActividades.setText(language.getProperty("estadisticas.form.selActividades"));
+        opTodasActividades.setText(language.getProperty("estadisticas.form.opTodosActividades"));
+        opSelActividades.setText(language.getProperty("estadisticas.form.opFiltrarActividades"));
         lblMatriculacion.setText(language.getProperty("estadisticas.fotm.fechaMat"));
         opTodosAlumnos.setText(language.getProperty("estadisticas.form.opTodos"));
         opFiltroAlumno.setText(language.getProperty("estadisticas.form.opDni"));
@@ -78,9 +75,9 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         opcionesAlumno.add(opFiltroAlumno);
         opTodosAlumnos.setSelected(true);
        
-        opcionesCursos.add(opTodosCursos);
-        opcionesCursos.add(opSelCursos);
-        opTodosCursos.setSelected(true);
+//        opcionesActividades.add(opTodssActividades);
+//        opcionesActividades.add(opSelActividades);
+        opTodasActividades.setSelected(true);
         
         opcionesHoras.add(opTodasHoras);
         opcionesHoras.add(opSelHoras);
@@ -96,11 +93,11 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         cargarTablaSolapados("","");
         cargarTablaHoras("","");
         
-        //carga los cursos de un centro
+        //carga los actividads de un centro
         try {    
         
-        listaCurso = manager.consultarCursos();
-        cargarLista(listCursos, listaCurso);
+        listaActividad = manager.consultarActividades();
+        cargarLista(listActividades, listaActividad);
         
         } catch (RemoteException e) {
             
@@ -130,15 +127,15 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         tabSolapamiento = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        lblSelCursos = new javax.swing.JLabel();
+        lblSelActividades = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listCursos = new javax.swing.JList();
-        opTodosCursos = new javax.swing.JRadioButton();
-        opSelCursos = new javax.swing.JRadioButton();
+        listActividades = new javax.swing.JList();
+        opTodasActividades = new javax.swing.JRadioButton();
+        opSelActividades = new javax.swing.JRadioButton();
         txtData = new javax.swing.JTextField();
         lblFecha = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
-        btnCurso = new javax.swing.JButton();
+        btnActividad = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lblMatriculacion = new javax.swing.JLabel();
@@ -171,10 +168,10 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblSelCursos.setText("Seleccionar curso/os");
+        lblSelActividades.setText("Seleccionar actividad/es");
 
-        listCursos.setBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setViewportView(listCursos);
+        listActividades.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(listActividades);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,33 +180,38 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblSelCursos)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lblSelActividades)
+                        .addGap(0, 207, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblSelCursos)
+                .addComponent(lblSelActividades)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        opTodosCursos.setText("Todos los cursos");
-        opTodosCursos.addActionListener(new java.awt.event.ActionListener() {
+        lblSelActividades.getAccessibleContext().setAccessibleName("Seleccionar actividad/es");
+
+        opTodasActividades.setText("Todos los cursos");
+        opTodasActividades.setActionCommand("Todas las actividades");
+        opTodasActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        opTodasActividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opTodosCursosActionPerformed(evt);
+                opTodasActividadesActionPerformed(evt);
             }
         });
 
-        opSelCursos.setText("Filtrar por curso");
-        opSelCursos.addActionListener(new java.awt.event.ActionListener() {
+        opSelActividades.setText("Filtrar por actividad");
+        opSelActividades.setActionCommand("Filtrar por actividad");
+        opSelActividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opSelCursosActionPerformed(evt);
+                opSelActividadesActionPerformed(evt);
             }
         });
 
@@ -223,11 +225,12 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
             }
         });
 
-        btnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/books-stack.png"))); // NOI18N
-        btnCurso.setText("Estadísticas curso/os");
-        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/books-stack.png"))); // NOI18N
+        btnActividad.setText("Estadísticas actividad/es");
+        btnActividad.setActionCommand("Estadísticas actividad/es");
+        btnActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoActionPerformed(evt);
+                btnActividadActionPerformed(evt);
             }
         });
 
@@ -252,13 +255,13 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblFecha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(opSelCursos)
-                    .addComponent(opTodosCursos))
+                    .addComponent(opSelActividades)
+                    .addComponent(opTodasActividades))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -269,21 +272,23 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                     .addComponent(lblFecha)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(opTodosCursos)
+                .addComponent(opTodasActividades)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opSelCursos)
+                .addComponent(opSelActividades)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar)
                 .addGap(18, 18, 18)
-                .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
                 .addGap(74, 74, 74))
         );
+
+        opTodasActividades.getAccessibleContext().setAccessibleName("Todas las actividades");
 
         tabSolapamiento.addTab("tab1", jPanel2);
 
@@ -343,7 +348,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                         .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSolapamiento))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -404,7 +409,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCerrar)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         tabSolapamiento.addTab("tab2", jPanel3);
@@ -447,7 +452,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(lblDe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -463,7 +468,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHoraDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtHoraA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -505,7 +510,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 518, Short.MAX_VALUE)
+                        .addGap(0, 537, Short.MAX_VALUE)
                         .addComponent(btnCerrarH))
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -526,7 +531,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCerrarH)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         tabSolapamiento.addTab("tab3", jPanel5);
@@ -548,31 +553,31 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void opTodosCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodosCursosActionPerformed
+    private void opTodasActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodasActividadesActionPerformed
         // TODO add your handling code here:
 
-        if(opSelCursos.isSelected()){
+        if(opSelActividades.isSelected()){
 
-            listCursos.setModel(modelo);
-            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+            listActividades.setModel(modelo);
+            listActividades.setBackground(new java.awt.Color(255, 255, 255));
         }
-        else {listCursos.setModel(modelo2);
-            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        else {listActividades.setModel(modelo2);
+            listActividades.setBackground(new java.awt.Color(204, 204, 204));
         }
-    }//GEN-LAST:event_opTodosCursosActionPerformed
+    }//GEN-LAST:event_opTodasActividadesActionPerformed
 
-    private void opSelCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelCursosActionPerformed
+    private void opSelActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelActividadesActionPerformed
         // TODO add your handling code here:
 
-        if(opTodosCursos.isSelected()){
-            listCursos.setModel(modelo2);
-            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        if(opTodasActividades.isSelected()){
+            listActividades.setModel(modelo2);
+            listActividades.setBackground(new java.awt.Color(204, 204, 204));
         }
-        else {listCursos.setModel(modelo);
-            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+        else {listActividades.setModel(modelo);
+            listActividades.setBackground(new java.awt.Color(255, 255, 255));
 
         }
-    }//GEN-LAST:event_opSelCursosActionPerformed
+    }//GEN-LAST:event_opSelActividadesActionPerformed
 
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -588,12 +593,12 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+    private void btnActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActividadActionPerformed
         // TODO add your handling code here:
         
         llamarAcciones(1);
         
-    }//GEN-LAST:event_btnCursoActionPerformed
+    }//GEN-LAST:event_btnActividadActionPerformed
 
     private void opTodosAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodosAlumnosActionPerformed
         if(opTodosAlumnos.isSelected()){
@@ -704,7 +709,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                 if(matricula.getTurno()==2)turno=language.getProperty("estatisticas.table.personalAcademico.turnoTarde");
                 gridData[i][0] = matricula.getUsuarioNif();
                 gridData[i][1] = matricula.getUsuarioNombre();
-                gridData[i][2] = matricula.getCursoNombre();
+                gridData[i][2] = matricula.getActividadNombre();
                 gridData[i][3] = turno;
             
             i++;
@@ -863,33 +868,33 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
     private void llamarAcciones(int opcion){
         
         
-        ArrayList<Curso> listaCursoSel = null;
-        Curso curso;
+        ArrayList<Actividad> listaActividadSel = null;
+        Actividad actividad;
        
         Object s[];
 
-        //Cargar a una ArrayList los cursos seleccionados
+        //Cargar a una ArrayList los actividades seleccionados
         try{
-            if(opSelCursos.isSelected()){
-                if(listCursos.getSelectedValue()==null){
+            if(opSelActividades.isSelected()){
+                if(listActividades.getSelectedValue()==null){
 
                     JOptionPane.showMessageDialog(null,
-                        language.getProperty("err.curso.noselect"),
+                        language.getProperty("err.actividad.noselect"),
                         language.getProperty("app.title"),
                         JOptionPane.WARNING_MESSAGE);
                     return;
 
                 }
                 else{
-                    listaCursoSel = new ArrayList<Curso>();
-                    s=listCursos.getSelectedValues();
+                    listaActividadSel = new ArrayList<Actividad>();
+                    s=listActividades.getSelectedValues();
                     for(int i =0 ; i< s.length; i++)
                     {
                         String prova=s[i].toString();
 
-                        curso = new Curso();
-                        curso.setNombre(prova);
-                        listaCursoSel.add(curso);
+                        actividad = new Actividad();
+                        actividad.setTitol(prova);
+                        listaActividadSel.add(actividad);
                     }
 
                 }
@@ -908,7 +913,7 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
                 data = formato.parse(txt);
             }
          
-            PnlListadoPersonalAcademico form = new PnlListadoPersonalAcademico(parent, true, manager, language, usuario ,data, listaCursoSel, opcion);
+            PnlListadoPersonalAcademico form = new PnlListadoPersonalAcademico(parent, true, manager, language, usuario ,data, listaActividadSel, opcion);
             form.setLocationRelativeTo(null);
             form.setVisible(true);
 
@@ -928,8 +933,8 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
     private void cargarLista(JList listas, ArrayList lista) {
         String item;
         for (Object obj : lista) {
-            if (obj instanceof Curso) {
-                item = ((Curso) obj).getNombre();
+            if (obj instanceof Actividad) {
+                item = ((Actividad) obj).getTitol();
                 modelo.addElement(item);
             } 
         }
@@ -940,10 +945,10 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnActividad;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnCerrarH;
-    private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnHoras;
     private javax.swing.JButton btnSolapamiento;
     private javax.swing.JButton jButton1;
@@ -961,14 +966,14 @@ public class PnlFiltroPersonalAcademico extends javax.swing.JDialog {
     private javax.swing.JLabel lblDni;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblMatriculacion;
-    private javax.swing.JLabel lblSelCursos;
-    private javax.swing.JList listCursos;
+    private javax.swing.JLabel lblSelActividades;
+    private javax.swing.JList listActividades;
     private javax.swing.JRadioButton opFiltroAlumno;
-    private javax.swing.JRadioButton opSelCursos;
+    private javax.swing.JRadioButton opSelActividades;
     private javax.swing.JRadioButton opSelHoras;
+    private javax.swing.JRadioButton opTodasActividades;
     private javax.swing.JRadioButton opTodasHoras;
     private javax.swing.JRadioButton opTodosAlumnos;
-    private javax.swing.JRadioButton opTodosCursos;
     private javax.swing.ButtonGroup opcionesAlumno;
     private javax.swing.ButtonGroup opcionesCursos;
     private javax.swing.ButtonGroup opcionesHoras;

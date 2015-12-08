@@ -3,7 +3,7 @@ package edu.uoc.tdp.pac4.remote;
 import edu.uoc.tdp.pac4.beans.Alumno;
 import edu.uoc.tdp.pac4.beans.Asistencia;
 import edu.uoc.tdp.pac4.beans.Aula;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Profesor;
@@ -26,33 +26,33 @@ import java.util.Date;
 public interface GestAcademica extends Remote 
 {
    /**
-    * Obtiene una lista completa de los cursos del centro.
+    * Obtiene una lista completa de los actividades del centro.
     * 
-    * @return Una lista de instancia de {@link Curso}.
-    * 
-    * @throws SQLException
-    * @throws Exception 
-    */
-   ArrayList<Curso> getCursos() throws SQLException, Exception;
-   
-   /**
-    * Obtiene una lista completa de los cursos del centro.
-    * 
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   Curso getCurso(int id) throws SQLException, Exception;
+   ArrayList<Actividad> getActividades() throws SQLException, Exception;
    
    /**
-    * Devuelve el número de plazas disponibles para un determinado curso y turno (en función de las matriculas aceptadas).
+    * Obtiene una lista completa de los actividades del centro.
     * 
-    * @param idCurso Identificador único del curso.
+    * @return Una lista de instancia de {@link Actividad}.
+    * 
+    * @throws SQLException
+    * @throws Exception 
+    */
+   Actividad getActividad(int id) throws SQLException, Exception;
+   
+   /**
+    * Devuelve el número de plazas disponibles para un determinado actividad y turno (en función de las matriculas aceptadas).
+    * 
+    * @param idActividad Identificador único del actividad.
     * @param turno Código del turno.
     * @return El número de plazas disponibles en un grupo y turno.
     */
-   int getPlazasDisponibles(int idCurso, int turno) throws NoGroupFoundException, SQLException, Exception;
+   int getPlazasDisponibles(int idActividad, int turno) throws NoGroupFoundException, SQLException, Exception;
    
    /**
     * Agrega un nuevo grupo al centro.
@@ -100,34 +100,34 @@ public interface GestAcademica extends Remote
    ArrayList<Grupo> getGrupos() throws SQLException, Exception;
    
    /**
-    * Obtiene una lista de los grupos del centro correspondientes a un determinado curso.
+    * Obtiene una lista de los grupos del centro correspondientes a un determinado actividad.
     * 
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   ArrayList<Grupo> getGrupos(int idCurso) throws SQLException, Exception;
+   ArrayList<Grupo> getGrupos(int idActividad) throws SQLException, Exception;
    
    /**
     * Obtiene una lista (filtrada) de los grupos del centro.
     * 
-    * @param idTurno Identificador del curso para el que se desea filtrar ({@code -1} para ignorar).
+    * @param idTurno Identificador del actividad para el que se desea filtrar ({@code -1} para ignorar).
     * @param idTurno Identificador del turno para el que se desea filtrar ({@code -1} para ignorar).
     * @param fechaInicio Fecha de inicio para la que se desea filtrar ({@code null} para ignorar).
     * @param fechaFin Fecha de finalización para la que se desea filtrar ({@code null} para ignorar).
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-   ArrayList<Grupo> getGrupos(int idCurso, int idTurno, Date fechaInicio, Date fechaFin) throws SQLException, Exception;
+   ArrayList<Grupo> getGrupos(int idActividad, int idTurno, Date fechaInicio, Date fechaFin) throws SQLException, Exception;
    
    /**
     * Obtiene una lista de los grupos del centro correspondientes a un determinado profesor.
     * 
     * @param idUsuario Identificador del profesor (usuario).
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
@@ -244,7 +244,7 @@ public interface GestAcademica extends Remote
    /**
     * Obtiene una lista completa de los grupos del centro.
     * 
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
@@ -257,7 +257,7 @@ public interface GestAcademica extends Remote
     * @param name Una cadena que contiene parte del nombre y/o apellidos para filtrar.
     * @param nif Una cadena que contiene parte del nif para filtrar.
     * @param estado Un estado para filtrar o -1 para ignorar el filtro.
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 

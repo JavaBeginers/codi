@@ -1,6 +1,6 @@
 package edu.uoc.tdp.pac4.remote;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -21,30 +21,30 @@ public interface Estadisticas extends Remote
     * Obtiene una lista completa de las matrículas de un alumno.
     * @param id identificador alumno.
     * @param op opcion escogida del raioButton.
-    * @param data data minima de matricula curso.
+    * @param data data minima de matricula actividad.
     * @return Una lista de instancia de {@link Matricula}.
     * 
     * @throws SQLException
     * @throws Exception 
     */
-ArrayList<Matricula> consultarCursosAlumno(int id,int op, Date data) throws SQLException, Exception;
+ArrayList<Matricula> consultarActividadesAlumno(int id,int op, Date data) throws SQLException, Exception;
 
    /**
-    * Obtiene una lista completa de los cursos de un profesor.
+    * Obtiene una lista completa de los actividadess de un profesor.
     * @param login login del profesor.
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
     * @throws RemoteException
     */
 
-ArrayList<Curso> consultarCursosProfesor(String login) throws RemoteException, SQLException, Exception;
+ArrayList<Actividad> consultarActividadesProfesor(String login) throws RemoteException, SQLException, Exception;
 
   /**
-    * Obtiene una lista completa de los cursos del centro.
+    * Obtiene una lista completa de los actividadess del centro.
     * @param login login del profesor.
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
@@ -53,14 +53,14 @@ ArrayList<Curso> consultarCursosProfesor(String login) throws RemoteException, S
 
 
 
-ArrayList<Curso> consultarCursos() throws RemoteException, SQLException, Exception;
+ArrayList<Actividad> consultarActividades() throws RemoteException, SQLException, Exception;
 
 
   /**
     * Obtiene una lista completa de las alumno que imparte clase un profesor.
     * @param id identificador profesor.
-    * @param data data minima de matricula curso.
-    * @param cursos listado de cursos.
+    * @param data data minima de matricula actividad.
+    * @param actividades listado de actividades.
     * @return Una lista de instancia de {@link Matricula}.
     * 
     * @throws SQLException
@@ -68,13 +68,13 @@ ArrayList<Curso> consultarCursos() throws RemoteException, SQLException, Excepti
     * @throws RemoteException
     */
 
-ArrayList<Matricula> consultarAlumnosProfesor(int id, Date data, ArrayList<Curso> cursos) throws RemoteException, SQLException, Exception;
+ArrayList<Matricula> consultarAlumnosProfesor(int id, Date data, ArrayList<Actividad> actividades) throws RemoteException, SQLException, Exception;
 
  /**
-    * Obtiene una lista completa de las estadísticas de asistencia en los cursos de un profesor.
+    * Obtiene una lista completa de las estadísticas de asistencia en los actividades de un profesor.
     * @param id identificador profesor.
-    * @param data data minima de matricula curso.
-    * @param cursos listado de cursos.
+    * @param data data minima de matricula actividad.
+    * @param actividades listado de actividades.
     * @return Una lista de instancia de {@link Matricula}.
     * 
     * @throws SQLException
@@ -82,13 +82,13 @@ ArrayList<Matricula> consultarAlumnosProfesor(int id, Date data, ArrayList<Curso
     * @throws RemoteException
     */
 
-ArrayList<Matricula> consultarEstCursProfesor(int id, Date data, ArrayList<Curso> cursos) throws RemoteException, SQLException, Exception;
+ArrayList<Matricula> consultarEstCursProfesor(int id, Date data, ArrayList<Actividad> actividades) throws RemoteException, SQLException, Exception;
 
 
  /**
-    * Obtiene una lista de los profesores con la asistencia a sus cursos.
-    * @param data data minima de matricula curso.
-    * @param cursos listado de cursos.
+    * Obtiene una lista de los profesores con la asistencia a sus actividades.
+    * @param data data minima de matricula actividad.
+    * @param actividades listado de actividades.
     * @return Una lista de instancia de {@link Matricula}.
     * 
     * @throws SQLException
@@ -96,12 +96,12 @@ ArrayList<Matricula> consultarEstCursProfesor(int id, Date data, ArrayList<Curso
     * @throws RemoteException
     */
 
-ArrayList<Matricula> consultarEstProfesores(Date data, ArrayList<Curso> cursos) throws RemoteException, SQLException, Exception;
+ArrayList<Matricula> consultarEstProfesores(Date data, ArrayList<Actividad> actividades) throws RemoteException, SQLException, Exception;
 
 /**
-    * Obtiene una lista los cursos impartidos por el centro con la asistencia de cada curso.
-    * @param data data minima de matricula curso.
-    * @param cursos listado de cursos.
+    * Obtiene una lista los actividades impartidos por el centro con la asistencia de cada actividad.
+    * @param data data minima de matricula actividad.
+    * @param actividades listado de actividades.
     * @return Una lista de instancia de {@link Matricula}.
     * 
     * @throws SQLException
@@ -109,11 +109,11 @@ ArrayList<Matricula> consultarEstProfesores(Date data, ArrayList<Curso> cursos) 
     * @throws RemoteException
     */
 
-ArrayList<Matricula> consultarEstCursosCentro(Date data, ArrayList<Curso> cursos) throws RemoteException, SQLException, Exception;
+ArrayList<Matricula> consultarEstActividadesCentro(Date data, ArrayList<Actividad> actividades) throws RemoteException, SQLException, Exception;
 
 /**
-    * Obtiene una lista los cursos solapados.
-    * @param data data minima de matricula curso.
+    * Obtiene una lista los actividades solapados.
+    * @param data data minima de matricula actvidad.
     * @param nif nif del alumno.
     * @return Una lista de instancia de {@link Matricula}.
     * 

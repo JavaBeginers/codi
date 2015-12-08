@@ -13,7 +13,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 public class Matricula extends IdentifiableObject implements java.io.Serializable 
 {
    // peticionid ???
-   private int cursoId;
+   private int actividadId;
    private int grupoId;
    private int estadoId;
    private int usuarioId;
@@ -21,7 +21,7 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
    private Date fechaAlta;
    
    // Propiedades de solo lectura
-   private String cursoNombre;
+   private String actividadNombre;
    private String grupoNombre;
    private String usuarioNombre;
    private String usuarioNif;
@@ -50,7 +50,7 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
     */
    public Matricula()
    {
-      this.cursoId = 0;
+      this.actividadId = 0;
       this.grupoId = 0;
       this.estadoId = 0;
       this.usuarioId = 0;
@@ -58,7 +58,7 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
       this.fechaModificacion = null;
       this.fechaAlta = new Date();
       
-      this.cursoNombre = "";
+      this.actividadNombre = "";
       this.grupoNombre = "";
       this.usuarioNombre = "";
       this.usuarioNif = "";
@@ -68,14 +68,14 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
    // Properties
    //===========================================
 
-   public int getCursoId() 
+   public int getActividadId() 
    {
-      return cursoId;
+      return actividadId;
    }
 
-   public void setCursoId(int cursoId) 
+   public void setactividadId(int actividadId) 
    {
-      this.cursoId = cursoId;
+      this.actividadId = actividadId;
    }
 
    public int getGrupoId() 
@@ -128,14 +128,14 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
       this.fechaAlta = fechaAlta;
    }
 
-   public String getCursoNombre() 
+   public String getActividadNombre() 
    {
-      return cursoNombre;
+      return actividadNombre;
    }
 
-   public void setCursoNombre(String cursoNombre) 
+   public void setActividadNombre(String actividadNombre) 
    {
-      this.cursoNombre = cursoNombre;
+      this.actividadNombre = actividadNombre;
    }
 
    public String getGrupoNombre() 

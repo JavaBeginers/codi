@@ -2,16 +2,17 @@ package edu.uoc.tdp.pac4.remote;
 
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
 import edu.uoc.tdp.pac4.dao.GestorUsuario;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
-import edu.uoc.tdp.pac4.dao.GestorCurso;
+import edu.uoc.tdp.pac4.dao.GestorActividad;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -303,121 +304,121 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
    }
    
    /**
-    * Devuelve una lista de Cursos del centro.
+    * Devuelve una lista de Actividades del centro.
     * 
-    * @return Una lista de instancias {@link Curso} que representan los Cursos del centro.
+    * @return Una lista de instancias {@link Actividad} que representan los Actividades del centro.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public ArrayList<Curso> getCursos() throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
-       return gc.getCursos();
+   public ArrayList<Actividad> getActividades() throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+       return gc.getActividades();
    }
    
    /**
-    * Devuelve una lista de Cursos inactivos del centro.
+    * Devuelve una lista de Actividades inactivos del centro.
     * 
-    * @return Una lista de instancias {@link Curso} que representan los Cursos del centro.
+    * @return Una lista de instancias {@link Actividad} que representan los Actividades del centro.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public ArrayList<Curso> getCursosInactivos() throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
-       return gc.getCursosInactivos();
+   public ArrayList<Actividad> getActividadesInactivas() throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+       return gc.getActividadesInactivas();
    }
    
    /**
-    * Obtiene un determinado Curso.
+    * Obtiene un determinado Actividad.
     * 
-    * @param  id Identificador único del Curso.
-    * @return Una instancia de {@link Curso} que representa el Curso solicitado.
+    * @param  id Identificador único del Actividad.
+    * @return Una instancia de {@link Actividad} que representa el Actividad solicitado.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public Curso getCurso(int id) throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+   public Actividad getActividad(int id) throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
        return gc.get(id);
    }
    
    /**
-    * Agrega un nuevo Curso al centro.
+    * Agrega un nuevo Actividad al centro.
     * 
-    * @param curso Una instancia de {@link Curso} que contiene los datos del Curso.
+    * @param actividad Una instancia de {@link Actividad} que contiene los datos del Actividad.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public boolean addCurso(Curso curso) throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
-       gc.add(curso);
+   public boolean addActividad(Actividad actividad) throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+       gc.add(actividad);
        
        return true;
    }
    
    /**
-    * Actualiza los datos de un Curso.
+    * Actualiza los datos de un Actividad.
     * 
-    * @param curso Una instancia de {@link Curso} que contiene los datos actualizados del Curso.
+    * @param actividad Una instancia de {@link Actividad} que contiene los datos actualizados del Actividad.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public boolean updateCurso(Curso curso) throws SQLException, Exception{
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
-       gc.update(curso);
+   public boolean updateActividad(Actividad actividad) throws SQLException, Exception{
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+       gc.update(actividad);
        return true;
    }
    
    /**
-    * Elimina un Curso.
+    * Elimina un Actividad.
     * 
-    * @param id Identificador del Curso a eliminar.
+    * @param id Identificador del Actividad a eliminar.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public boolean deleteCurso(int id) throws SQLException, Exception{
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+   public boolean deleteActividad(int id) throws SQLException, Exception{
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
        gc.delete(id);
        return true;
    }
    
    /**
-    * Recupera un Curso.
+    * Recupera un Actividad.
     * 
-    * @param id Identificador del Curso a recuperar.
+    * @param id Identificador del Actividad a recuperar.
     * 
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public boolean undeleteCurso(int id) throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+   public boolean undeleteActividad(int id) throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
        gc.undelete(id);
        
        return true;
    }
    
    /**
-    * Comprueba si un curso tiene grupos asignados
+    * Comprueba si un actividad tiene grupos asignados
     * 
-    * @param id Identificador del Curso
+    * @param id Identificador del Actividad
     * @return
     * @throws SQLException
     * @throws Exception 
     */
    @Override
-   public int checkGruposCurso(int id) throws SQLException, Exception {
-       GestorCurso gc = new GestorCurso(gestorDisc.getConnection());
+   public int checkGruposActividad(int id) throws SQLException, Exception {
+       GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
        return gc.checkGruposAssigned(id);
    }
    
@@ -463,4 +464,5 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
        return ga.checkGruposAssigned(id);
    }
+
 }

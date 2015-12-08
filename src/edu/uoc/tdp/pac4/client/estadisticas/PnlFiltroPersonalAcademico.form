@@ -19,6 +19,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -74,7 +75,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnAceptar" max="32767" attributes="0"/>
                                   <Component id="btnCancelar" max="32767" attributes="0"/>
-                                  <Component id="btnCurso" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <Component id="btnActividad" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -82,10 +83,10 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtData" min="-2" pref="114" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="opSelCursos" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="opTodosCursos" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="opSelActividades" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="opTodasActividades" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -98,9 +99,9 @@
                           <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="opTodosCursos" min="-2" max="-2" attributes="0"/>
+                      <Component id="opTodasActividades" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="opSelCursos" min="-2" max="-2" attributes="0"/>
+                      <Component id="opSelActividades" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="68" max="32767" attributes="0"/>
@@ -109,7 +110,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnCurso" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="btnActividad" min="-2" pref="28" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
@@ -133,10 +134,10 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" pref="341" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblSelCursos" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="lblSelActividades" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="207" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -147,7 +148,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSelCursos" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSelActividades" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" pref="141" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -156,10 +157,13 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="lblSelCursos">
+                <Component class="javax.swing.JLabel" name="lblSelActividades">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Seleccionar curso/os"/>
+                    <Property name="text" type="java.lang.String" value="Seleccionar actividad/es"/>
                   </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Seleccionar actividad/es"/>
+                  </AccessibilityProperties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                   <AuxValues>
@@ -168,7 +172,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JList" name="listCursos">
+                    <Component class="javax.swing.JList" name="listActividades">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -182,20 +186,28 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JRadioButton" name="opTodosCursos">
+            <Component class="javax.swing.JRadioButton" name="opTodasActividades">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Todos los cursos"/>
+                <Property name="actionCommand" type="java.lang.String" value="Todas las actividades"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor Por defecto"/>
+                </Property>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Todas las actividades"/>
+              </AccessibilityProperties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opTodosCursosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opTodasActividadesActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="opSelCursos">
+            <Component class="javax.swing.JRadioButton" name="opSelActividades">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Filtrar por curso"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por actividad"/>
+                <Property name="actionCommand" type="java.lang.String" value="Filtrar por actividad"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opSelCursosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opSelActividadesActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtData">
@@ -216,15 +228,16 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAceptarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCurso">
+            <Component class="javax.swing.JButton" name="btnActividad">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/resources/books-stack.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas curso/os"/>
+                <Property name="text" type="java.lang.String" value="Estad&#xed;sticas actividad/es"/>
+                <Property name="actionCommand" type="java.lang.String" value="Estad&#xed;sticas actividad/es"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCursoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActividadActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCancelar">
@@ -346,7 +359,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnSolapamiento" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane2" pref="577" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="592" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -442,7 +455,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="518" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="537" max="32767" attributes="0"/>
                               <Component id="btnCerrarH" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jPanel6" alignment="1" max="32767" attributes="0"/>
@@ -490,7 +503,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane3" alignment="0" pref="573" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" alignment="0" pref="592" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lblDe" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>

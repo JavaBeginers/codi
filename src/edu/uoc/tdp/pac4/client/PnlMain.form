@@ -158,15 +158,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMantenimientoAulasActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuMantenimientoCursos">
+            <MenuItem class="javax.swing.JMenuItem" name="mnuMantenimientoActividades">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/resources/projection-screen--pencil.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cursos..."/>
+                <Property name="text" type="java.lang.String" value="Activitats..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMantenimientoCursosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuMantenimientoActividadesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

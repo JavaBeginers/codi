@@ -18,17 +18,17 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
    private int turno;
    private int idAula;
    private int idProfesor;
-   private int idCurso;
+   private int idActividad;
    
    // Propiedades de sólo lectura
    private String nombreAula;
-   private String nombreCurso;
+   private String nombreActividad;
    private String nombreProfesor;
-   private String bibliografiaCurso;
-   private String planDocenteCurso;
-   private int minimoAsistenciaCurso;
-   private Date fechaInicioCurso;
-   private Date fechaFinCurso;
+   private String bibliografiaActividad;
+   private String planDocenteActividad;
+   private int minimoAsistenciaActividad;
+   private Date fechaInicioActividad;
+   private Date fechaFinActividad;
    private boolean asistenciaAbierta;
    
    // Definición de turnos
@@ -57,12 +57,12 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
       this.turno = 0;
       this.idAula = 0;
       this.idProfesor = 0;
-      this.idCurso = 0;
+      this.idActividad = 0;
       
       this.nombreAula = "";
-      this.nombreCurso = "";
+      this.nombreActividad = "";
       this.nombreProfesor = "";
-      this.minimoAsistenciaCurso = 0;
+      this.minimoAsistenciaActividad = 0;
    }
 
    //===========================================
@@ -139,14 +139,14 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
       this.idProfesor = idProfesor;
    }
 
-   public int getIdCurso()
+   public int getIdActividad()
    {
-      return idCurso;
+      return idActividad;
    }
 
-   public void setIdCurso(int idCurso)
+   public void setIdActividad(int idActividad)
    {
-      this.idCurso = idCurso;
+      this.idActividad = idActividad;
    }
 
    public String getNombreAula() 
@@ -159,14 +159,14 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
       this.nombreAula = nombreAula;
    }
 
-   public String getNombreCurso() 
+   public String getNombreActividad() 
    {
-      return nombreCurso;
+      return nombreActividad;
    }
 
-   public void setNombreCurso(String nombreCurso)
+   public void setNombreActividad(String nombreActividad)
    {
-      this.nombreCurso = nombreCurso;
+      this.nombreActividad = nombreActividad;
    }
 
    public String getNombreProfesor() 
@@ -191,56 +191,56 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
       }
    }
    
-   public String getBibliografiaCurso() 
+   public String getBibliografiaActividad() 
    {
-      return bibliografiaCurso;
+      return bibliografiaActividad;
    }
 
-   public void setBibliografiaCurso(String bibliografiaCurso)
+   public void setBibliografiaActividad(String bibliografiaActividad)
    {
-      this.bibliografiaCurso = bibliografiaCurso;
+      this.bibliografiaActividad = bibliografiaActividad;
    }
    
-   public String getPlanDocenteCurso() 
+   public String getPlanDocenteActividad() 
    {
-      return planDocenteCurso;
+      return planDocenteActividad;
    }
 
-   public void setPlanDocenteCurso(String planDocenteCurso)
+   public void setPlanDocenteActividad(String planDocenteActividad)
    {
-      this.planDocenteCurso = planDocenteCurso;
+      this.planDocenteActividad = planDocenteActividad;
    }
    
-   public int getMinimoAsistenciaCurso() 
+   public int getMinimoAsistenciaActividad() 
    {
-      return minimoAsistenciaCurso;
+      return minimoAsistenciaActividad;
    }
 
-   public void setMinimoAsistenciaCurso(int minimoAsistenciaCurso)
+   public void setMinimoAsistenciaActividad(int minimoAsistenciaActividad)
    {
-      this.minimoAsistenciaCurso = minimoAsistenciaCurso;
+      this.minimoAsistenciaActividad = minimoAsistenciaActividad;
    }
 
    // Read only properties
    
-   public Date getFechaInicioCurso() 
+   public Date getFechaInicioActividad() 
    {
-      return fechaInicioCurso;
+      return fechaInicioActividad;
    }
 
-   public void setFechaInicioCurso(Date fechaInicioCurso) 
+   public void setFechaInicioActividad(Date fechaInicioActividad) 
    {
-      this.fechaInicioCurso = fechaInicioCurso;
+      this.fechaInicioActividad = fechaInicioActividad;
    }
 
-   public Date getFechaFinCurso() 
+   public Date getFechaFinActividad() 
    {
-      return fechaFinCurso;
+      return fechaFinActividad;
    }
 
-   public void setFechaFinCurso(Date fechaFinCurso) 
+   public void setFechaFinActividad(Date fechaFinActividad) 
    {
-      this.fechaFinCurso = fechaFinCurso;
+      this.fechaFinActividad = fechaFinActividad;
    }
    
    public boolean getAsistenciaAbierta() 

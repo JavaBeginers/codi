@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author eSupport Netbeans
  */
-public class PnlFiltroCursos extends javax.swing.JDialog {
+public class PnlFiltroActividades extends javax.swing.JDialog {
 
    private Estadisticas manager;
    private LanguageUtils language;
@@ -30,7 +30,7 @@ public class PnlFiltroCursos extends javax.swing.JDialog {
     /**
      * Creates new form PnlFiltroCursos
      */
-    public PnlFiltroCursos(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr) {
+    public PnlFiltroActividades(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr) {
         
         super(parent, modal);
         initComponents();
@@ -175,8 +175,7 @@ public class PnlFiltroCursos extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelar)))
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 

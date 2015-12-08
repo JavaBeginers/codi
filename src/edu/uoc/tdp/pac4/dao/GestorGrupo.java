@@ -1,6 +1,6 @@
 package edu.uoc.tdp.pac4.dao;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.exceptions.GroupAlreadyExistsException;
 import edu.uoc.tdp.pac4.exceptions.GroupNotEmptyException;
@@ -113,10 +113,10 @@ public class GestorGrupo extends GestorDisco
       
       try 
       {
-         // Comprueba que no exista otro grupo para el mismo curso y turno
+         // Comprueba que no exista otro grupo para el mismo actividad y turno
          sql = "SELECT Count(*) As nItems " +
                "FROM   grupo " +
-               "WHERE  grupo.idcurso = " + grupo.getIdCurso() + " And " +
+               "WHERE  grupo.idactividad = " + grupo.getIdActividad() + " And " +
                "       grupo.turno   = " + grupo.getTurno();
          if (executeScalar(sql) > 0)
          {
@@ -148,7 +148,7 @@ public class GestorGrupo extends GestorDisco
                "  " + grupo.getTurno() + ", " +
                "  " + grupo.getIdAula() + ", " +
                "  " + grupo.getIdProfesor() + ", " +
-               "  " + grupo.getIdCurso() + ")";
+               "  " + grupo.getIdActividad() + ")";
          execute(sql);
       } 
       catch (SQLException ex) 
@@ -189,7 +189,7 @@ public class GestorGrupo extends GestorDisco
          // Comprueba que no exista otro grupo para el mismo curso y turno
          sql = "SELECT Count(*) As nItems " +
                "FROM   grupo " +
-               "WHERE  grupo.idcurso = " + grupo.getIdCurso() + " And " +
+               "WHERE  grupo.idcurso = " + grupo.getIdActividad() + " And " +
                "       grupo.turno   = " + grupo.getTurno() + " And " +
                "       grupo.grupoid <>" + grupo.getId();
          if (executeScalar(sql) > 0)
@@ -222,7 +222,7 @@ public class GestorGrupo extends GestorDisco
                    "turno             =  " + grupo.getTurno() + ", " +
                    "idaula            =  " + grupo.getIdAula() + ", " +
                    "idprofesor        =  " + grupo.getIdProfesor() + ", " +
-                   "idcurso           =  " + grupo.getIdCurso() + " " +
+                   "idcurso           =  " + grupo.getIdActividad() + " " +
                "WHERE grupoid = " + grupo.getId();
 
          execute(sql);
@@ -519,12 +519,12 @@ public class GestorGrupo extends GestorDisco
       grupo.setTurno(rs.getInt("turno"));
       grupo.setIdAula(rs.getInt("idaula"));
       grupo.setIdProfesor(rs.getInt("idprofesor"));
-      grupo.setIdCurso(rs.getInt("idcurso"));
+      grupo.setIdActividad(rs.getInt("idactividad"));
       grupo.setAsistenciaAbierta(rs.getBoolean("asistenciaabierta"));
             
       // Propiedades de sólo lectura
       grupo.setNombreAula((rs.getString("aula") == null ? "- no asignada -" : rs.getString("aula")));
-      grupo.setNombreCurso(rs.getString("curso"));
+      grupo.setNombreActividad(rs.getString("curso"));
       if (!matricula) 
       {
          grupo.setNombreProfesor(rs.getString("pnombre"), rs.getString("papellidos"));
@@ -534,10 +534,10 @@ public class GestorGrupo extends GestorDisco
         grupo.setNombreProfesor(rs.getString("nombreProfesor").split("#")[1].toString() + ", " +
                                 rs.getString("nombreProfesor").split("#")[0].toString());
       }
-      grupo.setPlanDocenteCurso(rs.getString("plandocente"));
-      grupo.setBibliografiaCurso(rs.getString("bibliografia"));
-      grupo.setMinimoAsistenciaCurso(rs.getInt("minasistencia"));
-      grupo.setFechaInicioCurso(rs.getDate("fecha_inicio"));
-      grupo.setFechaFinCurso(rs.getDate("fecha_finalizacion"));
+      grupo.setPlanDocenteActividad(rs.getString("plandocente"));
+      grupo.setBibliografiaActividad(rs.getString("bibliografia"));
+      grupo.setMinimoAsistenciaActividad(rs.getInt("minasistencia"));
+      grupo.setFechaInicioActividad(rs.getDate("fecha_inicio"));
+      grupo.setFechaFinActividad(rs.getDate("fecha_finalizacion"));
    }
 }

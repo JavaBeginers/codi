@@ -4,7 +4,7 @@
  */
 package edu.uoc.tdp.pac4.client.estadisticas;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.exceptions.eAssistenciaException;
 import edu.uoc.tdp.pac4.remote.Estadisticas;
@@ -34,7 +34,7 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
    private java.awt.Frame parent;
    DefaultListModel modelo ;
    DefaultListModel modelo2 ;
-   ArrayList<Curso> listaCurso;
+   ArrayList<Actividad> listaActividad;
     /**
      * Creates new form PnlFiltroProfesor
      */
@@ -49,17 +49,17 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
         //Cargar textos
         
         btnAceptar.setText(language.getProperty("estadisticas.profesor.btn.alumnos"));
-        btnCurso.setText(language.getProperty("estadisticas.profesor.btn.curso"));
+        btnActividad.setText(language.getProperty("estadisticas.profesor.btn.actividad"));
         btnCancelar.setText(language.getProperty("form.common.close"));
         lblFecha.setText(language.getProperty("estadisticas.form.fechaInicio"));
-        lblSelCursos.setText(language.getProperty("estadisticas.form.selCursos"));
-        opSelCursos.setText(language.getProperty("estadisticas.form.opFiltrarCursos"));
+        lblSelActividades.setText(language.getProperty("estadisticas.form.selActividads"));
+        opSelActividades.setText(language.getProperty("estadisticas.form.opFiltrarActividads"));
         this.setTitle(language.getProperty("estadisticas.form.estProfesor"));
         
         int prova=usuario.getId();
-        opcionesCursos.add(opTodosCursos);
-        opcionesCursos.add(opSelCursos);
-        opTodosCursos.setSelected(true);
+//        opcionesActividades.add(opTodasActividades);
+//        opcionesActividades.add(opSelActividades);
+        opTodasActividades.setSelected(true);
         
         
         
@@ -67,11 +67,11 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
         modelo = new DefaultListModel();
         modelo2 = new DefaultListModel();
 
-        //obtiene una lista con todos los cursos de un profesor
+        //obtiene una lista con todos los actividades de un profesor
     try {    
         
-        listaCurso = manager.consultarCursosProfesor(usuario.getLogin());
-        cargarLista(listCursos, listaCurso);
+        listaActividad = manager.consultarActividadesProfesor(usuario.getLogin());
+        cargarLista(listActividades, listaActividad);
         
         } catch (RemoteException e) {
             
@@ -98,40 +98,41 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
         opcionesCursos = new javax.swing.ButtonGroup();
         lblFecha = new javax.swing.JLabel();
         txtData = new javax.swing.JTextField();
-        opTodosCursos = new javax.swing.JRadioButton();
-        opSelCursos = new javax.swing.JRadioButton();
+        opTodasActividades = new javax.swing.JRadioButton();
+        opSelActividades = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
-        lblSelCursos = new javax.swing.JLabel();
+        lblSelActividades = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listCursos = new javax.swing.JList();
+        listActividades = new javax.swing.JList();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnCurso = new javax.swing.JButton();
+        btnActividad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblFecha.setText("Fecha de inicio:");
 
-        opTodosCursos.setText("Todos los cursos");
-        opTodosCursos.addActionListener(new java.awt.event.ActionListener() {
+        opTodasActividades.setText("Todas las actividades");
+        opTodasActividades.setActionCommand("Todas las actividades");
+        opTodasActividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opTodosCursosActionPerformed(evt);
+                opTodasActividadesActionPerformed(evt);
             }
         });
 
-        opSelCursos.setText("Filtrar por curso");
-        opSelCursos.addActionListener(new java.awt.event.ActionListener() {
+        opSelActividades.setText("Filtrar por actividad");
+        opSelActividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opSelCursosActionPerformed(evt);
+                opSelActividadesActionPerformed(evt);
             }
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblSelCursos.setText("Seleccionar curso/os");
+        lblSelActividades.setText("Seleccionar actividad/es");
 
-        listCursos.setBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setViewportView(listCursos);
+        listActividades.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(listActividades);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,9 +141,9 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblSelCursos)
+                        .addComponent(lblSelActividades)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -150,7 +151,7 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblSelCursos)
+                .addComponent(lblSelActividades)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addContainerGap())
@@ -172,11 +173,11 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
             }
         });
 
-        btnCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/books-stack.png"))); // NOI18N
-        btnCurso.setText("Estadísticas curso/os");
-        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/books-stack.png"))); // NOI18N
+        btnActividad.setText("Estadísticas actividad/es");
+        btnActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoActionPerformed(evt);
+                btnActividadActionPerformed(evt);
             }
         });
 
@@ -193,16 +194,16 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
                                 .addComponent(lblFecha)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(opTodosCursos)
-                            .addComponent(opSelCursos))
-                        .addContainerGap())
+                            .addComponent(opTodasActividades)
+                            .addComponent(opSelActividades))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCurso))
+                            .addComponent(btnActividad))
                         .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -215,51 +216,54 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
                             .addComponent(lblFecha)
                             .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(opTodosCursos)
+                        .addComponent(opTodasActividades)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(opSelCursos)
+                        .addComponent(opSelActividades)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAceptar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCurso)
+                        .addComponent(btnActividad)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar)
                         .addGap(27, 27, 27))))
         );
 
+        opTodasActividades.getAccessibleContext().setAccessibleName("Todas las actividades");
+        opSelActividades.getAccessibleContext().setAccessibleName("Filtrar por actividad");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void opTodosCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodosCursosActionPerformed
+    private void opTodasActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTodasActividadesActionPerformed
         // TODO add your handling code here:
 
         
-        if(opSelCursos.isSelected()){
+        if(opSelActividades.isSelected()){
 
-            listCursos.setModel(modelo);
-            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+            listActividades.setModel(modelo);
+            listActividades.setBackground(new java.awt.Color(255, 255, 255));
         }
-        else {listCursos.setModel(modelo2);
-            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        else {listActividades.setModel(modelo2);
+            listActividades.setBackground(new java.awt.Color(204, 204, 204));
         }
-    }//GEN-LAST:event_opTodosCursosActionPerformed
+    }//GEN-LAST:event_opTodasActividadesActionPerformed
 
-    private void opSelCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelCursosActionPerformed
+    private void opSelActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSelActividadesActionPerformed
         // TODO add your handling code here:
 
-        if(opTodosCursos.isSelected()){
-            listCursos.setModel(modelo2);
-            listCursos.setBackground(new java.awt.Color(204, 204, 204));
+        if(opTodasActividades.isSelected()){
+            listActividades.setModel(modelo2);
+            listActividades.setBackground(new java.awt.Color(204, 204, 204));
         }
-        else {listCursos.setModel(modelo);
-            listCursos.setBackground(new java.awt.Color(255, 255, 255));
+        else {listActividades.setModel(modelo);
+            listActividades.setBackground(new java.awt.Color(255, 255, 255));
 
         }
-    }//GEN-LAST:event_opSelCursosActionPerformed
+    }//GEN-LAST:event_opSelActividadesActionPerformed
 
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -275,12 +279,12 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+    private void btnActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActividadActionPerformed
         // TODO add your handling code here:
         
         llamarAcciones(1);
         
-    }//GEN-LAST:event_btnCursoActionPerformed
+    }//GEN-LAST:event_btnActividadActionPerformed
 
         /*
      * Carga la lista que se le envía por parámetro en el combo del parámetro
@@ -290,34 +294,34 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
     private void llamarAcciones(int opcion){
         
         
-        ArrayList<Curso> listaCursoSel = null;
-        Curso curso;
+        ArrayList<Actividad> listaActividadSel = null;
+        Actividad actividad;
         //PnlListadoAlumno pn = new PnlListadoAlumno(, true);
        
         Object s[];
 
-        //Cargar a una ArrayList los cursos seleccionados
+        //Cargar a una ArrayList los actividades seleccionados
         try{
-            if(opSelCursos.isSelected()){
-                if(listCursos.getSelectedValue()==null){
+            if(opSelActividades.isSelected()){
+                if(listActividades.getSelectedValue()==null){
 
                     JOptionPane.showMessageDialog(null,
-                        language.getProperty("err.curso.noselect"),
+                        language.getProperty("err.actividad.noselect"),
                         language.getProperty("app.title"),
                         JOptionPane.WARNING_MESSAGE);
                     return;
 
                 }
                 else{
-                    listaCursoSel = new ArrayList<Curso>();
-                    s=listCursos.getSelectedValues();
+                    listaActividadSel = new ArrayList<Actividad>();
+                    s=listActividades.getSelectedValues();
                     for(int i =0 ; i< s.length; i++)
                     {
                         String prova=s[i].toString();
 
-                        curso = new Curso();
-                        curso.setNombre(prova);
-                        listaCursoSel.add(curso);
+                        actividad = new Actividad();
+                        actividad.setTitol(prova);
+                        listaActividadSel.add(actividad);
                     }
 
                 }
@@ -336,7 +340,7 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
                 data = formato.parse(txt);
             }
          //manda todos los datos de filtrado a PnlListadoProfesor
-            PnlListadoProfesor form = new PnlListadoProfesor(parent, true, manager, language, usuario ,data, listaCursoSel, opcion);
+            PnlListadoProfesor form = new PnlListadoProfesor(parent, true, manager, language, usuario ,data, listaActividadSel, opcion);
             form.setLocationRelativeTo(null);
             form.setVisible(true);
 
@@ -367,8 +371,8 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
         //mota la lisa a partir de una ArrayList
         String item;
         for (Object obj : lista) {
-            if (obj instanceof Curso) {
-                item = ((Curso) obj).getNombre();
+            if (obj instanceof Actividad) {
+                item = ((Actividad) obj).getTitol();
                 modelo.addElement(item);
             } 
         }
@@ -379,15 +383,15 @@ public class PnlFiltroProfesor extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnActividad;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCurso;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFecha;
-    private javax.swing.JLabel lblSelCursos;
-    private javax.swing.JList listCursos;
-    private javax.swing.JRadioButton opSelCursos;
-    private javax.swing.JRadioButton opTodosCursos;
+    private javax.swing.JLabel lblSelActividades;
+    private javax.swing.JList listActividades;
+    private javax.swing.JRadioButton opSelActividades;
+    private javax.swing.JRadioButton opTodasActividades;
     private javax.swing.ButtonGroup opcionesCursos;
     private javax.swing.ButtonGroup opcionesMostrar;
     private javax.swing.JTextField txtData;

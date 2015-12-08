@@ -1,6 +1,6 @@
 package edu.uoc.tdp.pac4.client.conexion;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.exceptions.StudentAssistanceAlreadyCountedException;
@@ -22,13 +22,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PnlMarcaAsistencia extends javax.swing.JDialog 
 {
-   private Conexion manager;
-   private LanguageUtils language;
+   private final Conexion manager;
+   private final LanguageUtils language;
    private ArrayList<Grupo> grupos;
-   private Usuario alumno;
+   private final Usuario alumno;
 
    /**
     * Creates new form PnlSolicitaMatricula
+     * @param parent
+     * @param modal
+     * @param manager
+     * @param language
+     * @param alumno
     */
    public PnlMarcaAsistencia(java.awt.Frame parent, boolean modal, Conexion manager, LanguageUtils language, Usuario alumno) 
    {
@@ -299,7 +304,7 @@ public class PnlMarcaAsistencia extends javax.swing.JDialog
 
     private void cmdSetFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSetFilterActionPerformed
 
-        int idCurso = (cboCurso.getSelectedIndex() >= 0 ? ((Curso)cboCurso.getSelectedItem()).getId() : -1);
+        int idCurso = (cboCurso.getSelectedIndex() >= 0 ? ((Actividad)cboCurso.getSelectedItem()).getId() : -1);
         int idTurno = (cboTurno.getSelectedIndex() >= 0 ? ((ComboItem)cboTurno.getSelectedItem()).getId() : -1);
 
         fillForm(idCurso, idTurno);
@@ -339,7 +344,7 @@ public class PnlMarcaAsistencia extends javax.swing.JDialog
                 
          // Rellena la lista de cursos
          cboCurso.removeAll();
-         cboCurso.setModel(new DefaultComboBoxModel(manager.getCursos().toArray()));
+         cboCurso.setModel(new DefaultComboBoxModel(manager.getActividades().toArray()));
          cboCurso.setSelectedIndex(-1);
 
          // Rellena el combo de filtros
@@ -398,11 +403,11 @@ public class PnlMarcaAsistencia extends javax.swing.JDialog
          for (Grupo grupo : grupos)
          {
             gridData[i][0] = grupo.getNombre();
-            gridData[i][1] = grupo.getNombreCurso();
+            gridData[i][1] = grupo.getNombreActividad();
             gridData[i][2] = grupo.getNombreProfesor();
             gridData[i][3] = grupo.getNombreAula();
             gridData[i][4] = (grupo.getTurno() == Grupo.TURNO_MANANA ? "Mañana" : "Tarde");
-            gridData[i][5] = (grupo.getFechaInicioCurso() == null ? "?" : df.format(grupo.getFechaInicioCurso()));            
+            gridData[i][5] = (grupo.getFechaFinActividad() == null ? "?" : df.format(grupo.getFechaInicioActividad()));            
             gridData[i][6] = (grupo.getAsistenciaAbierta() == Grupo.PERIODO_ABIERTO ? "Abierto" : "Cerrado");
             i++;
          }
