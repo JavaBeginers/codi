@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JTextField" name="fldName1">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -35,21 +39,21 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPlace" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCapacity" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDescript" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="fldName" pref="278" max="32767" attributes="0"/>
-                                  <Component id="fldCapacity" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="fldPlace" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPlace" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCapacity" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCode" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCenter" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaAlta" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="fldName" pref="278" max="32767" attributes="0"/>
+                          <Component id="fldCapacity" alignment="1" max="32767" attributes="0"/>
+                          <Component id="fldPlace" alignment="1" max="32767" attributes="0"/>
+                          <Component id="fldCode" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
+                          <Component id="fldFechaAlta" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
+                          <Component id="comboCenter" pref="278" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -61,7 +65,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldCode" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="fldName" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -77,10 +86,16 @@
                   <Component id="fldPlace" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblDescript" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fldFechaAlta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFechaAlta" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="220" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblCenter" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboCenter" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="154" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmdAccept" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -113,22 +128,20 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblName">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCapacity">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Capacidad"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPlace">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Localizaci&#xf3;n"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblDescript">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Descripci&#xf3;n"/>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="fldCapacity">
@@ -146,20 +159,34 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAcceptActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextArea" name="tarDescript">
-          <Properties>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="rows" type="int" value="5"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
+    <Component class="javax.swing.JLabel" name="lblCode">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Codigo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldCode">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFechaAlta">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Fecha Alta"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCenter">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Centro"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldFechaAlta">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboCenter">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

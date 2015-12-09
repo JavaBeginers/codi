@@ -177,7 +177,7 @@ public class GestorAulas
       ArrayList<Aula> aulas = new ArrayList<Aula>();
       
       sql = "SELECT * FROM " + AULATABLE        + " "    + 
-            "WHERE "  + AULATABLE_CANCELLDATE + " IS NOT NULL" +
+            "WHERE "  + AULATABLE_CANCELLDATE + " IS NOT NULL " +
             "ORDER BY "      + AULATABLE_NAME;
 
       try 
@@ -331,7 +331,7 @@ public class GestorAulas
         
         try {
             sql = "UPDATE " + AULATABLE              + " "        +
-                  "SET "    + AULATABLE_CANCELLDATE       + " = NULL" +
+                  "SET "    + AULATABLE_CANCELLDATE       + " = NULL " +
                   "WHERE "  + AULATABLE_ID           + " = "      + id;
 
             statement = getConnection().createStatement();
