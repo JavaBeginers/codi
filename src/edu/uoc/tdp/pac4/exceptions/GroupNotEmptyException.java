@@ -1,7 +1,7 @@
 package edu.uoc.tdp.pac4.exceptions;
 
 /**
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GroupNotEmptyException extends Exception
 {

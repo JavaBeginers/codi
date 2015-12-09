@@ -2,7 +2,7 @@ package edu.uoc.tdp.pac4.exceptions;
 
 /**
  * Indica que ya existe una solicitud de matrícula previa para un curso.
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class NoRolesException extends Exception
 {

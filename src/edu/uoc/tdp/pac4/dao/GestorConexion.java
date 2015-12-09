@@ -52,11 +52,11 @@ public class GestorConexion extends GestorDisco {
         ResultSet rs = null;
         StringBuffer sql = new StringBuffer();
 
-        sql.append("SELECT USUARI.usuari_id, USUARI.nom_usuari, USUARI.contrasenya, USUARI.noms, USUARI.cognoms, USUARI.rol, USUARI.activo ");
+        sql.append("SELECT USUARI.usuari_id, USUARI.nom_usuari, USUARI.contrasenya, USUARI.noms, USUARI.cognoms, USUARI.rol, USUARI.actiu ");
         sql.append("FROM USUARI ");
         sql.append("WHERE lower(USUARI.nom_usuari)= '" + login.trim().toLowerCase() + "' AND ");
         sql.append("USUARI.contrasenya= ('" + password + "') AND ");
-        sql.append("USUARI.activo        = '" + 1 + "'");
+        sql.append("USUARI.actiu        = '" + 1 + "'");
 
         try {
             

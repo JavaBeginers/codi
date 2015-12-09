@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorAlumno extends GestorDisco
 {

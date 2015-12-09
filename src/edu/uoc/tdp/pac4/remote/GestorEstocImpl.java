@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Implementación del interface de control remoto de la aplicación (cliente).
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorEstocImpl extends java.rmi.server.UnicastRemoteObject implements GestorEstoc, Serializable 
 {

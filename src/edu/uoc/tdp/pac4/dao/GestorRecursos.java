@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Implementa el gestor de recursos.
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorRecursos extends GestorDisco
 {

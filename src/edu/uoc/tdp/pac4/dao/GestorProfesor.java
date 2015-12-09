@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorProfesor extends GestorDisco
 {

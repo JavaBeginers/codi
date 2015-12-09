@@ -31,7 +31,7 @@ public class GestorUsuario extends GestorDisco
     private static final String USERTABLE_PHONE        = "telefono";
     private static final String USERTABLE_NAME         = "noms";
     private static final String USERTABLE_SURNAME      = "cognoms";
-    private static final String USERTABLE_ACTIVE       = "activo";
+    private static final String USERTABLE_ACTIVE       = "actiu";
     private static final String USERTABLE_INACTIVEDATE = "data_baixa";
     private static final String USERTABLE_NIF          = "nif";
     private static final String USERTABLE_ROLID        = "rol";

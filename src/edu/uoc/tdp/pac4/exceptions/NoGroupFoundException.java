@@ -2,7 +2,7 @@ package edu.uoc.tdp.pac4.exceptions;
 
 /**
  * Implementa una excepción para controlar el caso que no se encuentra grupo para ciertas operaciones.
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class NoGroupFoundException extends Exception
 {

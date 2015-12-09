@@ -2,7 +2,7 @@ package edu.uoc.tdp.pac4.exceptions;
 
 /**
  * Indica que un usuario no existe.
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class StudentNotExistsException extends Exception
 {

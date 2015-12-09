@@ -3,7 +3,7 @@ package edu.uoc.tdp.pac4.exceptions;
 /**
  * Indica que el marcaje de asistencia de un alumno ya se ha realizado.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class StudentAssistanceAlreadyCountedException extends Exception
 {

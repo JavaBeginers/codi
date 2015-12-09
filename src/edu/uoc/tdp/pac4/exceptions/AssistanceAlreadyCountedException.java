@@ -3,7 +3,7 @@ package edu.uoc.tdp.pac4.exceptions;
 /**
  * Indica que el recuento para un determinado grupo y dia ya existe.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class AssistanceAlreadyCountedException extends Exception
 {

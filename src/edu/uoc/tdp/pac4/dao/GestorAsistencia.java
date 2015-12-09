@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Implementa el gestor para el control de asistencia.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorAsistencia extends GestorDisco
 {

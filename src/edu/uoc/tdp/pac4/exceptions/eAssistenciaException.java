@@ -6,7 +6,7 @@ import edu.uoc.tdp.pac4.util.LanguageUtils;
  * Clase eAssistenciaException
  * Gestor de excepciones de la aplicación
  * @version 1.0
- * @author eSupport Netbeans
+ * @author JavaBeginers
  *
  */
 public class eAssistenciaException extends Exception 

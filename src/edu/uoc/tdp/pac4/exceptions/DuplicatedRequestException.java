@@ -6,7 +6,7 @@ package edu.uoc.tdp.pac4.exceptions;
  * En realidad, esta restricción (que no viene en el enunciado) se produce por la restricción que impone el campo DATE
  * dentro de la clave principal (lo mejor hubiera sido un TIMESTAMP, por ejemplo).
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class DuplicatedRequestException extends Exception 
 {

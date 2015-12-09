@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Implementa el gestor para las peticiones de recursos (clase {@link PeticionRecurso}).
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorPeticionRecurso extends GestorDisco
 {

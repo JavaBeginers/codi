@@ -6,7 +6,7 @@ package edu.uoc.tdp.pac4.exceptions;
  * - Per cada curs, es podrà obrir un màxim de dos grups: un de matí i un de tarda.
  * - Sólo puede haber un grupo por turno y curso.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GroupAlreadyExistsException extends Exception
 {
