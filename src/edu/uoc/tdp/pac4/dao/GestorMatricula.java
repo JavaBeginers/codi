@@ -1,6 +1,6 @@
 package edu.uoc.tdp.pac4.dao;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
@@ -64,13 +64,13 @@ public class GestorMatricula extends GestorDisco
       String sql;
       Matricula matricula = null;
       
-      sql = "SELECT matriculas.*, curso.fecha_inicio As fechaInicio, curso.fecha_finalizacion As fechaFin, " +
-            "       grupo.nombre As grupoNombre, curso.nombre As cursoNombre, usuario.nombre As usrNombre, " +
+      sql = "SELECT matriculas.*, actividad.fecha_inicio As fechaInicio, actividad.fecha_finalizacion As fechaFin, " +
+            "       grupo.nombre As grupoNombre, actividad.nombre As actividadNombre, usuario.nombre As usrNombre, " +
             "       usuario.apellidos As usrApellidos, usuario.nif as usrNif " +
-            "FROM   matriculas, usuario, grupo, curso " +
+            "FROM   matriculas, usuario, grupo, actividad " +
             "WHERE  matriculas.usuarioid = usuario.id And " +
                    "matriculas.grupoid = grupo.grupoid And " + 
-                   "grupo.idcurso = curso.id And " + 
+                   "grupo.idactividad = actividad.id And " + 
                    "matriculaid = " + id;
       
       try 
@@ -111,7 +111,7 @@ public class GestorMatricula extends GestorDisco
          sql = "SELECT Count(*) As nItems " +
                "FROM matriculas " +
                "WHERE matriculas.usuarioid = " + matricula.getUsuarioId() + " And " +
-               "      matriculas.cursoid = " + matricula.getCursoId()     + " And " +
+               "      matriculas.actividadid = " + matricula.getActividadId()     + " And " +
                "      matriculas.grupoid = " + matricula.getGrupoId() ;
          
          if (executeScalar(sql) > 0)
@@ -122,10 +122,10 @@ public class GestorMatricula extends GestorDisco
       try 
       {
          // Agrega la petición (peticionid = 1, alta)
-         sql = "INSERT INTO matriculas (peticionid, cursoid, grupoid, estadoid, usuarioid, fechaalta) " +
+         sql = "INSERT INTO matriculas (peticionid, actividadid, grupoid, estadoid, usuarioid, fechaalta) " +
                "VALUES " +
                "(1, "                               +
-               "  " + matricula.getCursoId() + ", " +  
+               "  " + matricula.getActividadId() + ", " +  
                "  " + matricula.getGrupoId() + ", " +
                "  " + matricula.getEstado() + ", " +
                "  " + matricula.getUsuarioId() + ", " +
@@ -164,7 +164,7 @@ public class GestorMatricula extends GestorDisco
          
          // Agrega la petición
          sql = "UPDATE matriculas " +
-               "SET cursoid           = " + matricula.getCursoId() + ", " +
+               "SET actividadid           = " + matricula.getActividadId() + ", " +
                    "grupoid           = " + matricula.getGrupoId() + ", " +
                    "estadoid          = " + matricula.getEstado() + ", " +
                    "usuarioid         = " + matricula.getUsuarioId() + ", " +
@@ -268,7 +268,7 @@ public class GestorMatricula extends GestorDisco
    /**
     * Obtiene una lista completa de los grupos del centro.
     * 
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws Exception 
@@ -279,13 +279,13 @@ public class GestorMatricula extends GestorDisco
       String sql;
       ArrayList<Matricula> list = new ArrayList<Matricula>();
       
-      sql = "SELECT   matriculas.*, curso.fecha_inicio As fechaInicio, curso.fecha_finalizacion As fechaFin, " +
-            "         grupo.nombre As grupoNombre, curso.nombre As cursoNombre, usuario.nombre As usrNombre, " +
+      sql = "SELECT   matriculas.*, actividad.fecha_inicio As fechaInicio, actividad.fecha_finalizacion As fechaFin, " +
+            "         grupo.nombre As grupoNombre, actividad.nombre As actividadNombre, usuario.nombre As usrNombre, " +
             "         usuario.apellidos As usrApellidos, usuario.nif as usrNif " +
-            "FROM     matriculas, usuario, grupo, curso " +
+            "FROM     matriculas, usuario, grupo, actividad " +
             "WHERE    matriculas.usuarioid = usuario.id And " +
                      "matriculas.grupoid = grupo.grupoid And " + 
-                     "grupo.idcurso = curso.id " + 
+                     "grupo.idactividad = actividad.id " + 
             "ORDER BY usrApellidos, usrNombre";
 
       try
@@ -316,7 +316,7 @@ public class GestorMatricula extends GestorDisco
     * @param name Una cadena que contiene parte del nombre y/o apellidos para filtrar.
     * @param nif Una cadena que contiene parte del nif para filtrar.
     * @param estado Un estado para filtrar o -1 para ignorar el filtro.
-    * @return Una lista de instancia de {@link Curso}.
+    * @return Una lista de instancia de {@link Actividad}.
     * 
     * @throws SQLException
     * @throws RemoteException
@@ -333,13 +333,13 @@ public class GestorMatricula extends GestorDisco
       nif = StringUtils.formatToSql(nif.trim().toLowerCase());
       
       // Genera la senténcia SQL de selección de matriculas
-      sql = "SELECT   matriculas.*, curso.fecha_inicio As fechaInicio, curso.fecha_finalizacion As fechaFin, " +
-            "         grupo.nombre As grupoNombre, curso.nombre As cursoNombre, usuario.nombre As usrNombre, " +
+      sql = "SELECT   matriculas.*, actividad.fecha_inicio As fechaInicio, actividad.fecha_finalizacion As fechaFin, " +
+            "         grupo.nombre As grupoNombre, actividad.nombre As actividadNombre, usuario.nombre As usrNombre, " +
             "         usuario.apellidos As usrApellidos, usuario.nif as usrNif " +
-            "FROM     matriculas, usuario, grupo, curso " +
+            "FROM     matriculas, usuario, grupo, actividad " +
             "WHERE    matriculas.usuarioid = usuario.id And " +
                      "matriculas.grupoid = grupo.grupoid And " + 
-                     "grupo.idcurso = curso.id ";
+                     "grupo.idactividad = actividad.id ";
 
       // Aplica los filtros especificados como parámetro
       if (!name.equals(""))
@@ -363,9 +363,9 @@ public class GestorMatricula extends GestorDisco
       if(fechainicio != null && fechafin != null)          
       {
          sql += " And ";
-         sql += "(curso.fecha_inicio >= '" + fechainicio + "') ";
+         sql += "(actividad.fecha_inicio >= '" + fechainicio + "') ";
          sql += " And ";
-         sql += "(curso.fecha_finalizacion <= '" + fechafin + "') ";
+         sql += "(actividad.fecha_finalizacion <= '" + fechafin + "') ";
       }
               
       // Genera la secuencia de ordenación de los resultados
@@ -394,10 +394,10 @@ public class GestorMatricula extends GestorDisco
    }
    
    /**
-    * Obtiene una lista completa de los Cursos de un alumno.
+    * Obtiene una lista completa de los Actividad de un alumno.
     *
-    * @param id Identificador del Alumno que se quiere mostrar cursos.
-    * @param op Opción escogida de tipo de cursos a mostrar
+    * @param id Identificador del Alumno que se quiere mostrar actividads.
+    * @param op Opción escogida de tipo de actividads a mostrar
     * @param inici Fecha de inicio de la busqueda
     * @return Una lista de instancia de {@link Matricula}.
     * 
@@ -412,38 +412,38 @@ public class GestorMatricula extends GestorDisco
       SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
       Date hoy = new Date(System.currentTimeMillis());
       
-         sql= "select curso.nombre, " + 
-              "curso.minasistencia, " + 
-              "curso.fecha_inicio, " +
-              "curso.fecha_finalizacion, " +
+         sql= "select actividad.nombre, " + 
+              "actividad.minasistencia, " + 
+              "actividad.fecha_inicio, " +
+              "actividad.fecha_finalizacion, " +
               "sum(asistencia.totalasisten)as totalasisten, " +
               "sum(asistencia.totalnoasisten) as totalnoasisten " +
-              "FROM matriculas, usuario, grupo, curso, asistencia, asistenciaalumno " + 
+              "FROM matriculas, usuario, grupo, actividad, asistencia, asistenciaalumno " + 
               "where matriculas.usuarioid = usuario.id " +
               "And matriculas.grupoid = grupo.grupoid " +
-              "AND grupo.idcurso = curso.id " +
+              "AND grupo.idactividad = actividad.id " +
               "AND asistenciaalumno.alumnoid = usuario.id " +
               "AND asistenciaalumno.asistid = asistencia.asistid " +
               "AND asistencia.grupoid = grupo.grupoid " +
               "And usuario.id=" + idAlumno;
       
       if(inici!=null){
-          sql=sql+" And curso.fecha_inicio >= '" + df.format(new java.sql.Date(inici.getTime())) + "'";
+          sql=sql+" And actividad.fecha_inicio >= '" + df.format(new java.sql.Date(inici.getTime())) + "'";
       }
          
       
          if(op==1){
-          sql=sql+" And curso.fecha_finalizacion <= '" + hoy + "'";
+          sql=sql+" And actividad.fecha_finalizacion <= '" + hoy + "'";
           
       }
       
       if(op==2){
           
-          sql=sql+" And curso.fecha_finalizacion > '" + hoy + "'";
+          sql=sql+" And actividad.fecha_finalizacion > '" + hoy + "'";
           
       }
       
-      sql=sql+" group by curso.nombre,curso.minasistencia,curso.fecha_inicio,curso.fecha_finalizacion";
+      sql=sql+" group by actividad.nombre,actividad.minasistencia,actividad.fecha_inicio,actividad.fecha_finalizacion";
      
       try
       {
@@ -451,7 +451,7 @@ public class GestorMatricula extends GestorDisco
          while (rs.next()) 
          {
             matricula = new Matricula();
-            matricula.setCursoNombre(rs.getString("nombre"));
+            matricula.setActividadNombre(rs.getString("nombre"));
             matricula.setFechaInicio(rs.getDate("fecha_inicio"));
             matricula.setFechaFinal(rs.getDate("fecha_finalizacion"));
             matricula.setAsis(rs.getInt("totalasisten"));
@@ -478,47 +478,47 @@ public class GestorMatricula extends GestorDisco
     * Obtiene una lista completa de los alumnos de un profesor con su asistencia
     * @param id codigo identificador del profesor
     * @param inici fecha de inicio
-    * @param cursos listado de cursos seleccionados
+    * @param actividads listado de actividads seleccionados
     * @return Una lista de instancia de {@link Matricula}.
     * @throws SQLException
     * @throws Exception 
     */ 
-   public ArrayList<Matricula> getAlumnosProfesor(int id, java.util.Date inici, ArrayList<Curso> cursos) throws SQLException, Exception
+   public ArrayList<Matricula> getAlumnosProfesor(int id, java.util.Date inici, ArrayList<Actividad> actividades) throws SQLException, Exception
    {
       Matricula matricula;
       String sql;
       ArrayList<Matricula> list = new ArrayList<Matricula>();
       SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
       Date hoy = new Date(System.currentTimeMillis());
-         sql= "select curso.nombre As nombreCurso, " + 
-              "curso.minasistencia, " + 
-              "curso.fecha_inicio, " +
-              "curso.fecha_finalizacion, " +
+         sql= "select actividad.nombre As nombreActividad, " + 
+              "actividad.minasistencia, " + 
+              "actividad.fecha_inicio, " +
+              "actividad.fecha_finalizacion, " +
               "(usuario.apellidos ||', '|| usuario.nombre) as nombreUsuario, " +  
               "sum(asistencia.totalasisten)as totalasisten, " +
               "sum(asistencia.totalnoasisten) as totalnoasisten " +
-              "FROM matriculas, usuario, grupo, curso, asistencia, asistenciaalumno " + 
+              "FROM matriculas, usuario, grupo, actividad, asistencia, asistenciaalumno " + 
               "where matriculas.usuarioid = usuario.id " +
               "And matriculas.grupoid = grupo.grupoid " +
-              "AND grupo.idcurso = curso.id " +
+              "AND grupo.idactividad = actividad.id " +
               "AND asistenciaalumno.alumnoid = usuario.id " +
               "AND asistenciaalumno.asistid = asistencia.asistid " +
               "AND asistencia.grupoid = grupo.grupoid " +
               "And grupo.idprofesor=" + id;
       
       if(inici!=null){
-          sql=sql+" And curso.fecha_inicio >= '" + df.format(new java.sql.Date(inici.getTime())) + "'";
+          sql=sql+" And actividad.fecha_inicio >= '" + df.format(new java.sql.Date(inici.getTime())) + "'";
       }
          
       
-      if(cursos!=null)
+      if(actividades!=null)
       {
           sql=sql+" And (";
-          for( int i = 0 ; i < cursos.size() ; i++ ){
+          for( int i = 0 ; i < actividades.size() ; i++ ){
                 
-          sql = sql + " curso.nombre = '" + cursos.get( i ).getNombre() + "'";
+          sql = sql + " actividad.titol = '" + actividades.get( i ).getTitol() + "'";
            
-            if (i == cursos.size() - 1) 
+            if (i == actividades.size() - 1) 
             {
                sql = sql + " )";
             }
@@ -529,7 +529,7 @@ public class GestorMatricula extends GestorDisco
          }
       }
       
-      sql=sql+"group by nombreUsuario,curso.nombre,curso.minasistencia,curso.fecha_inicio,curso.fecha_finalizacion order by nombreCurso";
+      sql=sql+"group by nombreUsuario,actividad.nombre,actividad.minasistencia,actividad.fecha_inicio,actividad.fecha_finalizacion order by nombreActividad";
       
      Usuario usr=new Usuario();
       try
@@ -539,7 +539,7 @@ public class GestorMatricula extends GestorDisco
          {
             matricula = new Matricula();
             usr.setApellidos(rs.getString("nombreUsuario"));
-            matricula.setCursoNombre(rs.getString("nombreCurso"));
+            matricula.setActividadNombre(rs.getString("nombreActividad"));
             matricula.setFechaInicio(rs.getDate("fecha_inicio"));
             matricula.setFechaFinal(rs.getDate("fecha_finalizacion"));
             matricula.setAsis(rs.getInt("totalasisten"));
@@ -563,15 +563,15 @@ public class GestorMatricula extends GestorDisco
    }
     
    /**
-    * Obtiene una lista completa de la asistencia de los cursos que imparte clase un profesor
+    * Obtiene una lista completa de la asistencia de los actividads que imparte clase un profesor
     * @param id codigo identificador del profesor
     * @param inici fecha de inicio
-    * @param cursos listado de cursos seleccionados
+    * @param actividads listado de actividads seleccionados
     * @return Una lista de instancia de {@link Matricula}.
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Matricula> getAsistenciaCursos(int id, java.util.Date inici, ArrayList<Curso> cursos) throws SQLException, Exception
+   public ArrayList<Matricula> getAsistenciaActividades(int id, java.util.Date inici, ArrayList<Actividad> actividades) throws SQLException, Exception
    {
       Matricula matricula;
       String sql;
@@ -579,16 +579,16 @@ public class GestorMatricula extends GestorDisco
       SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
       Date hoy = new Date(System.currentTimeMillis());
       
-      sql = "select curso.nombre As nombreCurso, " + 
-                "curso.minasistencia, " +
-                "curso.fecha_inicio, " +
-                "curso.fecha_finalizacion, " + 
+      sql = "select actividad.nombre As nombreActividad, " + 
+                "actividad.minasistencia, " +
+                "actividad.fecha_inicio, " +
+                "actividad.fecha_finalizacion, " + 
                 "sum(asistencia.totalasisten) as asistenciatotal, " +
                 "sum(asistencia.totalnoasisten) as absencia " +
-                "FROM matriculas, usuario, grupo, curso, asistencia, asistenciaalumno " +
+                "FROM matriculas, usuario, grupo, actividad, asistencia, asistenciaalumno " +
                 "where matriculas.usuarioid = usuario.id " +
                 "And matriculas.grupoid = grupo.grupoid " +
-                "AND grupo.idcurso = curso.id " +
+                "AND grupo.idactividad = actividad.id " +
                 "AND asistenciaalumno.alumnoid = usuario.id " +
                 "AND asistenciaalumno.asistid = asistencia.asistid " +
                 "AND asistencia.grupoid = grupo.grupoid " +
@@ -596,17 +596,17 @@ public class GestorMatricula extends GestorDisco
       
       if (inici!=null)
       {
-          sql = sql + " And curso.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
+          sql = sql + " And actividad.data_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
       }
       
-      if (cursos!=null)
+      if (actividades!=null)
       {
          sql = sql + " And (";
-         for (int i = 0; i < cursos.size() ; i++ )
+         for (int i = 0; i < actividades.size() ; i++ )
          {
-            sql = sql + " curso.nombre = '" + cursos.get( i ).getNombre() + "'";
+            sql = sql + " actividad.nombre = '" + actividades.get( i ).getTitol() + "'";
 
-            if (i==cursos.size()-1) 
+            if (i==actividades.size()-1) 
             {
                sql = sql +  " ) ";
             }
@@ -617,15 +617,15 @@ public class GestorMatricula extends GestorDisco
          }
       }
       
-      sql=sql+" group by nombreCurso,curso.minasistencia,curso.fecha_inicio,curso.fecha_finalizacion " +
-              "order by nombreCurso";
+      sql=sql+" group by nombreActividad,actividad.minasistencia,actividad.fecha_inicio,actividad.fecha_finalizacion " +
+              "order by nombreActividad";
       try
       {
          ResultSet rs = executeSql(sql);
          while (rs.next()) 
          {
             matricula = new Matricula();
-            matricula.setCursoNombre(rs.getString("nombreCurso"));
+            matricula.setActividadNombre(rs.getString("nombreActividad"));
             matricula.setFechaInicio(rs.getDate("fecha_inicio"));
             matricula.setFechaFinal(rs.getDate("fecha_finalizacion"));
             matricula.setAsis(rs.getInt("asistenciatotal"));
@@ -651,12 +651,12 @@ public class GestorMatricula extends GestorDisco
    /**
     * Obtiene una lista completa de la asistencia media de los profesores
     * @param inici fecha de inicio
-    * @param cursos listado de cursos seleccionados
+    * @param actividads listado de actividads seleccionados
     * @return Una lista de instancia de {@link Matricula}.
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Matricula> getAsistenciaProfesores(java.util.Date inici, ArrayList<Curso> cursos) throws SQLException, Exception
+   public ArrayList<Matricula> getAsistenciaProfesores(java.util.Date inici, ArrayList<Actividad> actividades) throws SQLException, Exception
    {
       Matricula matricula;
       String sql;
@@ -667,24 +667,24 @@ public class GestorMatricula extends GestorDisco
       sql = "select sum(asistencia.totalasisten) as asistenciatotal, " + 
                 "sum(asistencia.totalnoasisten) as absencia, " +
                 "(usuario.apellidos ||', '|| usuario.nombre) as nombreUsuario " +
-                "FROM curso, asistencia, asistenciaalumno, grupo inner join usuario on usuario.id = grupo.idprofesor " + 
-                "where grupo.idcurso = curso.id  " +
+                "FROM actividad, asistencia, asistenciaalumno, grupo inner join usuario on usuario.id = grupo.idprofesor " + 
+                "where grupo.idactividad = actividad.id  " +
                 "AND asistenciaalumno.asistid = asistencia.asistid " +
                 "AND asistencia.grupoid = grupo.grupoid ";
       
       if (inici!=null)
       {
-          sql = sql + " And curso.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
+          sql = sql + " And actividad.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
       }
       
-      if (cursos!=null)
+      if (actividades!=null)
       {
          sql = sql + " And (";
-         for (int i = 0; i < cursos.size() ; i++ )
+         for (int i = 0; i < actividades.size() ; i++ )
          {
-            sql = sql + " curso.nombre = '" + cursos.get( i ).getNombre() + "'";
+            sql = sql + " actividad.titol = '" + actividades.get( i ).getTitol() + "'";
 
-            if (i==cursos.size()-1) 
+            if (i==actividades.size()-1) 
             {
                sql = sql +  " ) ";
             }
@@ -726,14 +726,14 @@ public class GestorMatricula extends GestorDisco
    
    
      /**
-    * Obtiene una lista completa de la asistencia de los cursos que imparte el centro
+    * Obtiene una lista completa de la asistencia de los actividades que imparte el centro
     * @param inici fecha de inicio
-    * @param cursos listado de cursos seleccionados
+    * @param actividades listado de actividades seleccionados
     * @return Una lista de instancia de {@link Matricula}.
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Matricula> getAsistenciaCursoCentro(java.util.Date inici, ArrayList<Curso> cursos) throws SQLException, Exception
+   public ArrayList<Matricula> getAsistenciaActividadCentro(java.util.Date inici, ArrayList<Actividad> actividades) throws SQLException, Exception
    {
       Matricula matricula;
       String sql;
@@ -741,29 +741,29 @@ public class GestorMatricula extends GestorDisco
       SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
       Date hoy = new Date(System.currentTimeMillis());
       
-      sql = "select curso.minasistencia, " + 
+      sql = "select actividad.minasistencia, " + 
                 "sum(asistencia.totalasisten) as totalAsis, " +
                 "sum(asistencia.totalnoasisten) as totalAbsencia, " +
-                "curso.nombre as nombreCurso, " + 
+                "actividad.nombre as nombreActividad, " + 
                 "(usuario.apellidos ||', '|| usuario.nombre) as nombreUsuario  " +
-                "FROM curso, asistencia, asistenciaalumno, grupo inner join usuario on usuario.id = grupo.idprofesor " +
-                "where grupo.idcurso = curso.id "+
+                "FROM actividad, asistencia, asistenciaalumno, grupo inner join usuario on usuario.id = grupo.idprofesor " +
+                "where grupo.idactividad = actividad.id "+
                 "AND asistenciaalumno.asistid = asistencia.asistid "+
                 "AND asistencia.grupoid = grupo.grupoid ";
       
       if (inici!=null)
       {
-          sql = sql + " And curso.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
+          sql = sql + " And activdad.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
       }
       
-      if (cursos!=null)
+      if (actividades!=null)
       {
          sql = sql + " And (";
-         for (int i = 0; i < cursos.size() ; i++ )
+         for (int i = 0; i < actividades.size() ; i++ )
          {
-            sql = sql + " curso.nombre = '" + cursos.get( i ).getNombre() + "'";
+            sql = sql + " actividad.titol = '" + actividades.get( i ).getTitol() + "'";
 
-            if (i==cursos.size()-1) 
+            if (i==actividades.size()-1) 
             {
                sql = sql +  " ) ";
             }
@@ -774,8 +774,8 @@ public class GestorMatricula extends GestorDisco
          }
       }
       
-      sql=sql+" group by curso.nombre,nombreUsuario,curso.minasistencia " +
-              "order by curso.nombre";
+      sql=sql+" group by actividad.nombre,nombreUsuario,actividad.minasistencia " +
+              "order by actividad.nombre";
      
      Usuario usr=new Usuario();
       try
@@ -786,7 +786,7 @@ public class GestorMatricula extends GestorDisco
             
             usr.setApellidos(rs.getString("nombreUsuario"));
             matricula = new Matricula();
-            matricula.setCursoNombre(rs.getString("nombreCurso"));
+            matricula.setActividadNombre(rs.getString("nombreActividad"));
             matricula.setUsuarioNombre(usr.getApellidos());
             matricula.setAsis(rs.getInt("totalAsis"));
             matricula.setNoAsis(rs.getInt("totalAbsencia"));
@@ -807,14 +807,14 @@ public class GestorMatricula extends GestorDisco
     
    
     /**
-    * Obtiene una lista completa de cursos i grupos de loa alumnos
+    * Obtiene una lista completa de actividades i grupos de loa alumnos
     * @param inici fecha de inicio
     * @param nif nif del alumno
     * @return Una lista de instancia de {@link Matricula}.
     * @throws SQLException
     * @throws Exception 
     */
-   public ArrayList<Matricula> getCursosGruposAlumnos(java.util.Date inici, String nif) throws SQLException, Exception
+   public ArrayList<Matricula> getActividadesGruposAlumnos(java.util.Date inici, String nif) throws SQLException, Exception
    {
       Matricula matricula;
       String sql;
@@ -827,12 +827,12 @@ public class GestorMatricula extends GestorDisco
                 "matriculas.matriculaid as matriculaId, " +
                 "grupo.turno as turno, " +
                 "(usuario.apellidos ||', '|| usuario.nombre) as nombreUsuario, " +
-                "curso.nombre as nombreCurso, " +
+                "actividad.nombre as nombreActividad, " +
                 "grupo.nombre as nombregrupo, " + 
-                "curso.fecha_inicio,  " +
-                "curso.fecha_finalizacion " +
-                "from usuario,curso,grupo,matriculas " +
-                "where grupo.idcurso=curso.id " +
+                "actividad.fecha_inicio,  " +
+                "actividad.fecha_finalizacion " +
+                "from usuario,actividad,grupo,matriculas " +
+                "where grupo.idactividad=actividad.id " +
                 "AND matriculas.usuarioid=usuario.id " +
                 "AND matriculas.grupoid=grupo.grupoid " +
                 "AND matriculas.usuarioid=usuario.id ";
@@ -843,7 +843,7 @@ public class GestorMatricula extends GestorDisco
       }
       if (inici != null) 
       {
-         sql = sql + " And curso.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
+         sql = sql + " And actividad.fecha_inicio >= '" + df.format(new Date(inici.getTime())) + "'";
       }
 
      Usuario usr=new Usuario();
@@ -860,7 +860,7 @@ public class GestorMatricula extends GestorDisco
             matricula.setTurno(rs.getInt("turno"));
             matricula.setFechaInicio(rs.getDate("fecha_inicio"));
             matricula.setFechaFinal(rs.getDate("fecha_finalizacion"));
-            matricula.setCursoNombre(rs.getString("nombreCurso"));
+            matricula.setActividadNombre(rs.getString("nombreActividad"));
             matricula.setGrupoNombre(rs.getString("nombregrupo"));
             matricula.setUsuarioNif(rs.getString("nif"));
             matricula.setUsuarioNombre(usr.getApellidos());
@@ -946,7 +946,7 @@ public class GestorMatricula extends GestorDisco
    private void getMatriculaValues(Matricula matricula, ResultSet rs) throws SQLException
    {
       matricula.setId(rs.getInt("matriculaid"));
-      matricula.setCursoId(rs.getInt("cursoid"));
+      matricula.setactividadId(rs.getInt("actividadid"));
       matricula.setGrupoId(rs.getInt("grupoid"));
       matricula.setEstado(rs.getInt("estadoid"));
       matricula.setUsuarioId(rs.getInt("usuarioid"));
@@ -955,7 +955,7 @@ public class GestorMatricula extends GestorDisco
             
       // Propiedades de sólo lectura (para listados)
       matricula.setGrupoNombre(rs.getString("grupoNombre"));
-      matricula.setCursoNombre(rs.getString("cursoNombre"));
+      matricula.setActividadNombre(rs.getString("actividadNombre"));
       matricula.setUsuarioNombre(rs.getString("usrApellidos") + ", " + rs.getString("usrNombre"));
       matricula.setUsuarioNif(rs.getString("usrNif"));
       matricula.setFechaInicio(rs.getDate("fechainicio"));

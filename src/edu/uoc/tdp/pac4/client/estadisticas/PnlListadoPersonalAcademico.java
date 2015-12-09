@@ -4,7 +4,7 @@
  */
 package edu.uoc.tdp.pac4.client.estadisticas;
 
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
@@ -29,7 +29,7 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
 
    private Estadisticas manager;
    private LanguageUtils language;
-   private ArrayList<Curso> cursos;
+   private ArrayList<Actividad> actividades;
    private ArrayList<Matricula> matriculas;
    private Usuario usr;
    private Date data;
@@ -37,7 +37,7 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
     /**
      * Creates new form PnlListadoProfesor
      */
-    public PnlListadoPersonalAcademico(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr, Date data, ArrayList<Curso> cursos, int opcion) {
+    public PnlListadoPersonalAcademico(java.awt.Frame parent, boolean modal,Estadisticas manager, LanguageUtils language, Usuario usr, Date data, ArrayList<Actividad> actividades, int opcion) {
         super(parent, modal);
         initComponents();
         this.usr=usr;  
@@ -45,7 +45,7 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
         this.language = language;
         this.opcion=opcion;
         this.data=data;
-        this.cursos=cursos;
+        this.actividades=actividades;
         //carga textos
         btnExport.setText(language.getProperty("form.common.export"));
         btnCerrar.setText(language.getProperty("form.common.close"));
@@ -161,7 +161,7 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
       
       // Rellena la tabla
       ArrayList<String> header2 = new ArrayList<String>();   // cabecera
-      if(op==1)header2.add(language.getProperty("estadisticas.table.alumno.curso"));
+      if(op==1)header2.add(language.getProperty("estadisticas.table.alumno.actividad"));
       header2.add(language.getProperty("estadisticas.table.personalAcademico.nombreProfesor"));
       header2.add(language.getProperty("estadisticas.table.personalAcademico.asistenciaProfesor"));
       String[][] gridData;
@@ -170,11 +170,11 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
       try 
       {
          if(op==0){
-          matriculas= manager.consultarEstProfesores(data,cursos);
+          matriculas= manager.consultarEstProfesores(data,actividades);
             gridData = new String[matriculas.size()][2];
          }
          else{
-         matriculas= manager.consultarEstCursosCentro(data,cursos);
+         matriculas= manager.consultarEstActividadesCentro(data,actividades);
             gridData = new String[matriculas.size()][6];
          }
          
@@ -193,7 +193,7 @@ public class PnlListadoPersonalAcademico extends javax.swing.JDialog {
              total=matricula.getAsis()/cos;
              total=total*100;
             if(op==1){
-                gridData[i][0] = matricula.getCursoNombre();
+                gridData[i][0] = matricula.getActividadNombre();
                 gridData[i][1] = matricula.getUsuarioNombre();
                 gridData[i][2] = formato.format(total) + "%";
             } 

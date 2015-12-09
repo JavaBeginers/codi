@@ -1,7 +1,7 @@
 package edu.uoc.tdp.pac4.remote;
 
 import edu.uoc.tdp.pac4.beans.Asistencia;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
@@ -138,7 +138,7 @@ public interface Conexion extends Remote
     * @throws SQLException
     * @throws Exception 
     */
-   ArrayList<Curso> getCursos() throws SQLException, Exception;
+   ArrayList<Actividad> getActividades() throws SQLException, Exception;
     
     /**
     * Valida la conexión de un usuario al sistema

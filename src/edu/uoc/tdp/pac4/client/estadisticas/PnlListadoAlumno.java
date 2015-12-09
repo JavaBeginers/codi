@@ -156,7 +156,7 @@ public class PnlListadoAlumno extends javax.swing.JDialog {
       
       // Rellena la tabla
       ArrayList<String> header = new ArrayList<String>();   // cabecera
-      header.add(language.getProperty("estadisticas.table.alumno.curso"));
+      header.add(language.getProperty("estadisticas.table.alumno.actividad"));
       header.add(language.getProperty("estadisticas.table.alumno.fInicio"));
       header.add(language.getProperty("estadisticas.table.alumno.fFinal"));
       header.add(language.getProperty("estadisticas.table.alumno.asisRequerida"));
@@ -169,7 +169,7 @@ public class PnlListadoAlumno extends javax.swing.JDialog {
 
       try 
       {
-         matriculas= manager.consultarCursosAlumno(usr.getId(), op, data);
+         matriculas= manager.consultarActividadesAlumno(usr.getId(), op, data);
          gridData = new String[matriculas.size()][7];
          int i = 0;
          float total;
@@ -190,9 +190,9 @@ public class PnlListadoAlumno extends javax.swing.JDialog {
              stat=total-matricula.getAsisRequerida();
              float diff = Math.abs(matricula.getFechaFinal().getTime() - matricula.getFechaInicio().getTime());
              diff = diff / 1000 / 86400;
-             //float totalCurso = ((float)matricula.getAsis()/diff)*100;
+             //float totalActividad = ((float)matricula.getAsis()/diff)*100;
         
-            gridData[i][0] = matricula.getCursoNombre();
+            gridData[i][0] = matricula.getActividadNombre();
             gridData[i][1] = df.format(matricula.getFechaInicio()).toString();
             gridData[i][2] = df.format(matricula.getFechaFinal()).toString();
             gridData[i][3] = matricula.getAsisRequerida() + "%";

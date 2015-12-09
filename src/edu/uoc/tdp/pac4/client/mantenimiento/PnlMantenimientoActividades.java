@@ -1,13 +1,10 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
-import edu.uoc.tdp.pac4.client.gestion.*;
-import edu.uoc.tdp.pac4.beans.Curso;
-import edu.uoc.tdp.pac4.exceptions.GroupNotEmptyException;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,11 +13,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author eSupport Netbeans
  */
-public class PnlMantenimientoCursos extends javax.swing.JDialog 
+public class PnlMantenimientoActividades extends javax.swing.JDialog 
 {
     private Mantenimiento manager;
     private LanguageUtils language;
-    private ArrayList<Curso> cursos;
+    private ArrayList<Actividad> actividades;
     
     private boolean dofilter = false;
     
@@ -28,7 +25,7 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
     /**
      * Creates new form PnlGroupGestor
      */
-    public PnlMantenimientoCursos(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
+    public PnlMantenimientoActividades(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
         
         super(parent, modal);            
         this.language       = language;
@@ -195,7 +192,7 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
                     .addComponent(cmdClearFilter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmdClose)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -218,14 +215,14 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
         this.btnEdit.setText        (language.getProperty("mantenimiento.usermain.modUser"));
         this.btnDelete.setText      (language.getProperty("mantenimiento.usermain.delUser"));
         this.cmdClose.setText       (language.getProperty("mantenimiento.usermain.back"));
-        this.lblassistencia.setText (language.getProperty("mantenimiento.cursosmain.minasistencia"));
+        this.lblassistencia.setText (language.getProperty("mantenimiento.actividadesmain.minasistencia"));
         this.cmdFilter.setText      (language.getProperty("mantenimiento.usermain.dofilter"));
         this.cmdClearFilter.setText (language.getProperty("mantenimiento.usermain.clearfilter"));
     }
    
    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
        
-           PnlMantenimientoCursoGestor form = new PnlMantenimientoCursoGestor(this, true ,manager, language, "Add", 0);
+           PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(this, true ,manager, language, "Add", 0);
            form.setLocationRelativeTo(null);
            form.setVisible(true);
 
@@ -237,16 +234,16 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.msg.sele.curso"),
+                                       language.getProperty("mantenimiento.msg.sele.actividad"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
 
       // Obtiene el ID del grupo a editar
-      Curso curso = cursos.get(tblData.getSelectedRow());
+      Actividad actividad = actividades.get(tblData.getSelectedRow());
 
-      PnlMantenimientoCursoGestor form = new PnlMantenimientoCursoGestor(null, true, manager, language, "Edit", curso.getId());
+      PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(null, true, manager, language, "Edit", actividad.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
 
@@ -266,25 +263,25 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.msg.sele.curso"),
+                                       language.getProperty("mantenimiento.msg.sele.actividad"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
       
-      Curso curso = cursos.get(tblData.getSelectedRow());
+      Actividad actividad = actividades.get(tblData.getSelectedRow());
  
       Object[] options = {"Si", "No"};//NOi18
-      int reply = JOptionPane.showOptionDialog(this, "quiere borrar curso " + curso.getNombre(), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, curso);
+      int reply = JOptionPane.showOptionDialog(this, "quiere borrar actividad " + actividad.getTitol(), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, actividad);
       if (reply == 0) {
       try {
-          int grupos_curso = manager.checkGruposCurso(curso.getId());
-       if(grupos_curso == 0) {
-           manager.deleteCurso(curso.getId());
+          int grupos_actividad = manager.checkGruposActividad(actividad.getId());
+       if(grupos_actividad == 0) {
+           manager.deleteActividad(actividad.getId());
        }
        else {
            JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.err.link.curso"),
+                                       language.getProperty("mantenimiento.err.link.actividad"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
        }
@@ -325,21 +322,21 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
    /**
     * Rellena la tabla de usuarios.
     */
-    private void listFullCursosData() throws SQLException, RemoteException, Exception {
+    private void listFullActividadesData() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.cursosmain.minasistencia"));
+        header.add(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
 
         String[][] gridData;
         
-        cursos = manager.getCursos();
-        gridData = new String[cursos.size()][2];
+        actividades = manager.getActividades();
+        gridData = new String[actividades.size()][2];
         
         int i = 0;
-        for (Curso curso : cursos) {
-            gridData[i][0] = curso.getNombre();
-            gridData[i][1] = "" + curso.getMinasistencia();
+        for (Actividad actividad : actividades) {
+            gridData[i][0] = actividad.getTitol();
+            gridData[i][1] = "" + actividad.getMinimPercentatge();
             i++;
         }
         
@@ -352,22 +349,22 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
             });
     }
     
-    private void listFilteredCursosData() throws SQLException, RemoteException, Exception {
+    private void listFilteredActividadesData() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.cursosmain.minasistencia"));
+        header.add(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
       
         String[][] gridData;
         
-        cursos = manager.getCursos();
-        gridData = new String[cursos.size()][2];
+        actividades = manager.getActividades();
+        gridData = new String[actividades.size()][2];
         
         int i = 0;
-        for (Curso curso : cursos) {
-            if (new Integer(this.fldasistencia.getText()) <= curso.getMinasistencia()) {
-                gridData[i][0] = curso.getNombre();
-                gridData[i][1] = "" + curso.getMinasistencia();
+        for (Actividad actividad : actividades) {
+            if (new Integer(this.fldasistencia.getText()) <= actividad.getMinimPercentatge()) {
+                gridData[i][0] = actividad.getTitol();
+                gridData[i][1] = "" + actividad.getMinimPercentatge();
                 i++;
             }
         }
@@ -379,10 +376,10 @@ public class PnlMantenimientoCursos extends javax.swing.JDialog
    {
       try {
           if (!this.dofilter) {
-              this.listFullCursosData();
+              this.listFullActividadesData();
           }
           else {
-              this.listFilteredCursosData();
+              this.listFilteredActividadesData();
           }
       } 
       catch (SQLException ex)

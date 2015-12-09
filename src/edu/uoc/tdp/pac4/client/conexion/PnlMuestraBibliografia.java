@@ -37,10 +37,10 @@ public class PnlMuestraBibliografia extends javax.swing.JDialog implements Hyper
     private void inicializaEditorPanes()
     {
         
-        this.setTitle(language.getProperty("cnxmatricula.bibliografia.title") + grupo.getNombreCurso());
+        this.setTitle(language.getProperty("cnxmatricula.bibliografia.title") + grupo.getNombreActividad());
         jEdtPaneBibliografia.setContentType("text/html"); 
         jEdtPaneInfoOnline.setContentType("text/html"); 
-        jEdtPaneBibliografia.setText(grupo.getBibliografiaCurso());
+//        jEdtPaneBibliografia.setText(grupo.getBibliografiaCurso());
         jEdtPaneBibliografia.addHyperlinkListener(this);
         jEdtPaneInfoOnline.addHyperlinkListener(this);
         tabBibliografia.setTitleAt(0, language.getProperty("cnxmatricula.bibliografia.tabbibliografia"));

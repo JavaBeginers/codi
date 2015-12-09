@@ -33,10 +33,10 @@ public class PnlMuestraPlanDocente extends javax.swing.JDialog implements Hyperl
     private void inicializaEditorPanes()
     {
         
-        this.setTitle(language.getProperty("cnxmatricula.plandocente.title") + grupo.getNombreCurso()); //NOI18N
+        this.setTitle(language.getProperty("cnxmatricula.plandocente.title") + grupo.getNombreActividad()); //NOI18N
         jEdtPanePlanDocente.setContentType("text/html"); 
         jEdtPaneInfoOnline.setContentType("text/html"); 
-        jEdtPanePlanDocente.setText(grupo.getPlanDocenteCurso());
+//        jEdtPanePlanDocente.setText(grupo.getPlanDocenteCurso());
         jEdtPanePlanDocente.addHyperlinkListener(this);
         jEdtPaneInfoOnline.addHyperlinkListener(this);
         tabPlanDocente.setTitleAt(0, language.getProperty("cnxmatricula.plandocente.tabplandocente"));
@@ -48,7 +48,7 @@ public class PnlMuestraPlanDocente extends javax.swing.JDialog implements Hyperl
         
         try {
             jEdtPaneInfoOnline.setPage("http://es.wikipedia.org/w/index.php?search=" + 
-                                        grupo.getNombreCurso().replaceAll("\\s", "+"));                                    
+                                        grupo.getNombreActividad().replaceAll("\\s", "+"));                                    
         }
         catch (IOException ex) {
             

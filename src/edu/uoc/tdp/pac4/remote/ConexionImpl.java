@@ -1,13 +1,13 @@
 package edu.uoc.tdp.pac4.remote;
 
 import edu.uoc.tdp.pac4.beans.Asistencia;
-import edu.uoc.tdp.pac4.beans.Curso;
+import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Grupo;
 import edu.uoc.tdp.pac4.beans.Matricula;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.dao.GestorAsistencia;
 import edu.uoc.tdp.pac4.dao.GestorConexion;
-import edu.uoc.tdp.pac4.dao.GestorCurso;
+import edu.uoc.tdp.pac4.dao.GestorActividad;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
 import edu.uoc.tdp.pac4.dao.GestorGrupo;
 import edu.uoc.tdp.pac4.dao.GestorMatricula;
@@ -56,10 +56,10 @@ public class ConexionImpl extends UnicastRemoteObject implements Conexion, Seria
     * @throws Exception 
     */
    @Override
-   public ArrayList<Curso> getCursos() throws RemoteException, SQLException, Exception 
+   public ArrayList<Actividad> getActividades() throws RemoteException, SQLException, Exception 
    {
-      GestorCurso gc = new GestorCurso(gestorDisco.getConnection());
-		return gc.getCursos();
+      GestorActividad gc = new GestorActividad(gestorDisco.getConnection());
+		return gc.getActividades();
    }
    
    /**

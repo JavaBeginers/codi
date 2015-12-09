@@ -2,14 +2,14 @@ package edu.uoc.tdp.pac4.client;
 
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.client.conexion.*;
-import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroCursos;
+import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroActividades;
 import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroPersonalAcademico;
 import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroProfesor;
 import edu.uoc.tdp.pac4.client.gestion.PnlAsistencia;
 import edu.uoc.tdp.pac4.client.gestion.PnlGroupGestor;
 import edu.uoc.tdp.pac4.client.gestion.PnlMatriculaGestor;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoAulas;
-import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoCursos;
+import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoActividades;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoUsuarios;
 import edu.uoc.tdp.pac4.remote.Conexion;
 import edu.uoc.tdp.pac4.remote.Estadisticas;
@@ -184,7 +184,7 @@ public class PnlMain extends javax.swing.JFrame
         mnuMantenimiento = new javax.swing.JMenu();
         mnuMantenimientoUsuarios = new javax.swing.JMenuItem();
         mnuMantenimientoAulas = new javax.swing.JMenuItem();
-        mnuMantenimientoCursos = new javax.swing.JMenuItem();
+        mnuMantenimientoActividades = new javax.swing.JMenuItem();
         mnuEstadisticas = new javax.swing.JMenu();
         mnuEstadisticasAlumno = new javax.swing.JMenuItem();
         mnuEstadisticasProfesor = new javax.swing.JMenuItem();
@@ -351,14 +351,14 @@ public class PnlMain extends javax.swing.JFrame
         });
         mnuMantenimiento.add(mnuMantenimientoAulas);
 
-        mnuMantenimientoCursos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/projection-screen--pencil.png"))); // NOI18N
-        mnuMantenimientoCursos.setText("Cursos...");
-        mnuMantenimientoCursos.addActionListener(new java.awt.event.ActionListener() {
+        mnuMantenimientoActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/projection-screen--pencil.png"))); // NOI18N
+        mnuMantenimientoActividades.setText("Activitats...");
+        mnuMantenimientoActividades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuMantenimientoCursosActionPerformed(evt);
+                mnuMantenimientoActividadesActionPerformed(evt);
             }
         });
-        mnuMantenimiento.add(mnuMantenimientoCursos);
+        mnuMantenimiento.add(mnuMantenimientoActividades);
 
         mnuBarMenuPrincipal.add(mnuMantenimiento);
 
@@ -633,7 +633,7 @@ public class PnlMain extends javax.swing.JFrame
 
     private void mnuEstadisticasAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEstadisticasAlumnoActionPerformed
     
-      PnlFiltroCursos form = new PnlFiltroCursos(this, true, rmiEstadisticas, language, usuario);
+      PnlFiltroActividades form = new PnlFiltroActividades(this, true, rmiEstadisticas, language, usuario);
       form.setLocationRelativeTo(null);
       form.setVisible(true);
         
@@ -685,12 +685,12 @@ public class PnlMain extends javax.swing.JFrame
         form.setVisible(true);
     }//GEN-LAST:event_mnuMantenimientoAulasActionPerformed
 
-    private void mnuMantenimientoCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoCursosActionPerformed
+    private void mnuMantenimientoActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoActividadesActionPerformed
         // TODO add your handling code here:
-        PnlMantenimientoCursos form = new PnlMantenimientoCursos(this, true, rmiMantenimiento, language);
+        PnlMantenimientoActividades form = new PnlMantenimientoActividades(this, true, rmiMantenimiento, language);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
-    }//GEN-LAST:event_mnuMantenimientoCursosActionPerformed
+    }//GEN-LAST:event_mnuMantenimientoActividadesActionPerformed
 
     /**
      * Metodo para desconetarse del servidor y permitir realizar login con otro usuario distinto.
@@ -774,7 +774,7 @@ public class PnlMain extends javax.swing.JFrame
       mnuMantenimiento.setText(language.getProperty("mantenimiento.main.mantenimiento"));
       mnuMantenimientoUsuarios.setText(language.getProperty("mantenimiento.main.usuarios"));
       mnuMantenimientoAulas.setText(language.getProperty("mantenimiento.main.aulas"));
-      mnuMantenimientoCursos.setText(language.getProperty("mantenimiento.main.cursos"));
+      mnuMantenimientoActividades.setText(language.getProperty("mantenimiento.main.actividades"));
       
       mnuMatriculas.setText(language.getProperty("cnxmatricula.pnlmain.matriculas"));
       mnuAsistencia.setText(language.getProperty("cnxmatricula.pnlmain.marcarasistencia"));
@@ -905,8 +905,8 @@ public class PnlMain extends javax.swing.JFrame
     private javax.swing.JMenuItem mnuLanguageEng;
     private javax.swing.JMenuItem mnuLanguageEsp;
     private javax.swing.JMenu mnuMantenimiento;
+    private javax.swing.JMenuItem mnuMantenimientoActividades;
     private javax.swing.JMenuItem mnuMantenimientoAulas;
-    private javax.swing.JMenuItem mnuMantenimientoCursos;
     private javax.swing.JMenuItem mnuMantenimientoUsuarios;
     private javax.swing.JMenu mnuMatriculas;
     private javax.swing.JMenu mnuRequest;
