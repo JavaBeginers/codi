@@ -267,8 +267,8 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
             
             this.fldName.setText     (aula.getNombre());
             this.fldCapacity.setText ("" + aula.getCapacidad());
-            this.fldPlace.setText    (aula.getLocalizacion());
-            this.tarDescript.setText (aula.getDescripcion());
+            this.fldPlace.setText    (aula.getUbicacion());
+            //this.tarDescript.setText (aula.getDescripcion());
         }
         catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, 
@@ -319,15 +319,16 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
             
             aula.setNombre(this.fldName.getText());
             aula.setCapacidad(new Integer(this.fldCapacity.getText()));
-            aula.setLocalizacion(this.fldPlace.getText());
-            aula.setDescripcion(this.tarDescript.getText());
+            aula.setUbicacion(this.fldPlace.getText());
+           // aula.setDescripcion(this.tarDescript.getText());
             
             aula.setFechaAlta(this.now);
-            aula.setActiva(false);
-            aula.setFechaInactividad(this.now);
+           // aula.setActiva(false);
+            //aula.setFechaInactividad(this.now);
             
             for (Aula oldaula : this.aulasinactivas) {
-                if (aula.compare(oldaula)) {
+              //  if (aula.compare(oldaula)) {
+              if (1==1) {
                     if (manager.undeleteAula(oldaula.getId())) {
                         JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.oldaula"),
                                               "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -375,17 +376,17 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
             new_aula.setId(this.aulaID);
             new_aula.setNombre(this.fldName.getText());
             new_aula.setCapacidad(new Integer(this.fldCapacity.getText()));
-            new_aula.setLocalizacion(this.fldPlace.getText());
-            new_aula.setDescripcion(this.tarDescript.getText());
+            new_aula.setUbicacion(this.fldPlace.getText());
+            //new_aula.setDescripcion(this.tarDescript.getText());
             
             new_aula.setFechaAlta(this.aula.getFechaAlta());
-            new_aula.setActiva(this.aula.isActiva());
+           // new_aula.setActiva(this.aula.isActiva());
             
-            if (this.aula.getFechaInactividad() != null) {
-                new_aula.setFechaInactividad (this.aula.getFechaInactividad());
+            if (this.aula.getFechaBaja() != null) {
+                new_aula.setFechaBaja (this.aula.getFechaBaja());
             }
             else {
-                new_aula.setFechaInactividad (this.aula.getFechaAlta());
+                new_aula.setFechaBaja (this.aula.getFechaAlta());
             }
             
             

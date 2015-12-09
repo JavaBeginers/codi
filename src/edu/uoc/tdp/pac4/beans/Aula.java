@@ -2,11 +2,11 @@ package edu.uoc.tdp.pac4.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Implementa Aula de Centro
- * 
- * @author JavaBeginers
- */
+   /*************************************
+   *****************AULA*****************
+   *******@AUTHOR: JavaBegines***********
+   **************************************/
+
 public class Aula extends IdentifiableObject implements Serializable
 {
    /** Serial version UID */

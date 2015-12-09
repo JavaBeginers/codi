@@ -20,21 +20,23 @@ public class GestorAulas
      * Definimos los campos de la tabla aula
      */
     private static final String AULATABLE              = "aula";
-    private static final String AULATABLE_ID           = "id_aula";
-    private static final String AULATABLE_NAME         = "nombre";
-    private static final String AULATABLE_CAPACITY     = "capacidad";
-    private static final String AULATABLE_DESCRIPTION  = "descripcion_aula";
-    private static final String AULATABLE_LOCATION     = "localizacion";
-    private static final String AULATABLE_DATE         = "fechaalta";
-    private static final String AULATABLE_ACTIVE       = "activa";
-    private static final String AULATABLE_INACTIVEDATE = "fechainactividad";
+    private static final String AULATABLE_ID           = "idAula";
+    private static final String AULATABLE_CENTER       = "centroAula";
+    private static final String AULATABLE_CODE         = "codigoAula";
+    private static final String AULATABLE_NAME         = "nombreAula";
+    private static final String AULATABLE_CAPACITY     = "capacidadAula";
+   // private static final String AULATABLE_DESCRIPTION  = "descripcion_aula";
+    private static final String AULATABLE_LOCATION     = "ubicacionAlta";
+    private static final String AULATABLE_DATE         = "fechaAlta";
+   // private static final String AULATABLE_ACTIVE       = "activa";
+    private static final String AULATABLE_CANCELLDATE = "fechaBaja";
     
     /*
      * Definimos los campos de la tabla recursosaula
      */
     private static final String REAULTABLE             = "recursosaula";
     private static final String REAULTABLE_AULAID      = "idaula";
-    private static final String REAULTABLE_RECID       = "idrecurso";
+   // private static final String REAULTABLE_RECID       = "idrecurso";
     
     /*
      * Definimos los campos de la tabla grupo
@@ -87,13 +89,14 @@ public class GestorAulas
         Aula aula = new Aula();
         
         aula.setId               (rs.getInt     (AULATABLE_ID));
+        aula.setCentro            (rs.getInt     (AULATABLE_CENTER));
+        aula.setCodigo           (rs.getInt     (AULATABLE_CODE ));
         aula.setNombre           (rs.getString  (AULATABLE_NAME));
         aula.setCapacidad        (rs.getInt     (AULATABLE_CAPACITY));
-        aula.setDescripcion      (rs.getString  (AULATABLE_DESCRIPTION));
-        aula.setLocalizacion     (rs.getString  (AULATABLE_LOCATION));
+        aula.setUbicacion    (rs.getString  (AULATABLE_LOCATION));
         aula.setFechaAlta        (rs.getDate    (AULATABLE_DATE));
-        aula.setActiva           (rs.getBoolean (AULATABLE_ACTIVE));
-        aula.setFechaInactividad (rs.getDate    (AULATABLE_INACTIVEDATE));
+        aula.setFechaBaja        (rs.getDate    (AULATABLE_CANCELLDATE));
+ 
         
         
         return aula;
@@ -146,8 +149,7 @@ public class GestorAulas
       ArrayList<Aula> aulas = new ArrayList<Aula>();
       
       sql = "SELECT * FROM " + AULATABLE        + " "    + 
-            "WHERE "         + AULATABLE_ACTIVE + " = '" + 1 + "'" +
-            "ORDER BY "      + AULATABLE_NAME;
+            "WHERE "+ AULATABLE_CANCELLDATE + " IS NULL ORDER BY " + AULATABLE_NAME;
 
       try 
       {
@@ -180,7 +182,7 @@ public class GestorAulas
       ArrayList<Aula> aulas = new ArrayList<Aula>();
       
       sql = "SELECT * FROM " + AULATABLE        + " "    + 
-            "WHERE "         + AULATABLE_ACTIVE + " = '" + 0 + "'" +
+            "WHERE "  + AULATABLE_CANCELLDATE + " IS NOT NULL" +
             "ORDER BY "      + AULATABLE_NAME;
 
       try 
@@ -212,23 +214,24 @@ public class GestorAulas
         Statement statement;
         ResultSet rs;
         
-        aula.setActiva(true);
+       // aula.setActiva(true);
       
         try {
             sql = "INSERT INTO " + AULATABLE                             + " "  +
                   "("            + AULATABLE_NAME                        + ","  + 
+                  " "            + AULATABLE_CODE                        + ","  +
+                  " "            + AULATABLE_CENTER                      + ","  +
                   " "            + AULATABLE_CAPACITY                    + ","  +
-                  " "            + AULATABLE_DESCRIPTION                 + ","  +
                   " "            + AULATABLE_LOCATION                    + ","  +
-                  " "            + AULATABLE_DATE                        + ","  +
-                  " "            + AULATABLE_ACTIVE                      + ") " +
+                  " "            + AULATABLE_DATE                        + ")"  +
+
                   "VALUES "      +
                   "('"           + aula.getNombre()                      + "', " +
+                  " "            + aula.getCodigo()                      + ", "  +
+                  " "            + aula.getCentro()                      + ", "  +
                   " "            + aula.getCapacidad()                   + ", "  +
-                  " '"           + aula.getDescripcion()                 + "', " +
-                  " '"           + aula.getLocalizacion()                + "', " +
-                  " '"           + df.format(aula.getFechaAlta())        + "', " +
-                  " '"           + aula.isActivaBit()                    + "')";
+                  " '"           + aula.getUbicacion()                + "', " +
+                  " '"           + df.format(aula.getFechaAlta())        + "') " ;
 
             statement = getConnection().createStatement();
             statement.execute(sql);
@@ -253,8 +256,9 @@ public class GestorAulas
             sql = "UPDATE " + AULATABLE              + " "        +
                   "SET "    + AULATABLE_NAME         + " = '"     + aula.getNombre()                      + "', " +
                               AULATABLE_CAPACITY     + " = "      + aula.getCapacidad()                   + ", "  +
-                              AULATABLE_DESCRIPTION  + " = '"     + aula.getDescripcion()                 + "', " +
-                              AULATABLE_LOCATION     + " = '"     + aula.getLocalizacion()                + "' "  +
+                              AULATABLE_CODE         + " = "      + aula.getCodigo()                   + ", "  +
+                              AULATABLE_CENTER       + " = "      + aula.getCentro()                   + ", "  +
+                              AULATABLE_LOCATION     + " = '"     + aula.getUbicacion()                + "' "  +
                   "WHERE "  + AULATABLE_ID           + " = "      + aula.getId();
             
             statement = getConnection().createStatement();
@@ -280,8 +284,7 @@ public class GestorAulas
         
         try {
             sql = "UPDATE " + AULATABLE + " "        +
-                  "SET "    + AULATABLE_ACTIVE       + " = '"     + 0              + "', " +
-                              AULATABLE_INACTIVEDATE + " = '"     + df.format(now) + "' "  +
+                  "SET "   +  AULATABLE_CANCELLDATE + " = '"     + df.format(now) + "' "  +
                   "WHERE "  + AULATABLE_ID           + " = "      + id;
             //sql = "DELETE FROM " + AULATABLE    + " "   + 
             //      "WHERE "       + AULATABLE_ID + " = " + id;
@@ -333,7 +336,7 @@ public class GestorAulas
         
         try {
             sql = "UPDATE " + AULATABLE              + " "        +
-                  "SET "    + AULATABLE_ACTIVE       + " = '"     + 1   + "' " +
+                  "SET "    + AULATABLE_CANCELLDATE       + " = NULL" +
                   "WHERE "  + AULATABLE_ID           + " = "      + id;
 
             statement = getConnection().createStatement();
