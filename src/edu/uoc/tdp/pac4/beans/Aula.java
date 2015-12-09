@@ -13,148 +13,102 @@ public class Aula extends IdentifiableObject implements Serializable
    /** Serial version UID */
    private static final long serialVersionUID = 1L;
    
-   private String nombre;
-   private int capacidad;
-   private String descripcion;
-   private String localizacion;
+   private int idAula;
+   private int centroAula;
+   private int codigoAula;
+   private String nombreAula;
+   private int capacidadAula;
+   private String ubicacionAula;
    Date fechaAlta;
-   boolean activa;
-   Date fechaInactividad;
+   Date fechaBaja;
 
-   //==========================================
-   // Constructors
-   //==========================================
+
+   /*************************************
+   **********CONSTRUCTOR*****************
+   **************************************/
    
-   /**
-    * Constructor de la clase.
-    */
    public Aula() 
    {
-      this.descripcion = "";
-      this.nombre = "";
-      this.capacidad = 0;
-      this.descripcion = "";
-      this.localizacion = "";
-      this.fechaAlta = null;
-      this.activa = false;
-      this.fechaInactividad = null;
+       this.idAula=0;
+       this.centroAula=0;
+       this.codigoAula=0;
+       this.nombreAula="";
+       this.capacidadAula=0;
+       this.ubicacionAula="";
+       this.fechaAlta=null;
+       this.fechaBaja=null;
    }
 
-   //==========================================
-   // Properties
-   //==========================================
+   /*************************************
+   **********PROPERTIES*****************
+   **************************************/
    
-   public String getNombre() 
-   {
-      return nombre;
+   public int getId(){
+       return idAula;
+   }
+   
+   public void setId(int id){
+       this.idAula=id;
+   }
+   
+   public int getCentro(){
+       return centroAula;
+   }
+   
+   public void setCentro(int centro){
+       this.centroAula = centro;
+   }
+   
+   public int getCodigo(){
+       return codigoAula;
+   }
+   
+   public void setCodigo(int codigo){
+       this.codigoAula=codigo;
+   }
+   
+   public String getNombre(){
+      return nombreAula;
    }
 
-   public void setNombre(String nombre) 
-   {
-      this.nombre = nombre;
+   public void setNombre(String nombre){
+      this.nombreAula = nombre;
    }
 
-   public int getCapacidad() 
-   {
-      return capacidad;
+   public int getCapacidad(){
+      return capacidadAula;
    }
 
-   public void setCapacidad(int capacidad)
-   {
-      this.capacidad = capacidad;
+   public void setCapacidad(int capacidad){
+      this.capacidadAula = capacidad;
    }
 
-   public String getDescripcion() 
-   {
-      return descripcion;
+   public String getUbicacion(){
+      return ubicacionAula;
    }
 
-   public void setDescripcion(String descripcion) 
-   {
-      this.descripcion = descripcion;
+   public void setUbicacion(String ubicacion){
+      this.ubicacionAula = ubicacion;
    }
 
-   public String getLocalizacion() 
-   {
-      return localizacion;
-   }
-
-   public void setLocalizacion(String localizacion) 
-   {
-      this.localizacion = localizacion;
-   }
-
-   public Date getFechaAlta() 
-   {
+   public Date getFechaAlta(){
       return fechaAlta;
    }
 
-   public void setFechaAlta(Date fechaAlta) 
-   {
+   public void setFechaAlta(Date fechaAlta){
       this.fechaAlta = fechaAlta;
    }
 
-   public boolean isActiva() 
-   {
-      return activa;
-   }
-   
-   public int isActivaBit() {
-       if (this.isActiva()) {
-           return 1;
-       }
-       else {
-           return 0;
-       }
+
+  public Date getFechaBaja(){
+      return fechaBaja;
    }
 
-   public void setActiva(boolean activa) 
+   public void setFechaBaja(Date fechabaja) 
    {
-      this.activa = activa;
-   }
-
-   public Date getFechaInactividad()
-   {
-      return fechaInactividad;
-   }
-
-   public void setFechaInactividad(Date fechaInactividad) 
-   {
-      this.fechaInactividad = fechaInactividad;
+      this.fechaBaja = fechabaja;
    }
    
-   //==========================================
-   // Methods
-   //==========================================
-   
-   /**
-    * Compara nombre/localizacion para determinar si es la misma aula
-    */
-   public Boolean compare(Aula aula) {
-       if(!this.getNombre().equalsIgnoreCase(aula.getNombre()))             {return false;}
-       if(!this.getLocalizacion().equalsIgnoreCase(aula.getLocalizacion())) {return false;}
-       return true;
-   }
-   
-   /**
-    * Convierte la instancia en una cadena que representa el objeto.
-    */
-   @Override
-   public String toString()
-   {
-      return this.nombre;
-   }
-   
-   //==========================================
-   // Private members
-   //==========================================
-   
-   /**
-    * Inicializa la instancia
-    */
-   private void initialize()
-   {
-      this.setId(0);
-      this.descripcion = "";
-   }
 }
+   
+  
