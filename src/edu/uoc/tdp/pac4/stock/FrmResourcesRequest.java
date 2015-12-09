@@ -272,7 +272,7 @@ public class FrmResourcesRequest extends javax.swing.JDialog
       catch (TooManyRequestsException ex)
       {
          // Obtiene el aula
-         String aula = ((Aula)cboClass.getSelectedItem()).getDescripcion();
+         String aula = ((Aula)cboClass.getSelectedItem()).getNombre();
 
          JOptionPane.showMessageDialog(null, 
                                        language.getProperty("err.tooManyRequests"), 
