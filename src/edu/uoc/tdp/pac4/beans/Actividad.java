@@ -42,6 +42,13 @@ public class Actividad implements Serializable {
     public static final int ACTIVIDAD_TIPO_JORNADA_ID = 2;
     public static final int ACTIVIDAD_TIPO_MASTER_ID = 3;
     public static final int ACTIVIDAD_TIPO_CONFERENCIA_ID = 4;
+
+    // Definición de universidades
+    public static final int ACTIVIDAD_UNIVERSIDAD_NO_DEFINIDA_ID = 0;
+    public static final int ACTIVIDAD_UNIVERSIDAD_UOC_ID = 1;
+    public static final int ACTIVIDAD_UNIVERSIDAD_UAB_ID = 2;
+    public static final int ACTIVIDAD_UNIVERSIDAD_UPC_ID = 3;
+    public static final int ACTIVIDAD_UNIVERSIDAD_UPF_ID = 4;
     
     //==========================================
     // Constructors
@@ -304,7 +311,31 @@ public class Actividad implements Serializable {
       }
       
    }
-    
+
+   /**
+    * Convierte un código de estado a un texto descriptivo.
+    * 
+    * @param status Código de estado. Corresponde a una de las constantes {@code MATRICULA_ESTADO_XXX}.
+    * @return Una cadena que corresponde al nombre del estado especificado.
+    */
+   public static String getUniversidadName(int status, LanguageUtils language)
+   {
+      switch (status)
+      {
+         case ACTIVIDAD_UNIVERSIDAD_UOC_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_UNIVERSIDAD_UOC);
+         case ACTIVIDAD_UNIVERSIDAD_UAB_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_UNIVERSIDAD_UAB);
+         case ACTIVIDAD_UNIVERSIDAD_UPC_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_UNIVERSIDAD_UPC);
+         case ACTIVIDAD_UNIVERSIDAD_UPF_ID:
+            return language.getProperty(eAcademiaEU.ACTIVIDAD_UNIVERSIDAD_UPF);
+         default:
+            return "";
+      }
+      
+   }
+   
     /**
      * Convierte la instancia en una cadena que representa el objeto.
      */

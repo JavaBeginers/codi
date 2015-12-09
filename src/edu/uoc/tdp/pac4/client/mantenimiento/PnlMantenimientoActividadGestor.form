@@ -23,62 +23,82 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="cmdAccept" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="cmdAccept" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblCentro" max="32767" attributes="0"/>
+                          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblDecanatura" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblUniversidad" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblDateEnd" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblTitulo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblTipoActividad" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblAreaConocimiento" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblSitio" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblEspecialización" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblCapacidad" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblInvestigador" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblPrecio" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblCambios" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblDateIni" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="fldTitulo" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="cboUniversidad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="fldCapacidad" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Component id="fldDateEnd" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Component id="cboTipoActividad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="55" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="cboAreaConocimiento" min="-2" pref="228" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="fldCambios" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Component id="fldInvestigador" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="fldEspecializacion" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="cboSitio" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="cboCentro" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="fldDecanatura" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="fldDateIni" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <Component id="fldPrecio" min="-2" pref="101" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="411" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblPlan" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnPlanDocente" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblDateIni" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTipoActividad" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="fldName" pref="228" max="32767" attributes="0"/>
-                                  <Component id="fldDateIni" max="32767" attributes="0"/>
-                                  <Component id="cboTipoActividad" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" pref="283" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="lblBiblio" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnBibliografia" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblDateEnd" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAsistencia" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="fldAsistencia" max="32767" attributes="0"/>
-                                  <Component id="fldDateEnd" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
+                      <Component id="cbCancelada" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,34 +113,71 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="fldName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAsistencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldAsistencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUniversidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cboUniversidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cboCentro" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cboSitio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSitio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cboAreaConocimiento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAreaConocimiento" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblEspecialización" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldEspecializacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblDecanatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldDecanatura" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblInvestigador" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldInvestigador" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="lblCapacidad" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldCapacidad" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblCambios" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldCambios" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblDateIni" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fldDateIni" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fldDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnPlanDocente" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnBibliografia" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lblPlan" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="lblBiblio" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jScrollPane1" pref="265" max="32767" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
-              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cbCancelada" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -150,26 +207,11 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdCloseActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="fldName">
+    <Component class="javax.swing.JTextField" name="fldTitulo">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblName">
+    <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAsistencia">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Minima Asistencia"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblBiblio">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Bibliograf&#xed;a"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblPlan">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Plan Docente"/>
+        <Property name="text" type="java.lang.String" value="T&#xed;tulo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="cmdAccept">
@@ -183,38 +225,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAcceptActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextArea" name="tarPlan">
-          <Properties>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="lineWrap" type="boolean" value="true"/>
-            <Property name="rows" type="int" value="5"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTextArea" name="tarBiblio">
-          <Properties>
-            <Property name="columns" type="int" value="20"/>
-            <Property name="lineWrap" type="boolean" value="true"/>
-            <Property name="rows" type="int" value="5"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="lblDateIni">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha Inicio"/>
@@ -222,34 +232,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblDateEnd">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha Fin"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnPlanDocente">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/disk--plus.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPlanDocenteActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnBibliografia">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/disk--plus.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBibliografiaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="fldAsistencia">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Fecha M&#xe1;xima Inscripci&#xf3;n"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="fldDateIni">
@@ -270,16 +253,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblTipoActividad">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo"/>
+        <Property name="text" type="java.lang.String" value="Tipos de Actividad"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cboTipoActividad">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
-        </Property>
-        <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
-          <Rectangle value="[0, 0, 0, 0]"/>
         </Property>
       </Properties>
       <Events>
@@ -288,6 +268,146 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblUniversidad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Universidad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cboUniversidad">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboUniversidadActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCentro">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Centro"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cboCentro">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboCentroActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblSitio">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sitio"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cboSitio">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboSitioActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAreaConocimiento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#xc1;rea de conocimiento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cboAreaConocimiento">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboAreaConocimientoActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEspecializaci&#xf3;n">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Especializaci&#xf3;n"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldEspecializacion">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblDecanatura">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Decanatura Responsable"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldDecanatura">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblInvestigador">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Investigador Principal"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldInvestigador">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCapacidad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Capacidad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="fldCapacidad">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format subtype="0" type="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCambios">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="% de incritos que bloquea cambios"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="fldCambios">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format subtype="0" type="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPrecio">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Precio"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="fldPrecio">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format subtype="0" type="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbCancelada">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelada"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCanceladaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

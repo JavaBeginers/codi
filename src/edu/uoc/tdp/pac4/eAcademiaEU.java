@@ -149,4 +149,11 @@ public interface eAcademiaEU
    public static final String ACTIVIDAD_TIPO_JORNADA = "actividad.tipo.jornada";
    public static final String ACTIVIDAD_TIPO_MASTER = "actividad.tipo.master";
    public static final String ACTIVIDAD_TIPO_CONFERENCIA = "actividad.tipo.conferencia";
+   
+   public static final String FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA = "form.pnlMantenimientoActividad.tipo.universidad.selecciona";
+   public static final String ACTIVIDAD_UNIVERSIDAD_UOC = "actividad.universidad.uoc";
+   public static final String ACTIVIDAD_UNIVERSIDAD_UAB = "actividad.universidad.uab";
+   public static final String ACTIVIDAD_UNIVERSIDAD_UPC = "actividad.universidad.upc";
+   public static final String ACTIVIDAD_UNIVERSIDAD_UPF = "actividad.universidad.upf";
+   
 }
