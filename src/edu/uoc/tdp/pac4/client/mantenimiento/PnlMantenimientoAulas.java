@@ -363,7 +363,7 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
 
    
    /**
-    * Rellena la tabla de usuarios.
+    * Rellena la tabla de aulas.
     */
     private void listFullAulasData() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
@@ -383,7 +383,7 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
         for (Aula aula : aulas) {
             gridData[i][0] = aula.getNombre();
             gridData[i][1] = "" + aula.getCapacidad();
-            gridData[i][2] = aula.getLocalizacion();
+            gridData[i][2] = aula.getUbicacion();
             i++;
         }
         
@@ -411,7 +411,7 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
             if (new Integer(this.fldcapacity.getText()) <= aula.getCapacidad()) {
                 gridData[i][0] = aula.getNombre();
                 gridData[i][1] = "" + aula.getCapacidad();
-                gridData[i][2] = aula.getLocalizacion();
+                gridData[i][2] = aula.getUbicacion();
                 i++;
             }
         }
