@@ -155,5 +155,7 @@ public interface eAcademiaEU
    public static final String ACTIVIDAD_UNIVERSIDAD_UAB = "actividad.universidad.uab";
    public static final String ACTIVIDAD_UNIVERSIDAD_UPC = "actividad.universidad.upc";
    public static final String ACTIVIDAD_UNIVERSIDAD_UPF = "actividad.universidad.upf";
+
+   public static final String FORM_PNLACTIVIDAD_CENTRO_SELECCIONA = "form.pnlMantenimientoActividad.centro.selecciona";
    
 }

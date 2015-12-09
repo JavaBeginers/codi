@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Centro;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -256,6 +257,8 @@ public interface Mantenimiento extends Remote
     * @throws Exception 
     */
    public Actividad getActividad(int id) throws SQLException, Exception;
+   
+   public ArrayList<Centro> getCentros() throws SQLException, Exception;
    
    /**
     * Agrega un nuevo Actividad al centro.

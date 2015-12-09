@@ -2,6 +2,7 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.util.FieldLimit;
@@ -13,11 +14,10 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.ArrayList;
-import javax.swing.JFileChooser;
-import java.io.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,31 +25,34 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
-    private Mantenimiento manager;
-    private LanguageUtils language;
+    private final Mantenimiento manager;
+    private final LanguageUtils language;
     private List<ComboItem> tiposActividad;
     private List<ComboItem> universidades;
 
-    private String ActionType;
+    private final String actionType;
 
-    private Date now = new Date();
-    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private final Date now = new Date();
+    private final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     private Actividad actividad = null;
-    private ArrayList<Actividad> actividades = null;
-    private int actividadID;
-    private int NAME_LENGTH = 50;
+    private final ArrayList<Actividad> actividades = null;
+    private final int actividadID;
+    private final int NAME_LENGTH = 50;
 
     /**
      * Creates new form PnlGroupGestor
+     * @param parent
+     * @param modal
+     * @param manager
      */
-    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String ActionType, int actividadID) {
+    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String actionType, int actividadID) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
 
         this.manager = manager;
         this.language = language;
-        this.ActionType = ActionType;
+        this.actionType = actionType;
         this.actividadID = actividadID;
 
         //setTipoActividades();
@@ -339,17 +342,13 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean allDataFilled() {
-        if (fldTitulo.getText().isEmpty() || fldTitulo.getText().equals("")) {
+        //TODO: validate
+        if (fldTitulo.getText().isEmpty()) {
             return false;
         }
-        if (fldDateIni.getText().isEmpty() || fldDateIni.getText().equals("")) {
+        if (fldDateIni.getText().isEmpty()) {
             return false;
         }
-        if (fldDateIni.getText().isEmpty() || fldDateIni.getText().equals("")) {
-            return false;
-        }
-        //if (tarPlan.getText().isEmpty()       || tarPlan.getText().equals(""))       {return false;}
-        //if (tarBiblio.getText().isEmpty()     || tarBiblio.getText().equals(""))     {return false;}
 
         return true;
     }
@@ -375,9 +374,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
         
 
-        if (this.ActionType.equalsIgnoreCase("Add")) {
+        if (this.actionType.equalsIgnoreCase("Add")) {
             this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
         }
         this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
@@ -393,9 +392,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         this.fldTitulo.setDocument(new FieldLimit(NAME_LENGTH));
 
         // Cambios Vinculados al tipo de llamada
-        if (this.ActionType.equalsIgnoreCase("Add")) {
+        if (this.actionType.equalsIgnoreCase("Add")) {
             this.addaptToAddActividad();
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.addaptToEditActividad();
         }
     }
@@ -411,10 +410,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         setTipoActividades();
         //Inicializamos el combo de universidades
         setUniversidades();
+        setCentros();
         //Inicializamos todos los campos
         cboTipoActividad.setSelectedIndex(0);
         cboUniversidad.setSelectedIndex(0);
-        cboCentro.setSelectedIndex(-1);
+        cboCentro.setSelectedIndex(0);
         cboSitio.setSelectedIndex(-1);
         cboAreaConocimiento.setSelectedIndex(-1);
         fldEspecializacion.setText("");
@@ -633,9 +633,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     language.getProperty("mantenimiento.err.fields"),
                     language.getProperty("app.title"),
                     JOptionPane.ERROR_MESSAGE);
-        } else if (this.ActionType.equalsIgnoreCase("Add")) {
+        } else if (this.actionType.equalsIgnoreCase("Add")) {
             this.cmdAddActividadAction();
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.cmdModActividadAction();
         }
     }//GEN-LAST:event_cmdAcceptActionPerformed
@@ -669,18 +669,36 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbCanceladaActionPerformed
 
+    private void setCentros() {
+
+        List<ComboItem> centrosCB;
+        centrosCB = new ArrayList<ComboItem>();
+        List<Centro> centros = new ArrayList<Centro>();
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        for(Centro centro: centros) {
+            centrosCB.add(new ComboItem(centro.getNom(), centro.getId()));
+        }
+        cboCentro.removeAll();
+        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));        
+        
+    }
+
     private void setUniversidades() {
         if (universidades==null) {
             universidades = new ArrayList<ComboItem>();
         }
         //Buscar todas las universidades
-        ComboItem cb = new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1);
-        universidades.add(cb);
+        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
-        cboUniversidad.setSelectedIndex(-1);
         cboUniversidad.removeAll();
         cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));        
     }
@@ -695,7 +713,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
         tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
         tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
-        cboTipoActividad.setSelectedIndex(-1);
         cboTipoActividad.removeAll();
         cboTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
 
