@@ -121,7 +121,7 @@ CONSTRAINT PK_RECURS PRIMARY KEY(recurs_id),
 CONSTRAINT FK_RECURS_AULA FOREIGN KEY (aula_id) REFERENCES AULA(aula_id)
 );
 
-CREATE TABLE ACTIVITATS
+CREATE TABLE ACTIVIDAD
 (
  id bigint NOT NULL,
  universitat_id bigint NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE ACTIVITATS
  area text,
  especialitat text,
  decanatura text,
- investigator text,
+ investigador text,
  data_inici date NOT NULL,
  data_fi date,
  data_max_inscripcio date NOT NULL,
