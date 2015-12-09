@@ -1,10 +1,9 @@
 package edu.uoc.tdp.pac4.beans;
-
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Implementa una aula del centro.
+ * Implementa Aula de Centro
  * 
  * @author JavaBeginers
  */
