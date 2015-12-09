@@ -16,20 +16,15 @@ import java.util.Date;
  */
 public class GestorAulas 
 {
-    /*
-     * Definimos los campos de la tabla aula
-     */
     private static final String AULATABLE              = "aula";
-    private static final String AULATABLE_ID           = "idAula";
-    private static final String AULATABLE_CENTER       = "centroAula";
-    private static final String AULATABLE_CODE         = "codigoAula";
-    private static final String AULATABLE_NAME         = "nombreAula";
-    private static final String AULATABLE_CAPACITY     = "capacidadAula";
-   // private static final String AULATABLE_DESCRIPTION  = "descripcion_aula";
-    private static final String AULATABLE_LOCATION     = "ubicacionAlta";
-    private static final String AULATABLE_DATE         = "fechaAlta";
-   // private static final String AULATABLE_ACTIVE       = "activa";
-    private static final String AULATABLE_CANCELLDATE = "fechaBaja";
+    private static final String AULATABLE_ID           = "aula_id";
+    private static final String AULATABLE_CENTER       = "centre_id";
+    private static final String AULATABLE_CODE         = "codi_aula";
+    private static final String AULATABLE_NAME         = "nom";
+    private static final String AULATABLE_CAPACITY     = "capacitat";
+    private static final String AULATABLE_LOCATION     = "ubicacio";
+    private static final String AULATABLE_DATE         = "data_alta";
+    private static final String AULATABLE_CANCELLDATE  = "data_baixa";
     
     /*
      * Definimos los campos de la tabla recursosaula
@@ -89,11 +84,11 @@ public class GestorAulas
         Aula aula = new Aula();
         
         aula.setId               (rs.getInt     (AULATABLE_ID));
-        aula.setCentro            (rs.getInt     (AULATABLE_CENTER));
+        aula.setCentro           (rs.getInt     (AULATABLE_CENTER));
         aula.setCodigo           (rs.getInt     (AULATABLE_CODE ));
         aula.setNombre           (rs.getString  (AULATABLE_NAME));
         aula.setCapacidad        (rs.getInt     (AULATABLE_CAPACITY));
-        aula.setUbicacion    (rs.getString  (AULATABLE_LOCATION));
+        aula.setUbicacion        (rs.getString  (AULATABLE_LOCATION));
         aula.setFechaAlta        (rs.getDate    (AULATABLE_DATE));
         aula.setFechaBaja        (rs.getDate    (AULATABLE_CANCELLDATE));
  
