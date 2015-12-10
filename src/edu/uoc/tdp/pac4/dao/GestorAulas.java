@@ -85,7 +85,7 @@ public class GestorAulas
         
         aula.setId               (rs.getInt     (AULATABLE_ID));
         aula.setCentro           (rs.getInt     (AULATABLE_CENTER));
-        aula.setCodigo           (rs.getString     (AULATABLE_CODE ));
+        aula.setCodigo           (rs.getString  (AULATABLE_CODE ));
         aula.setNombre           (rs.getString  (AULATABLE_NAME));
         aula.setCapacidad        (rs.getInt     (AULATABLE_CAPACITY));
         aula.setUbicacion        (rs.getString  (AULATABLE_LOCATION));
@@ -239,7 +239,7 @@ public class GestorAulas
      * @throws SQLException
      * @throws Exception 
      */
-    public void add(Aula aula) throws SQLException, Exception {
+    public void alta(Aula aula) throws SQLException, Exception {
         String sql;
         Statement statement;
         ResultSet rs;
@@ -257,7 +257,7 @@ public class GestorAulas
 
                   "VALUES "      +
                   "('"           + aula.getNombre()                      + "', " +
-                  " "            + aula.getCodigo()                      + ", "  +
+                  " '"            + aula.getCodigo()                      + "', "  +
                   " "            + aula.getCentro()                      + ", "  +
                   " "            + aula.getCapacidad()                   + ", "  +
                   " '"           + aula.getUbicacion()                + "', " +
@@ -278,7 +278,7 @@ public class GestorAulas
      * @throws SQLException
      * @throws Exception 
      */
-    public void update(Aula aula) throws SQLException, Exception {
+    public void actualizar(Aula aula) throws SQLException, Exception {
         String sql;
         Statement statement;
       
@@ -286,7 +286,7 @@ public class GestorAulas
             sql = "UPDATE " + AULATABLE              + " "        +
                   "SET "    + AULATABLE_NAME         + " = '"     + aula.getNombre()                      + "', " +
                               AULATABLE_CAPACITY     + " = "      + aula.getCapacidad()                   + ", "  +
-                              AULATABLE_CODE         + " = "      + aula.getCodigo()                   + ", "  +
+                              AULATABLE_CODE         + " = '"      + aula.getCodigo()                   + "', "  +
                               AULATABLE_CENTER       + " = "      + aula.getCentro()                   + ", "  +
                               AULATABLE_LOCATION     + " = '"     + aula.getUbicacion()                + "' "  +
                   "WHERE "  + AULATABLE_ID           + " = "      + aula.getId();

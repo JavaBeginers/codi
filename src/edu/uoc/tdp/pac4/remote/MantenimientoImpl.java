@@ -243,9 +243,9 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
      * @throws Exception
      */
     @Override
-    public boolean addAula(Aula aula) throws SQLException, Exception {
+    public boolean altaAula(Aula aula) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        ga.add(aula);
+        ga.alta(aula);
 
         return true;
     }
@@ -260,9 +260,9 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
      * @throws Exception
      */
     @Override
-    public boolean updateAula(Aula aula) throws SQLException, Exception {
+    public boolean actualizarAula(Aula aula) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        ga.update(aula);
+        ga.actualizar(aula);
 
         return true;
     }
