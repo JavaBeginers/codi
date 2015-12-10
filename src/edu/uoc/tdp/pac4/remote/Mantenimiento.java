@@ -207,17 +207,9 @@ public interface Mantenimiento extends Remote {
      * @throws SQLException
      * @throws Exception
      */
-    public boolean deleteAula(int id) throws SQLException, Exception;
+    public boolean eliminarAula(int id) throws SQLException, Exception;
 
-    /**
-     * Elimina la asignacion de recursos al aula
-     *
-     * @param id Identificador de la Aula
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean liberarRecursosAula(int id) throws SQLException, Exception;
+    
 
     /**
      * Recupera una Aula.
@@ -229,15 +221,7 @@ public interface Mantenimiento extends Remote {
      */
     public boolean undeleteAula(int id) throws SQLException, Exception;
 
-    /**
-     * Comprueba si un aula tiene grupos asignados
-     *
-     * @param id Identificador del Aula
-     * @return
-     * @throws SQLException
-     * @throws Exception
-     */
-    public int checkGruposAula(int id) throws SQLException, Exception;
+
 
     /**
      * Devuelve una lista de Actividadess del centro.

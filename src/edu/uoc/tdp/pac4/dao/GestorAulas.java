@@ -231,14 +231,7 @@ public class GestorAulas
       return aulas;
    }
    
-   /**
-     * Agrega un nuevo usuario al centro.
-     * 
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos del grupo.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+//Alta de Aula
     public void alta(Aula aula) throws SQLException, Exception {
         String sql;
         Statement statement;
@@ -270,14 +263,7 @@ public class GestorAulas
         catch (Exception ex)    {throw ex;}
     }
     
-    /**
-     * Actualiza los datos de un Usuario.
-     * 
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos actualizados del usuario.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+ //Actualizar Aula
     public void actualizar(Aula aula) throws SQLException, Exception {
         String sql;
         Statement statement;
@@ -298,15 +284,8 @@ public class GestorAulas
         catch (Exception ex)    {throw ex;}
     }
    
-    /**
-     * Elimina (borrado logico) una Aula.
-     * 
-     * @param id Identificador de la Aula a eliminar.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
-    public void delete(int id) throws SQLException, Exception {
+//Elimina Aula
+    public void eliminar(int id) throws SQLException, Exception {
         String sql;
         Statement statement;
       
@@ -316,8 +295,6 @@ public class GestorAulas
             sql = "UPDATE " + AULATABLE + " "        +
                   "SET "   +  AULATABLE_CANCELLDATE + " = '"     + df.format(now) + "' "  +
                   "WHERE "  + AULATABLE_ID           + " = "      + id;
-            //sql = "DELETE FROM " + AULATABLE    + " "   + 
-            //      "WHERE "       + AULATABLE_ID + " = " + id;
 
             statement = getConnection().createStatement();
             statement.execute(sql);
@@ -326,27 +303,7 @@ public class GestorAulas
         catch (Exception ex)    {throw ex;}
     }
     
-    /**
-     * Libera los recursos asignados a una aula
-     * 
-     * @param id Identificador Aula
-     * @throws SQLException
-     * @throws Exception 
-     */
-    public void freeRecursosFromAula(int id) throws SQLException, Exception {
-        String sql;
-        Statement statement;
-        
-        try {
-            sql = "DELETE FROM " + REAULTABLE        + " "   +
-                  "WHERE "       + REAULTABLE_AULAID + " = " + id;
-            
-            statement = getConnection().createStatement();
-            statement.execute(sql);
-        }
-        catch (SQLException ex) {throw ex;}
-        catch (Exception ex)    {throw ex;}
-    }
+    
     
     /**
      * Recupera (de un borrado lógico) una Aula del centro.
@@ -376,31 +333,5 @@ public class GestorAulas
         catch (Exception ex)    {throw ex;}
     }
     
-    /**
-     * Devuelve el número de Grupos que un Aula (Profesor) tiene asignados
-     * 
-     * @param id Identificador del Aula a checkear
-     * @return
-     * @throws SQLException
-     * @throws Exception 
-     */
-    public int checkGruposAssigned(int id) throws SQLException, Exception {
-        String sql;
-        ResultSet rs;
-        
-        int grupos = 0;
-        try {
-            sql = "SELECT COUNT(*) as total FROM " + GRUPOTABLE      + " "  +
-                  "WHERE "                         + GRUPOTABLE_AULA + " = " + id;
-            Statement objStt = (Statement) getConnection().createStatement();
-            rs = objStt.executeQuery(sql);
-            if(rs.next()) {
-                grupos = rs.getInt("total");
-            }
-        }
-        catch (SQLException ex) {throw ex;}
-        catch (Exception ex)    {throw ex;}
-        
-        return grupos;
-    }
+   
 }
