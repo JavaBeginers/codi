@@ -14,7 +14,7 @@ public class Aula extends IdentifiableObject implements Serializable
    
    private int idAula;
    private int centroAula;
-   private int codigoAula;
+   private String codigoAula;
    private String nombreAula;
    private int capacidadAula;
    private String ubicacionAula;
@@ -30,7 +30,7 @@ public class Aula extends IdentifiableObject implements Serializable
    {
        this.idAula=0;
        this.centroAula=0;
-       this.codigoAula=0;
+       this.codigoAula="";
        this.nombreAula="";
        this.capacidadAula=0;
        this.ubicacionAula="";
@@ -58,11 +58,11 @@ public class Aula extends IdentifiableObject implements Serializable
        this.centroAula = centro;
    }
    
-   public int getCodigo(){
+   public String getCodigo(){
        return codigoAula;
    }
    
-   public void setCodigo(int codigo){
+   public void setCodigo(String codigo){
        this.codigoAula=codigo;
    }
    

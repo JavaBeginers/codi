@@ -2,6 +2,7 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
@@ -161,6 +162,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
         lblSitio.setText("Sitio");
 
+        cboSitio.setEnabled(false);
         cboSitio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboSitioActionPerformed(evt);
@@ -244,18 +246,15 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(cboAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fldCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fldDateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(55, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cboAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -655,6 +654,30 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     private void cboCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCentroActionPerformed
         // TODO add your handling code here:
+        if (cboCentro.getSelectedIndex() > 0) {
+            try {
+                // Limpiar el combo de aulas
+                cboSitio.removeAllItems();
+                //Actualitzar la llista de aules
+                List<Aula> aulasByCentro;
+                ComboItem item = (ComboItem)cboCentro.getSelectedItem();
+                aulasByCentro = manager.getAulasByIdCentro(item.getId());
+                List<ComboItem> aulasCB = new ArrayList<ComboItem>();
+    
+                aulasCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+                for(Aula aula: aulasByCentro) {
+                    aulasCB.add(new ComboItem(aula.getNombre(), aula.getId()));
+                }
+                cboSitio.setModel(new DefaultComboBoxModel(aulasCB.toArray()));        
+                //Habilitar el combo de sitios
+                cboSitio.setEnabled(true);
+            } catch (Exception ex) {
+                Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            cboSitio.removeAllItems();
+            cboSitio.setEnabled(false);
+        }
     }//GEN-LAST:event_cboCentroActionPerformed
 
     private void cboSitioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSitioActionPerformed

@@ -488,4 +488,10 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gc.getCentros();
     }
 
+    @Override
+    public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception {
+        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+        return ga.getAulasByCentro(id);
+    }
+    
 }

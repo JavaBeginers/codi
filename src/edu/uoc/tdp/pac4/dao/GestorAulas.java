@@ -85,7 +85,7 @@ public class GestorAulas
         
         aula.setId               (rs.getInt     (AULATABLE_ID));
         aula.setCentro           (rs.getInt     (AULATABLE_CENTER));
-        aula.setCodigo           (rs.getInt     (AULATABLE_CODE ));
+        aula.setCodigo           (rs.getString     (AULATABLE_CODE ));
         aula.setNombre           (rs.getString  (AULATABLE_NAME));
         aula.setCapacidad        (rs.getInt     (AULATABLE_CAPACITY));
         aula.setUbicacion        (rs.getString  (AULATABLE_LOCATION));
@@ -162,6 +162,41 @@ public class GestorAulas
       return aulas;
    }
    
+  /**
+    * Recupera la lista de aulas por centro.
+    * 
+     * @param idCentro
+    * @return Una lista de instancias de {@link Aula} que representan todas las aulas del centro.
+    * 
+    */
+   public ArrayList<Aula> getAulasByCentro(int idCentro) {
+      String sql;
+      Aula aula;
+      ArrayList<Aula> aulas = new ArrayList<Aula>();
+      
+      sql = "SELECT * FROM " + AULATABLE        + " "    + 
+            "WHERE "+ AULATABLE_CANCELLDATE + " IS NULL and centre_id = " + idCentro + " ORDER BY " + AULATABLE_NAME;
+
+      try 
+      {
+         Statement objStt = (Statement) getConnection().createStatement();
+         ResultSet rs = objStt.executeQuery(sql);
+         while (rs.next()) 
+         {
+            aula = buildAula(rs);
+            aulas.add(aula);
+         }
+      } 
+      catch (SQLException ex) {
+          
+      } 
+      catch (Exception ex)    {
+          
+      }
+      
+      return aulas;   
+   }
+           
    /**
     * Recupera la lista de aulas.
     * 
