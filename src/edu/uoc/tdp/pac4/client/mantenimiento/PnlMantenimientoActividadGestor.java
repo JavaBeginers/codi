@@ -36,12 +36,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private final Date now = new Date();
     private final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     private Actividad actividad = null;
-    private final ArrayList<Actividad> actividades = null;
     private final int actividadID;
     private final int NAME_LENGTH = 50;
 
     /**
      * Creates new form PnlGroupGestor
+     *
      * @param parent
      * @param modal
      * @param manager
@@ -55,8 +55,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         this.language = language;
         this.actionType = actionType;
         this.actividadID = actividadID;
-
-        //setTipoActividades();
 
         addaptToPreferences();
 
@@ -77,9 +75,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         cmdAccept = new javax.swing.JButton();
         lblDateIni = new javax.swing.JLabel();
-        lblDateEnd = new javax.swing.JLabel();
+        lblDateMaximaInscripcion = new javax.swing.JLabel();
         fldDateIni = new javax.swing.JFormattedTextField();
-        fldDateEnd = new javax.swing.JFormattedTextField();
+        fldDateMaximaInscripcion = new javax.swing.JFormattedTextField();
         lblTipoActividad = new javax.swing.JLabel();
         cboTipoActividad = new javax.swing.JComboBox();
         lblUniversidad = new javax.swing.JLabel();
@@ -89,20 +87,20 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         lblSitio = new javax.swing.JLabel();
         cboSitio = new javax.swing.JComboBox();
         lblAreaConocimiento = new javax.swing.JLabel();
-        cboAreaConocimiento = new javax.swing.JComboBox();
         lblEspecialización = new javax.swing.JLabel();
         fldEspecializacion = new javax.swing.JTextField();
         lblDecanatura = new javax.swing.JLabel();
         fldDecanatura = new javax.swing.JTextField();
         lblInvestigador = new javax.swing.JLabel();
         fldInvestigador = new javax.swing.JTextField();
-        lblCapacidad = new javax.swing.JLabel();
-        fldCapacidad = new javax.swing.JFormattedTextField();
         lblCambios = new javax.swing.JLabel();
         fldCambios = new javax.swing.JFormattedTextField();
         lblPrecio = new javax.swing.JLabel();
         fldPrecio = new javax.swing.JFormattedTextField();
         cbCancelada = new javax.swing.JCheckBox();
+        fldAreaConocimiento = new javax.swing.JTextField();
+        lblDateFin = new javax.swing.JLabel();
+        fldDateFin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -128,13 +126,13 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
         lblDateIni.setText("Fecha Inicio");
 
-        lblDateEnd.setText("Fecha Máxima Inscripción");
+        lblDateMaximaInscripcion.setText("Fecha Máxima Inscripción");
 
         fldDateIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         fldDateIni.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        fldDateEnd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        fldDateEnd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fldDateMaximaInscripcion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldDateMaximaInscripcion.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         lblTipoActividad.setText("Tipos de Actividad");
 
@@ -171,22 +169,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
         lblAreaConocimiento.setText("Área de conocimiento");
 
-        cboAreaConocimiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboAreaConocimientoActionPerformed(evt);
-            }
-        });
-
         lblEspecialización.setText("Especialización");
 
         lblDecanatura.setText("Decanatura Responsable");
 
         lblInvestigador.setText("Investigador Principal");
-
-        lblCapacidad.setText("Capacidad");
-
-        fldCapacidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        fldCapacidad.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         lblCambios.setText("% de incritos que bloquea cambios");
 
@@ -204,6 +191,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                 cbCanceladaActionPerformed(evt);
             }
         });
+
+        lblDateFin.setText("Fecha Fin");
+
+        fldDateFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldDateFin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,7 +218,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                                 .addComponent(lblDecanatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(20, 20, 20))
                             .addComponent(lblUniversidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDateEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDateFin, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                                .addGap(173, 173, 173))
                             .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblTipoActividad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -234,36 +228,30 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                                 .addGap(42, 42, 42))
                             .addComponent(lblSitio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEspecialización, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCapacidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(81, 81, 81))
                             .addComponent(lblInvestigador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(81, 81, 81))
                             .addComponent(lblCambios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDateIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblDateIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDateMaximaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cboAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldDateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(216, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cbCancelada)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -290,8 +278,8 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     .addComponent(lblSitio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAreaConocimiento))
+                    .addComponent(lblAreaConocimiento)
+                    .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEspecialización)
@@ -309,15 +297,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     .addComponent(lblInvestigador)
                     .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblCapacidad)
-                    .addComponent(fldCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCambios)
                     .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPrecio)
                     .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,8 +310,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDateEnd)
-                    .addComponent(fldDateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDateFin)
+                    .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDateMaximaInscripcion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbCancelada)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -348,6 +336,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         if (fldDateIni.getText().isEmpty()) {
             return false;
         }
+        if (fldDateFin.getText().isEmpty()) {
+            return false;
+        }
+        if (fldDateMaximaInscripcion.getText().isEmpty()) {
+            return false;
+        }
 
         return true;
     }
@@ -365,13 +359,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         lblTitulo.setText(language.getProperty("mantenimiento.actividad.titulo"));
         lblDecanatura.setText(language.getProperty("mantenimiento.actividad.decanatura"));
         lblInvestigador.setText(language.getProperty("mantenimiento.actividad.investigador"));
-        lblCapacidad.setText(language.getProperty("mantenimiento.actividad.capacidad"));
         lblCambios.setText(language.getProperty("mantenimiento.actividad.cambios"));
         lblPrecio.setText(language.getProperty("mantenimiento.actividad.precio"));
         lblDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
-        lblDateEnd.setText(language.getProperty("mantenimiento.actividad.fechaend"));
+        lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechafin"));
+        lblDateMaximaInscripcion.setText(language.getProperty("mantenimiento.actividad.fechamaximainscripcion"));
         cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
-        
 
         if (this.actionType.equalsIgnoreCase("Add")) {
             this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
@@ -409,40 +402,28 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         setTipoActividades();
         //Inicializamos el combo de universidades
         setUniversidades();
+        //Inicializamos Centros
         setCentros();
         //Inicializamos todos los campos
         cboTipoActividad.setSelectedIndex(0);
         cboUniversidad.setSelectedIndex(0);
         cboCentro.setSelectedIndex(0);
         cboSitio.setSelectedIndex(-1);
-        cboAreaConocimiento.setSelectedIndex(-1);
+        fldAreaConocimiento.setText("");
         fldEspecializacion.setText("");
         fldTitulo.setText("");
         fldDecanatura.setText("");
         fldInvestigador.setText("");
-        fldCapacidad.setText("");
         fldCambios.setText("");
         fldPrecio.setText("");
         cbCancelada.setSelected(false);
-        
+
         fldDateIni.setText("");
-        fldDateEnd.setText("");
+        fldDateFin.setText("");
+        fldDateMaximaInscripcion.setText("");
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
 
-//        try {
-//            actividades = manager.getActividadesInactivas();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
     }
 
     private void addaptToEditActividad() {
@@ -465,9 +446,14 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                 this.fldDateIni.setText("");
             }
             if (actividad.getDataFi() != null) {
-                this.fldDateEnd.setText(df.format(actividad.getDataFi()));
+                this.fldDateFin.setText(df.format(actividad.getDataFi()));
             } else {
-                this.fldDateEnd.setText("");
+                this.fldDateFin.setText("");
+            }
+            if (actividad.getDataMaxInscripcio() != null) {
+                this.fldDateMaximaInscripcion.setText(df.format(actividad.getDataMaxInscripcio()));
+            } else {
+                this.fldDateMaximaInscripcion.setText("");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
@@ -484,6 +470,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         }
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
+
     }
 
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
@@ -505,10 +492,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
          */
 
         Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-        Date endActividad = DateTimeUtils.strToDate(this.fldDateEnd.getText());
+        Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
 
         if (!DateTimeUtils.isDate(this.fldDateIni.getText())
-                || !DateTimeUtils.isDate(this.fldDateEnd.getText())) {
+                || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
             JOptionPane.showMessageDialog(null,
                     language.getProperty("mantenimiento.err.date.mal"),
                     language.getProperty("app.title"),
@@ -524,13 +511,24 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
             this.actividad = new Actividad();
 
-            actividad.setTitol(this.fldTitulo.getText());
+            actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
+            actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
+            actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
+            actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
+            actividad.setArea(fldAreaConocimiento.getText());
+            actividad.setEspecialitat(fldEspecializacion.getText());
+            actividad.setTitol(fldTitulo.getText());
+            actividad.setDecanatura(fldDecanatura.getText());
+            actividad.setInvestigator(fldInvestigador.getText());
             actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+            actividad.setPreu(new Double(fldPrecio.getText()));
             actividad.setDataInici(iniActividad);
             actividad.setDataFi(endActividad);
-//            actividad.setPlandocente(this.tarPlan.getText());
-//            actividad.setBibliografia(this.tarBiblio.getText());
-
+            actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            actividad.setCancelada(cbCancelada.isSelected());
+            
+            ArrayList<Actividad> actividades = manager.getActividadesInactivas();
+                    
             for (Actividad oldActividad : actividades) {
                 if (actividad.getTitol().equalsIgnoreCase(oldActividad.getTitol())) {
                     if (manager.undeleteActividad(oldActividad.getId())) {
@@ -574,10 +572,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
 
             Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-            Date endActividad = DateTimeUtils.strToDate(this.fldDateEnd.getText());
+            Date endActividad = DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText());
 
             if (!DateTimeUtils.isDate(this.fldDateIni.getText())
-                    || !DateTimeUtils.isDate(this.fldDateEnd.getText())) {
+                    || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
                 JOptionPane.showMessageDialog(null,
                         language.getProperty("mantenimiento.err.date.mal"),
                         language.getProperty("app.title"),
@@ -598,8 +596,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
             new_actividad.setDataInici(iniActividad);
             new_actividad.setDataFi(endActividad);
-//            new_actividad.setBibliografia(this.tarBiblio.getText());
-//            new_actividad.setPlandocente(this.tarPlan.getText());
 
             Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
             int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, now);
@@ -641,11 +637,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     private void cboTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoActividadActionPerformed
         // TODO add your handling code here:
-//        cboTipoActividad.setSelectedIndex(-1);
-//        cboTipoActividad.removeAll();
-//        setTipoActividades();
-//        cboTipoActividad.setModel(new DefaultComboBoxModel(tipus.toArray()));
-
     }//GEN-LAST:event_cboTipoActividadActionPerformed
 
     private void cboUniversidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUniversidadActionPerformed
@@ -660,15 +651,15 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                 cboSitio.removeAllItems();
                 //Actualitzar la llista de aules
                 List<Aula> aulasByCentro;
-                ComboItem item = (ComboItem)cboCentro.getSelectedItem();
+                ComboItem item = (ComboItem) cboCentro.getSelectedItem();
                 aulasByCentro = manager.getAulasByIdCentro(item.getId());
                 List<ComboItem> aulasCB = new ArrayList<ComboItem>();
-    
+
                 aulasCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
-                for(Aula aula: aulasByCentro) {
+                for (Aula aula : aulasByCentro) {
                     aulasCB.add(new ComboItem(aula.getNombre(), aula.getId()));
                 }
-                cboSitio.setModel(new DefaultComboBoxModel(aulasCB.toArray()));        
+                cboSitio.setModel(new DefaultComboBoxModel(aulasCB.toArray()));
                 //Habilitar el combo de sitios
                 cboSitio.setEnabled(true);
             } catch (Exception ex) {
@@ -684,10 +675,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboSitioActionPerformed
 
-    private void cboAreaConocimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboAreaConocimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboAreaConocimientoActionPerformed
-
     private void cbCanceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCanceladaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbCanceladaActionPerformed
@@ -702,18 +689,18 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
         centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
-        for(Centro centro: centros) {
+        for (Centro centro : centros) {
             centrosCB.add(new ComboItem(centro.getNom(), centro.getId()));
         }
         cboCentro.removeAll();
-        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));        
-        
+        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
+
     }
 
     private void setUniversidades() {
-        if (universidades==null) {
+        if (universidades == null) {
             universidades = new ArrayList<ComboItem>();
         }
         //Buscar todas las universidades
@@ -723,11 +710,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
         universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
         cboUniversidad.removeAll();
-        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));        
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
     }
-            
+
     private void setTipoActividades() {
-        if (tiposActividad==null) {
+        if (tiposActividad == null) {
             tiposActividad = new ArrayList<ComboItem>();
         }
         ComboItem cb = new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1);
@@ -744,17 +731,17 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbCancelada;
-    private javax.swing.JComboBox cboAreaConocimiento;
     private javax.swing.JComboBox cboCentro;
     private javax.swing.JComboBox cboSitio;
     private javax.swing.JComboBox cboTipoActividad;
     private javax.swing.JComboBox cboUniversidad;
     private javax.swing.JButton cmdAccept;
     private javax.swing.JButton cmdClose;
+    private javax.swing.JTextField fldAreaConocimiento;
     private javax.swing.JFormattedTextField fldCambios;
-    private javax.swing.JFormattedTextField fldCapacidad;
-    private javax.swing.JFormattedTextField fldDateEnd;
+    private javax.swing.JFormattedTextField fldDateFin;
     private javax.swing.JFormattedTextField fldDateIni;
+    private javax.swing.JFormattedTextField fldDateMaximaInscripcion;
     private javax.swing.JTextField fldDecanatura;
     private javax.swing.JTextField fldEspecializacion;
     private javax.swing.JTextField fldInvestigador;
@@ -763,10 +750,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblAreaConocimiento;
     private javax.swing.JLabel lblCambios;
-    private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblCentro;
-    private javax.swing.JLabel lblDateEnd;
+    private javax.swing.JLabel lblDateFin;
     private javax.swing.JLabel lblDateIni;
+    private javax.swing.JLabel lblDateMaximaInscripcion;
     private javax.swing.JLabel lblDecanatura;
     private javax.swing.JLabel lblEspecialización;
     private javax.swing.JLabel lblInvestigador;
