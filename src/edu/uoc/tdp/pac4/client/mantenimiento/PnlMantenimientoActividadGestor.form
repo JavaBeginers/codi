@@ -42,7 +42,10 @@
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <Component id="lblUniversidad" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblDateEnd" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblDateFin" pref="63" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="lblTitulo" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblTipoActividad" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -51,10 +54,6 @@
                           </Group>
                           <Component id="lblSitio" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblEspecialización" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblCapacidad" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="lblInvestigador" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblPrecio" max="32767" attributes="0"/>
@@ -62,32 +61,26 @@
                           </Group>
                           <Component id="lblCambios" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblDateIni" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblDateMaximaInscripcion" alignment="0" pref="236" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="cboAreaConocimiento" min="-2" pref="228" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="fldTitulo" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="cboUniversidad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="fldCapacidad" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                                  <Component id="fldDateEnd" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                                  <Component id="cboTipoActividad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="fldCambios" min="-2" pref="101" max="-2" attributes="0"/>
-                                  <Component id="fldInvestigador" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="fldEspecializacion" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="cboSitio" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="cboCentro" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="fldDecanatura" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="fldDateIni" min="-2" pref="101" max="-2" attributes="0"/>
-                                  <Component id="fldPrecio" min="-2" pref="101" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="fldDateMaximaInscripcion" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="fldPrecio" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="cboTipoActividad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="cboUniversidad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="cboCentro" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="cboSitio" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldEspecializacion" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldDecanatura" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldTitulo" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldInvestigador" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldAreaConocimiento" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                          <Component id="fldCambios" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="fldDateIni" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="fldDateFin" min="-2" pref="101" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="216" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="cbCancelada" min="-2" max="-2" attributes="0"/>
@@ -123,8 +116,8 @@
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cboAreaConocimiento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblAreaConocimiento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldAreaConocimiento" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -147,19 +140,14 @@
                   <Component id="fldInvestigador" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblCapacidad" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldCapacidad" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCambios" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fldCambios" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblPrecio" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldPrecio" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -168,8 +156,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDateFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldDateFin" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="fldDateMaximaInscripcion" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDateMaximaInscripcion" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="cbCancelada" min="-2" max="-2" attributes="0"/>
@@ -225,7 +218,7 @@
         <Property name="text" type="java.lang.String" value="Fecha Inicio"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDateEnd">
+    <Component class="javax.swing.JLabel" name="lblDateMaximaInscripcion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha M&#xe1;xima Inscripci&#xf3;n"/>
       </Properties>
@@ -238,7 +231,7 @@
         <Property name="horizontalAlignment" type="int" value="4"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="fldDateEnd">
+    <Component class="javax.swing.JFormattedTextField" name="fldDateMaximaInscripcion">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
           <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
@@ -324,19 +317,6 @@
         <Property name="text" type="java.lang.String" value="&#xc1;rea de conocimiento"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cboAreaConocimiento">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboAreaConocimientoActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblEspecializaci&#xf3;n">
       <Properties>
         <Property name="text" type="java.lang.String" value="Especializaci&#xf3;n"/>
@@ -357,19 +337,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="fldInvestigador">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblCapacidad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Capacidad"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="fldCapacidad">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCambios">
       <Properties>
@@ -404,6 +371,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCanceladaActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldAreaConocimiento">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblDateFin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha Fin"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="fldDateFin">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

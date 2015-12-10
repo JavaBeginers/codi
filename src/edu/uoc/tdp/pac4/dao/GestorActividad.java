@@ -280,49 +280,53 @@ public class GestorActividad extends GestorDisco {
      * @throws Exception
      */
     public void add(Actividad actividad) throws SQLException, Exception {
-        String sql;
+        StringBuilder sql = new StringBuilder();
         Statement statement;
 
-        actividad.setCancelada(false);
-
+        
         try {
-            sql = "INSERT INTO " + ACTIVIDADTABLE + " "
-                    + "(" + ACTIVIDADTABLE_ID + ","
-                    + " " + ACTIVIDADTABLE_UNIVERSITAT_ID + ","
-                    + " " + ACTIVIDADTABLE_CENTRE_ID + ","
-                    + " " + ACTIVIDADTABLE_AULA_ID + ","
-                    + " " + ACTIVIDADTABLE_TIPUS + ","
-                    + " " + ACTIVIDADTABLE_TITOL + ","
-                    + " " + ACTIVIDADTABLE_AREA  + ","
-                    + " " + ACTIVIDADTABLE_ESPECIALITAT + ","
-                    + " " + ACTIVIDADTABLE_DECANATURA  + ","
-                    + " " + ACTIVIDADTABLE_INVESTIGADOR  + ","
-                    + " " + ACTIVIDADTABLE_DATA_INICI  + ","
-                    + " " + ACTIVIDADTABLE_DATA_FI  + ","
-                    + " " + ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO  + ","
-                    + " " + ACTIVIDADTABLE_PREU  + ","
-                    + " " + ACTIVIDADTABLE_MINIM_PERCENTAGE  + ","
-                    + " " + ACTIVIDADTABLE_CANCELADA  + ") "
-                    + "VALUES "
-                    + "('" + actividad.getId() + "', "
-                    + " " + actividad.getUniversitatId() + ", "
-                    + " " + actividad.getCentreId() + ", "
-                    + " " + actividad.getAulaId() + ", "
-                    + " " + actividad.getTipus() + ", "
-                    + " " + actividad.getTitol() + ", "
-                    + " " + actividad.getArea() + ", "
-                    + " " + actividad.getEspecialitat() + ", "
-                    + " " + actividad.getDecanatura() + ", "
-                    + " " + actividad.getInvestigator() + ", "
-                    + " '" + df.format(actividad.getDataInici()) + "', "
-                    + " '" + df.format(actividad.getDataFi()) + "', "
-                    + " '" + df.format(actividad.getDataMaxInscripcio()) + "', "
-                    + " " + actividad.getPreu() + ", "
-                    + " " + actividad.getMinimPercentatge() + ", "
-                    + " " + actividad.isCancelada() + "')";
+            sql.append("INSERT INTO " + ACTIVIDADTABLE + " ");
+            sql.append(ACTIVIDADTABLE_ID + ",");
+            sql.append(ACTIVIDADTABLE_UNIVERSITAT_ID + ",");
+            sql.append(ACTIVIDADTABLE_CENTRE_ID + ",");
+            sql.append(ACTIVIDADTABLE_AULA_ID + ",");
+            sql.append(ACTIVIDADTABLE_TIPUS + ",");
+            sql.append(ACTIVIDADTABLE_TITOL + ",");
+            sql.append(ACTIVIDADTABLE_AREA  + ",");
+            sql.append(ACTIVIDADTABLE_ESPECIALITAT + ",");
+            sql.append(ACTIVIDADTABLE_DECANATURA  + ",");
+            sql.append(ACTIVIDADTABLE_INVESTIGADOR  + ",");
+            sql.append(ACTIVIDADTABLE_DATA_INICI  + ",");
+            sql.append(ACTIVIDADTABLE_DATA_FI  + ",");
+            sql.append(ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO  + ",");
+            sql.append(ACTIVIDADTABLE_PREU  + ",");
+            sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE  + ",");
+            sql.append(ACTIVIDADTABLE_CANCELADA  + ") ");
+            sql.append("VALUES ");
+            sql.append("('").append(actividad.getId()).append("', ");
+            sql.append(actividad.getUniversitatId()).append(", ");
+            sql.append(actividad.getCentreId()).append(", ");
+            sql.append(actividad.getAulaId()).append(", ");
+            sql.append(actividad.getTipus()).append(", ");
+            sql.append(actividad.getTitol()).append(", ");
+            sql.append(actividad.getArea()).append(", ");
+            sql.append(actividad.getEspecialitat()).append(", ");
+            sql.append(actividad.getDecanatura()).append(", ");
+            sql.append(actividad.getInvestigator()).append(", ");
+            sql.append("'").append(df.format(actividad.getDataInici())).append("', ");
+            sql.append("'").append(df.format(actividad.getDataFi())).append("', ");
+            if(actividad.getDataMaxInscripcio()!=null) {
+                sql.append("'").append(df.format(actividad.getDataMaxInscripcio())).append("', ");
+            } else {
+                sql.append("null");
+            }
+            sql.append(actividad.getPreu()).append(", ");
+            sql.append(actividad.getMinimPercentatge()).append(", ");
+            sql.append(actividad.isCancelada()?"1":"0");
+            sql.append("')");
 
             statement = getConnection().createStatement();
-            statement.execute(sql);
+            statement.execute(sql.toString());
         } catch (SQLException ex) {
             throw ex;
         } catch (Exception ex) {
