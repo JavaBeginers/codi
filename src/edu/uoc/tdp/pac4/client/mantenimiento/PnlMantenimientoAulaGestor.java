@@ -231,6 +231,10 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
        fldNombre.setText     ("");
        fldCapacidad.setText ("");
        fldUbicacion.setText    ("");
+       this.fldCodigo.setText("");
+        this.fldFechaAlta.setText(this.now.toString());
+       this.fldFechaAlta.setEditable(false);
+ 
                   
        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
     }
@@ -292,21 +296,8 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
             aula.setCapacidad(new Integer(this.fldCapacidad.getText()));
             aula.setUbicacion(this.fldUbicacion.getText());
             aula.setFechaAlta(this.now);
-            aula.setCentro(this.comboCentro.getSelectedIndex()-1);
-            /*
-            for (Aula oldaula : this.aulasinactivas) {
-              //  if (aula.compare(oldaula)) {
-              if (1==1) {
-                    if (manager.undeleteAula(oldaula.getId())) {
-                        JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.oldaula"),
-                                              "Información", JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                        return;
-                    }
-                    break;
-                }
-            }*/
-                    
+            aula.setCentro(((ComboItem)comboCentro.getSelectedItem()).getId());
+       
             if (manager.addAula(aula)) {
                 JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.aula"),
                                               "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -391,22 +382,17 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
     }//GEN-LAST:event_cmdAcceptActionPerformed
    
    private void setCentros() {
-
-        List<ComboItem> centrosCB;
-        centrosCB = new ArrayList<ComboItem>();
+        comboCentro.removeAll();
         List<Centro> centros = new ArrayList<Centro>();
         try {
             centros = manager.getCentros();
         } catch (Exception ex) {
             Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        comboCentro.addItem(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
         for(Centro centro: centros) {
-            centrosCB.add(new ComboItem(centro.getNom(), centro.getId()));
-        }
-        comboCentro.removeAll();
-        comboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));        
+        comboCentro.addItem(new ComboItem(centro.getNom(),centro.getId()));
+        }  
         
     }
    
