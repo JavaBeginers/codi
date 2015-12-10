@@ -362,7 +362,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         lblCambios.setText(language.getProperty("mantenimiento.actividad.cambios"));
         lblPrecio.setText(language.getProperty("mantenimiento.actividad.precio"));
         lblDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
-        lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechafin"));
+        lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechaend"));
         lblDateMaximaInscripcion.setText(language.getProperty("mantenimiento.actividad.fechamaximainscripcion"));
         cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
 
@@ -532,8 +532,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             actividad.setTitol(fldTitulo.getText());
             actividad.setDecanatura(fldDecanatura.getText());
             actividad.setInvestigator(fldInvestigador.getText());
-            actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
-            actividad.setPreu(new Double(fldPrecio.getText()));
+            try {
+                actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+            } catch (NumberFormatException ex) {}
+            try {
+                actividad.setPreu(new Double(fldPrecio.getText()));
+            } catch (NumberFormatException ex) {}
             actividad.setDataInici(iniActividad);
             actividad.setDataFi(endActividad);
             actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
@@ -584,7 +588,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
 
             Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-            Date endActividad = DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText());
+            Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
 
             if (!DateTimeUtils.isDate(this.fldDateIni.getText())
                     || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
@@ -604,10 +608,26 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             Actividad new_actividad = new Actividad();
 
             new_actividad.setId(this.actividadID);
-            new_actividad.setTitol(this.fldTitulo.getText());
-            new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+
+            new_actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
+            new_actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
+            new_actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
+            new_actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
+            new_actividad.setArea(fldAreaConocimiento.getText());
+            new_actividad.setEspecialitat(fldEspecializacion.getText());
+            new_actividad.setTitol(fldTitulo.getText());
+            new_actividad.setDecanatura(fldDecanatura.getText());
+            new_actividad.setInvestigator(fldInvestigador.getText());
+            try {
+                new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+            } catch (NumberFormatException ex) {}
+            try {
+                new_actividad.setPreu(new Double(fldPrecio.getText()));
+            } catch (NumberFormatException ex) {}
             new_actividad.setDataInici(iniActividad);
             new_actividad.setDataFi(endActividad);
+            new_actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            new_actividad.setCancelada(cbCancelada.isSelected());
 
             Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
             int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, now);

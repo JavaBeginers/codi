@@ -338,7 +338,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
 
         header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
+        header.add(language.getProperty("mantenimiento.actividad.cambios"));
 
         String[][] gridData;
 
