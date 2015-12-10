@@ -355,7 +355,7 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
         
         int i = 0;
         for (Aula aula : aulas) {
-            gridData[i][0] = "" + aula.getCodigo();
+            gridData[i][0] = aula.getCodigo();
             gridData[i][1] = aula.getNombre();
             gridData[i][2] = "" + aula.getCapacidad();
             gridData[i][3] = aula.getUbicacion();

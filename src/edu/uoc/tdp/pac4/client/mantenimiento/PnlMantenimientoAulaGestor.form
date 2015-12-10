@@ -45,15 +45,17 @@
                           <Component id="lblCodigo" min="-2" max="-2" attributes="0"/>
                           <Component id="lblCentro" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFechaAlta" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaBaja" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="80" max="32767" attributes="0"/>
+                      <EmptySpace pref="78" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="fldNombre" pref="278" max="32767" attributes="0"/>
                           <Component id="fldUbicacion" alignment="1" max="32767" attributes="0"/>
                           <Component id="fldCodigo" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
-                          <Component id="fldFechaAlta" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
                           <Component id="comboCentro" pref="278" max="32767" attributes="0"/>
                           <Component id="fldCapacidad" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
+                          <Component id="fldFechaAlta" alignment="0" max="32767" attributes="0"/>
+                          <Component id="fldFechaBaja" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -64,38 +66,47 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fldCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="fldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fldCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fldUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="comboCentro" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblCentro" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fldFechaAlta" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="lblFechaAlta" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="fldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="fldFechaAlta" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFechaAlta" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblCentro" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboCentro" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="156" max="32767" attributes="0"/>
+              <EmptySpace pref="125" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmdAccept" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -181,6 +192,13 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFechaBaja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha Baja"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldFechaBaja">
     </Component>
   </SubComponents>
 </Form>

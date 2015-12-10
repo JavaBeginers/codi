@@ -186,7 +186,7 @@ public interface Mantenimiento extends Remote {
      * @throws SQLException
      * @throws Exception
      */
-    public boolean addAula(Aula aula) throws SQLException, Exception;
+    public boolean altaAula(Aula aula) throws SQLException, Exception;
 
     /**
      * Actualiza los datos de una Aula.
@@ -197,7 +197,7 @@ public interface Mantenimiento extends Remote {
      * @throws SQLException
      * @throws Exception
      */
-    public boolean updateAula(Aula aula) throws SQLException, Exception;
+    public boolean actualizarAula(Aula aula) throws SQLException, Exception;
 
     /**
      * Elimina una Aula.
