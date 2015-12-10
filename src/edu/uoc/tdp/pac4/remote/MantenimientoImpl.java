@@ -9,6 +9,7 @@ import edu.uoc.tdp.pac4.dao.GestorUsuario;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
 import edu.uoc.tdp.pac4.dao.GestorActividad;
 import edu.uoc.tdp.pac4.dao.GestorCentro;
+import edu.uoc.tdp.pac4.dao.GestorMatricula;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -492,6 +493,18 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
     public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getAulasByCentro(id);
+    }
+
+    @Override
+    public int getInscritosByActividadId(int actividadId) throws SQLException, Exception {
+        GestorMatricula gm = new GestorMatricula(gestorDisc.getConnection());
+        return gm.getInscritosByActividad(actividadId);
+    }
+
+    @Override
+    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
+        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+        return ga.getCapacidadByAulaId(aulaId);
     }
     
 }

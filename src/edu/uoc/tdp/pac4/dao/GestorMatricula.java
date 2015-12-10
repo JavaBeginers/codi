@@ -995,4 +995,29 @@ public class GestorMatricula extends GestorDisco
          throw ex;
       }
    }
+
+    public int getInscritosByActividad(int actividadId) throws SQLException, Exception{
+
+      String sql;
+      
+      sql = "select count(*) inscritos from matricula where activitat_id =  " + actividadId;
+                
+      try {
+         ResultSet rs = executeSql(sql);
+         if(rs.next()) {
+            return rs.getInt("inscritos");
+         } else {
+             return 0;
+         }
+      }
+      catch (SQLException ex) 
+      {
+          return 0;
+      } 
+      catch (Exception ex) 
+      {
+          return 0;
+      }
+     
+    }
 }

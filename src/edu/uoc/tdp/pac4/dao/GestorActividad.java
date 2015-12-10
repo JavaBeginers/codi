@@ -345,7 +345,7 @@ public class GestorActividad extends GestorDisco {
     public void update(Actividad actividad) throws SQLException, Exception {
         StringBuilder sql = new StringBuilder();
         Statement statement;
-
+        
         try {
             sql.append("UPDATE " + ACTIVIDADTABLE);
             sql.append(" SET ");

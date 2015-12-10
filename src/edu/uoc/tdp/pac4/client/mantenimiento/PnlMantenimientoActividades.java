@@ -310,18 +310,22 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private void listFullActividadesData() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
 
-        header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
+        header.add(language.getProperty("mantenimiento.usermain.universidad"));
+        header.add(language.getProperty("mantenimiento.usermain.tipo"));
+        header.add(language.getProperty("mantenimiento.usermain.name"));        
+        header.add(language.getProperty("mantenimiento.actividad.cambios"));
 
         String[][] gridData;
 
         actividades = manager.getActividades();
-        gridData = new String[actividades.size()][2];
+        gridData = new String[actividades.size()][4];
 
         int i = 0;
         for (Actividad actividad : actividades) {
-            gridData[i][0] = actividad.getTitol();
-            gridData[i][1] = "" + actividad.getMinimPercentatge();
+            gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
+            gridData[i][1] = getDescTipus(actividad.getTipus());
+            gridData[i][2] = actividad.getTitol();
+            gridData[i][3] = "" + actividad.getMinimPercentatge();
             i++;
         }
 
@@ -337,24 +341,62 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private void listFilteredActividadesData() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
 
-        header.add(language.getProperty("mantenimiento.usermain.name"));
+        header.add(language.getProperty("mantenimiento.usermain.universidad"));
+        header.add(language.getProperty("mantenimiento.usermain.tipo"));
+        header.add(language.getProperty("mantenimiento.usermain.name"));        
         header.add(language.getProperty("mantenimiento.actividad.cambios"));
 
         String[][] gridData;
 
         actividades = manager.getActividades();
-        gridData = new String[actividades.size()][2];
+        gridData = new String[actividades.size()][4];
 
         int i = 0;
         for (Actividad actividad : actividades) {
             if (new Integer(this.fldasistencia.getText()) <= actividad.getMinimPercentatge()) {
-                gridData[i][0] = actividad.getTitol();
-                gridData[i][1] = "" + actividad.getMinimPercentatge();
+                gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
+                gridData[i][1] = getDescTipus(actividad.getTipus());
+                gridData[i][2] = actividad.getTitol();
+                gridData[i][3] = "" + actividad.getMinimPercentatge();
                 i++;
             }
         }
 
         this.tblData.setModel(new javax.swing.table.DefaultTableModel(gridData, header.toArray()));
+    }
+    
+    private String getDescTipus(int tipusId) {
+    
+        switch (tipusId) {
+            case Actividad.ACTIVIDAD_TIPO_CONGRESO_ID:
+                return Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language);
+            case Actividad.ACTIVIDAD_TIPO_JORNADA_ID:
+                return Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language);
+            case Actividad.ACTIVIDAD_TIPO_MASTER_ID:
+                return Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language);
+            case Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID:
+                return Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language);
+            default:
+                return "(-)";
+        }
+        
+    }
+    
+    private String getDescUniversidad(int universidadId) {
+        
+        switch (universidadId) {
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID:
+                return Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language);
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID:
+                return Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language);
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID:
+                return Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language);
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID:
+                return Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language);
+            default:
+                return "(-)";
+        }
+        
     }
 
     private void listData() {
