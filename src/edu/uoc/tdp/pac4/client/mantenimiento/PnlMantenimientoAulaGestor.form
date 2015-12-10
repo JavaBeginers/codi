@@ -31,29 +31,29 @@
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="202" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="cmdAccept" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPlace" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCapacity" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCode" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCenter" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblUbicacion" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCapacidad" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCodigo" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCentro" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFechaAlta" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="80" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="fldName" pref="278" max="32767" attributes="0"/>
-                          <Component id="fldCapacity" alignment="1" max="32767" attributes="0"/>
-                          <Component id="fldPlace" alignment="1" max="32767" attributes="0"/>
-                          <Component id="fldCode" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
+                          <Component id="fldNombre" pref="278" max="32767" attributes="0"/>
+                          <Component id="fldUbicacion" alignment="1" max="32767" attributes="0"/>
+                          <Component id="fldCodigo" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
                           <Component id="fldFechaAlta" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
-                          <Component id="comboCenter" pref="278" max="32767" attributes="0"/>
+                          <Component id="comboCentro" pref="278" max="32767" attributes="0"/>
+                          <Component id="fldCapacidad" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -67,23 +67,23 @@
               <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCode" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="fldName" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCapacity" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldCapacity" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldCapacidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPlace" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldPlace" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldUbicacion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -92,10 +92,10 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblCenter" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboCenter" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCentro" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboCentro" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="154" max="32767" attributes="0"/>
+              <EmptySpace pref="156" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmdAccept" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -115,57 +115,51 @@
     </Container>
     <Component class="javax.swing.JButton" name="cmdClose">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/arrow-curve-180.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Cerrar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdCloseActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="fldName">
+    <Component class="javax.swing.JTextField" name="fldNombre">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblName">
+    <Component class="javax.swing.JLabel" name="lblNombre">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCapacity">
+    <Component class="javax.swing.JLabel" name="lblCapacidad">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Capacidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblPlace">
+    <Component class="javax.swing.JLabel" name="lblUbicacion">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="fldCapacity">
+    <Component class="javax.swing.JTextField" name="fldCapacidad">
     </Component>
-    <Component class="javax.swing.JTextField" name="fldPlace">
+    <Component class="javax.swing.JTextField" name="fldUbicacion">
     </Component>
     <Component class="javax.swing.JButton" name="cmdAccept">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/ok_st_obj.gif"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Acceptar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAcceptActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCode">
+    <Component class="javax.swing.JLabel" name="lblCodigo">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" value="Codigo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="fldCode">
+    <Component class="javax.swing.JTextField" name="fldCodigo">
     </Component>
     <Component class="javax.swing.JLabel" name="lblFechaAlta">
       <Properties>
@@ -173,7 +167,7 @@
         <Property name="text" type="java.lang.String" value="Fecha Alta"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCenter">
+    <Component class="javax.swing.JLabel" name="lblCentro">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="text" type="java.lang.String" value="Centro"/>
@@ -181,7 +175,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fldFechaAlta">
     </Component>
-    <Component class="javax.swing.JComboBox" name="comboCenter">
+    <Component class="javax.swing.JComboBox" name="comboCentro">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
