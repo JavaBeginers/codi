@@ -5,10 +5,46 @@
  */
 package edu.uoc.tdp.pac4.beans;
 
+import java.io.Serializable;
+
+
 /**
  *
- * @author Cristian
+ * @author Ivan
  */
-public class Centro {
+public class Centro implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+
+    
+    private int id;
+    private String nom;
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the descrpcion
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the descrpcion to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 }

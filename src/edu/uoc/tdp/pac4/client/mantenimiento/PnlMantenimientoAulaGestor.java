@@ -1,7 +1,10 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.beans.Aula;
+import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.eAcademiaEU;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
+import edu.uoc.tdp.pac4.util.ComboItem;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.util.FieldLimit;
 
@@ -10,6 +13,10 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -297,6 +304,7 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
        fldName.setText     ("");
        fldCapacity.setText ("");
        fldPlace.setText    ("");
+                   setCentros();
 
             
        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
@@ -481,6 +489,25 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
         }
     }//GEN-LAST:event_cmdAcceptActionPerformed
    
+      private void setCentros() {
+
+        List<ComboItem> centrosCB;
+        centrosCB = new ArrayList<ComboItem>();
+        List<Centro> centros = new ArrayList<Centro>();
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        for(Centro centro: centros) {
+            centrosCB.add(new ComboItem(centro.getNom(), centro.getId()));
+        }
+        comboCenter.removeAll();
+        comboCenter.setModel(new DefaultComboBoxModel(centrosCB.toArray()));        
+        
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdAccept;
