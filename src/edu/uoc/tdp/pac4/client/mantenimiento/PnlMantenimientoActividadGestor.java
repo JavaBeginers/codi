@@ -439,7 +439,19 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
             this.actividad = manager.getActividad(this.actividadID);
 
+            //Inicializamos el combo de tipo de actividad
+            setTipoActividades(actividad.getTipus());
+            //Inicializamos el combo de universidades
+            setUniversidades( Math.toIntExact(actividad.getUniversitatId()));
+            //Inicializamos Centros
+            setCentros(actividad.getCentreId(), actividad.getAulaId());
+            this.fldAreaConocimiento.setText(actividad.getArea());
+            this.fldEspecializacion.setText(actividad.getEspecialitat());
             this.fldTitulo.setText(actividad.getTitol());
+            this.fldDecanatura.setText(actividad.getDecanatura());
+            this.fldInvestigador.setText(actividad.getInvestigator());
+            this.fldCambios.setText(String.valueOf(actividad.getMinimPercentatge()));
+            this.fldPrecio.setText(String.valueOf(actividad.getPreu()));
             if (actividad.getDataInici() != null) {
                 this.fldDateIni.setText(df.format(actividad.getDataInici()));
             } else {
@@ -679,6 +691,38 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbCanceladaActionPerformed
 
+    //Inicializamos Centros
+    private void setCentros(long centreId, long aulaId){
+        
+        List<ComboItem> centrosCB;
+        centrosCB = new ArrayList<ComboItem>();
+        List<Centro> centros = new ArrayList<Centro>();
+        int index=0;
+        
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        for (int i = 0;i<centros.size();i++){
+            if(centreId==centros.get(i).getId()) {
+                index = i+1;
+            }
+            centrosCB.add(new ComboItem(centros.get(i).getNom(), centros.get(i).getId()));
+        }
+        cboCentro.removeAll();
+        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
+        cboCentro.setSelectedIndex(index);
+        for(int i = 0;i<cboSitio.getComponentCount();i++) {
+            if (aulaId == cboSitio.getItemAt(i).hashCode()) {
+                index = i+1;
+            }
+        }
+        cboSitio.setSelectedIndex(index);
+    }
+
     private void setCentros() {
 
         List<ComboItem> centrosCB;
@@ -714,6 +758,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     }
 
     private void setTipoActividades() {
+
         if (tiposActividad == null) {
             tiposActividad = new ArrayList<ComboItem>();
         }
@@ -728,6 +773,74 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     }
 
+    private void setTipoActividades(int tipus) {
+
+        int index;
+        if (tiposActividad == null) {
+            tiposActividad = new ArrayList<ComboItem>();
+        }
+        tiposActividad.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language), Actividad.ACTIVIDAD_TIPO_CONGRESO_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
+        switch (tipus) {
+            case Actividad.ACTIVIDAD_TIPO_CONGRESO_ID:
+                index = 1;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_JORNADA_ID:
+                index = 2;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_MASTER_ID:
+                index = 3;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID:
+                index = 4;
+                break;
+            default:
+                index = 0;
+        }
+
+        cboTipoActividad.removeAll();
+        cboTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
+        cboTipoActividad.setSelectedIndex(index);
+        
+    }
+
+    private void setUniversidades(int universidad) {
+        
+        int index;
+        if (universidades == null) {
+            universidades = new ArrayList<ComboItem>();
+        }
+        //Buscar todas las universidades
+        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+        switch (universidad) {
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID:
+                index = 1;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID:
+                index = 2;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID:
+                index = 3;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID:
+                index = 4;
+                break;
+            default:
+                index = 0;
+        }        
+        
+        cboUniversidad.removeAll();
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
+        cboUniversidad.setSelectedIndex(index);
+        
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbCancelada;

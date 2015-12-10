@@ -285,8 +285,7 @@ public class GestorActividad extends GestorDisco {
 
         
         try {
-            sql.append("INSERT INTO " + ACTIVIDADTABLE + " ");
-            sql.append(ACTIVIDADTABLE_ID + ",");
+            sql.append("INSERT INTO " + ACTIVIDADTABLE + " (");
             sql.append(ACTIVIDADTABLE_UNIVERSITAT_ID + ",");
             sql.append(ACTIVIDADTABLE_CENTRE_ID + ",");
             sql.append(ACTIVIDADTABLE_AULA_ID + ",");
@@ -303,7 +302,7 @@ public class GestorActividad extends GestorDisco {
             sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE  + ",");
             sql.append(ACTIVIDADTABLE_CANCELADA  + ") ");
             sql.append("VALUES ");
-            sql.append("('").append(actividad.getId()).append("', ");
+            sql.append("(");
             sql.append(actividad.getUniversitatId()).append(", ");
             sql.append(actividad.getCentreId()).append(", ");
             sql.append(actividad.getAulaId()).append(", ");
@@ -323,7 +322,7 @@ public class GestorActividad extends GestorDisco {
             sql.append(actividad.getPreu()).append(", ");
             sql.append(actividad.getMinimPercentatge()).append(", ");
             sql.append(actividad.isCancelada()?"1":"0");
-            sql.append("')");
+            sql.append(")");
 
             statement = getConnection().createStatement();
             statement.execute(sql.toString());
