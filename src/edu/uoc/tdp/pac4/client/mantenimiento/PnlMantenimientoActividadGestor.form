@@ -66,21 +66,16 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Component id="cboAreaConocimiento" min="-2" pref="228" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="fldTitulo" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
                                   <Component id="cboUniversidad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
                                   <Component id="fldCapacidad" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
                                   <Component id="fldDateEnd" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
                                   <Component id="cboTipoActividad" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="55" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="cboAreaConocimiento" min="-2" pref="228" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="fldCambios" min="-2" pref="101" max="-2" attributes="0"/>
                                   <Component id="fldInvestigador" min="-2" pref="228" max="-2" attributes="0"/>
                                   <Component id="fldEspecializacion" min="-2" pref="228" max="-2" attributes="0"/>
@@ -315,6 +310,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboSitioActionPerformed"/>

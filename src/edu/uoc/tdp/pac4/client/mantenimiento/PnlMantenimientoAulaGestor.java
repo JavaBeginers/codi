@@ -291,7 +291,7 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
 
         try {
             this.aula = new Aula();
-            aula.setCodigo(new Integer(this.fldCodigo.getText()));
+            aula.setCodigo(this.fldCodigo.getText());
             aula.setNombre(this.fldNombre.getText());
             aula.setCapacidad(new Integer(this.fldCapacidad.getText()));
             aula.setUbicacion(this.fldUbicacion.getText());
@@ -322,7 +322,7 @@ public class PnlMantenimientoAulaGestor extends javax.swing.JDialog
         try {
             Aula new_aula = new Aula();
             new_aula.setId(this.aulaID);
-            new_aula.setCodigo(new Integer(this.fldCodigo.getText()));
+            new_aula.setCodigo(this.fldCodigo.getText());
             new_aula.setNombre(this.fldNombre.getText());
             new_aula.setCapacidad(new Integer(this.fldCapacidad.getText()));
             new_aula.setUbicacion(this.fldUbicacion.getText());
