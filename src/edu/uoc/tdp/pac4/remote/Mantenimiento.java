@@ -341,14 +341,14 @@ public interface Mantenimiento extends Remote {
      */
     public int getInscritosByActividadId(int actividadId) throws SQLException, Exception;
         
-//    /**
-//     * Devuelve la capacidad de un aula
-//     *
-//     * @param aulaId Identificador del Actividad
-//     * @return
-//     * @throws SQLException
-//     * @throws Exception
-//     */
-//    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception;
+    /**
+     * Devuelve la capacidad de un aula
+     *
+     * @param aulaId Identificador del Actividad
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception;
     
 }

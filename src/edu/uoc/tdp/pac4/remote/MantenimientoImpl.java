@@ -475,10 +475,10 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gm.getInscritosByActividad(actividadId);
     }
 
-//    @Override
-//    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
-//        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-//        return ga.getCapacidadByAulaId(aulaId);
-//    }
+    @Override
+    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
+        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+        return ga.getCapacidadByAulaId(aulaId);
+    }
     
 }
