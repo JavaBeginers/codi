@@ -9,6 +9,7 @@ import edu.uoc.tdp.pac4.client.gestion.PnlAsistencia;
 import edu.uoc.tdp.pac4.client.gestion.PnlGroupGestor;
 import edu.uoc.tdp.pac4.client.gestion.PnlMatriculaGestor;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoAulas;
+import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoRecursos;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoActividades;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoUsuarios;
 import edu.uoc.tdp.pac4.remote.Conexion;
@@ -184,6 +185,7 @@ public class PnlMain extends javax.swing.JFrame
         mnuMantenimiento = new javax.swing.JMenu();
         mnuMantenimientoUsuarios = new javax.swing.JMenuItem();
         mnuMantenimientoAulas = new javax.swing.JMenuItem();
+        mnuMantenimientoRecursos = new javax.swing.JMenuItem();
         mnuMantenimientoActividades = new javax.swing.JMenuItem();
         mnuEstadisticas = new javax.swing.JMenu();
         mnuEstadisticasAlumno = new javax.swing.JMenuItem();
@@ -350,6 +352,15 @@ public class PnlMain extends javax.swing.JFrame
             }
         });
         mnuMantenimiento.add(mnuMantenimientoAulas);
+
+        mnuMantenimientoRecursos.setText("Recursos...");
+        mnuMantenimientoRecursos.setActionCommand("Recursos...");
+        mnuMantenimientoRecursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuMantenimientoRecursosActionPerformed(evt);
+            }
+        });
+        mnuMantenimiento.add(mnuMantenimientoRecursos);
 
         mnuMantenimientoActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/projection-screen--pencil.png"))); // NOI18N
         mnuMantenimientoActividades.setText("Activitats...");
@@ -684,7 +695,8 @@ public class PnlMain extends javax.swing.JFrame
         form.setLocationRelativeTo(null);
         form.setVisible(true);
     }//GEN-LAST:event_mnuMantenimientoAulasActionPerformed
-
+ 
+    
     private void mnuMantenimientoActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoActividadesActionPerformed
         // TODO add your handling code here:
         PnlMantenimientoActividades form = new PnlMantenimientoActividades(this, true, rmiMantenimiento, language);
@@ -742,6 +754,13 @@ public class PnlMain extends javax.swing.JFrame
       
       setLanguage(LanguageUtils.LANG_ENGLISH);
     }//GEN-LAST:event_mnuLanguageEngActionPerformed
+
+    private void mnuMantenimientoRecursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoRecursosActionPerformed
+        // TODO add your handling code here:
+         PnlMantenimientoRecursos form = new PnlMantenimientoRecursos(this, true, rmiMantenimiento, language);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+    }//GEN-LAST:event_mnuMantenimientoRecursosActionPerformed
 
     private void mnuAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {
         PnlMarcaAsistencia form = new PnlMarcaAsistencia(this, true, rmiConexion, language, usuario);
@@ -907,6 +926,7 @@ public class PnlMain extends javax.swing.JFrame
     private javax.swing.JMenu mnuMantenimiento;
     private javax.swing.JMenuItem mnuMantenimientoActividades;
     private javax.swing.JMenuItem mnuMantenimientoAulas;
+    private javax.swing.JMenuItem mnuMantenimientoRecursos;
     private javax.swing.JMenuItem mnuMantenimientoUsuarios;
     private javax.swing.JMenu mnuMatriculas;
     private javax.swing.JMenu mnuRequest;

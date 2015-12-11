@@ -5,6 +5,7 @@ import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.beans.Recurso;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -143,84 +144,12 @@ public interface Mantenimiento extends Remote {
      */
     public boolean liberarMatriculasUsuario(int id) throws SQLException, Exception;
 
-    /**
-     * Devuelve una lista de Aulas del centro.
-     *
-     * @return Una lista de instancias {@link Aula} que representan las Aulas
-     * del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Aula> getAulas() throws SQLException, Exception;
-
-    /**
-     * Devuelve una lista de Aulas inactivas del centro.
-     *
-     * @return Una lista de instancias {@link Aula} que representan las Aulas
-     * del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Aula> getAulasInactivas() throws SQLException, Exception;
-
-    /**
-     * Obtiene una determinada Aula.
-     *
-     * @param id Identificador único de la Aula.
-     * @return Una instancia de {@link Aula} que representa la Aula
-     * seleccionada.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public Aula getAula(int id) throws SQLException, Exception;
-
-    /**
-     * Agrega un nueva Aula al centro.
-     *
-     * @param aula Una instancia de {@link Aula} que contiene los datos de la
-     * Aula.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean altaAula(Aula aula) throws SQLException, Exception;
-
-    /**
-     * Actualiza los datos de una Aula.
-     *
-     * @param aula Una instancia de {@link Aula} que contiene los datos
-     * actualizados de la Aula.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean actualizarAula(Aula aula) throws SQLException, Exception;
-
-    /**
-     * Elimina una Aula.
-     *
-     * @param id Identificador de la Aula a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean eliminarAula(int id) throws SQLException, Exception;
+  
+ 
 
     
 
-    /**
-     * Recupera una Aula.
-     *
-     * @param id Identificador de la Aula a recuperar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean undeleteAula(int id) throws SQLException, Exception;
-
+ 
 
 
     /**
@@ -330,4 +259,40 @@ public interface Mantenimiento extends Remote {
      * @throws Exception
      */
     public int checkGruposActividad(int id) throws SQLException, Exception;
+    
+    
+    //*********************************RECURSO********************************
+    public ArrayList<Recurso> getRecursos() throws SQLException, Exception;
+
+    public ArrayList<Recurso> getRecursosInactivos() throws SQLException, Exception;
+
+    public Recurso getRecurso(int id) throws SQLException, Exception;
+
+    public boolean altaRecurso(Recurso rec) throws SQLException, Exception;
+
+    public boolean actualizarRecurso(Recurso rec) throws SQLException, Exception;
+
+    public boolean eliminarRecurso(int id) throws SQLException, Exception;
+    
+    //***********************************************************************
+    
+
+    //*********************************AULA**********************************
+    public ArrayList<Aula> getAulas() throws SQLException, Exception;
+
+    public ArrayList<Aula> getAulasInactivas() throws SQLException, Exception;
+
+    public Aula getAula(int id) throws SQLException, Exception;
+
+    public boolean altaAula(Aula aula) throws SQLException, Exception;
+
+    public boolean actualizarAula(Aula aula) throws SQLException, Exception;
+
+    public boolean eliminarAula(int id) throws SQLException, Exception;
+    
+    //***********************************************************************
+
+ 
+
+    
 }
