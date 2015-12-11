@@ -749,9 +749,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cboCentro.removeAll();
         cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
         cboCentro.setSelectedIndex(index);
+        index=0;
         for(int i = 0;i<cboSitio.getComponentCount();i++) {
-            if (aulaId == cboSitio.getItemAt(i).hashCode()) {
-                index = i+1;
+            if (aulaId == ((ComboItem)cboSitio.getItemAt(i)).getId()) {
+                index = i;
             }
         }
         cboSitio.setSelectedIndex(index);
