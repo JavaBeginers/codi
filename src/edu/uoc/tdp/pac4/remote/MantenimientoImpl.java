@@ -277,28 +277,14 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
      * @throws Exception
      */
     @Override
-    public boolean deleteAula(int id) throws SQLException, Exception {
+    public boolean eliminarAula(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        ga.delete(id);
+        ga.eliminar(id);
 
         return true;
     }
 
-    /**
-     * Elimina la asignacion de recursos al aula
-     *
-     * @param id Identificador de la Aula
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    @Override
-    public boolean liberarRecursosAula(int id) throws SQLException, Exception {
-        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        ga.freeRecursosFromAula(id);
 
-        return true;
-    }
 
     /**
      * Recupera una Aula.
@@ -469,19 +455,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Comprueba si un aula tiene grupos asignados
-     *
-     * @param id Identificador del Aula
-     * @return
-     * @throws SQLException
-     * @throws Exception
-     */
-    @Override
-    public int checkGruposAula(int id) throws SQLException, Exception {
-        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        return ga.checkGruposAssigned(id);
-    }
+ 
 
     @Override
     public ArrayList<Centro> getCentros() throws SQLException, Exception {
@@ -501,10 +475,10 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gm.getInscritosByActividad(actividadId);
     }
 
-    @Override
-    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
-        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        return ga.getCapacidadByAulaId(aulaId);
-    }
+//    @Override
+//    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
+//        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+//        return ga.getCapacidadByAulaId(aulaId);
+//    }
     
 }

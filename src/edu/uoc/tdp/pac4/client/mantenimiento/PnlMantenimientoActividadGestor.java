@@ -483,19 +483,19 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
         //Validar si se pueden modificar las fechas
-        int numInscripciones;
-        try {
-            numInscripciones = manager.getInscritosByActividadId(actividad.getId());
-            int capacidad = manager.getCapacidadByAulaId(Math.toIntExact(actividad.getAulaId()));
-            if(((numInscripciones/capacidad)*100) > actividad.getMinimPercentatge() ||
-                    actividad.getDataMaxInscripcio().getTime()<new Date().getTime()) {
-                fldDateIni.setEditable(false);
-                fldDateFin.setEditable(false);
-                fldDateMaximaInscripcion.setEditable(false);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        int numInscripciones;
+//        try {
+//            numInscripciones = manager.getInscritosByActividadId(actividad.getId());
+//            int capacidad = manager.getCapacidadByAulaId(Math.toIntExact(actividad.getAulaId()));
+//            if(((numInscripciones/capacidad)*100) > actividad.getMinimPercentatge() ||
+//                    actividad.getDataMaxInscripcio().getTime()<new Date().getTime()) {
+//                fldDateIni.setEditable(false);
+//                fldDateFin.setEditable(false);
+//                fldDateMaximaInscripcion.setEditable(false);
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
     }
 

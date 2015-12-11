@@ -2,38 +2,43 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.client.gestion.*;
 import edu.uoc.tdp.pac4.beans.Aula;
+import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.eAcademiaEU;
 import edu.uoc.tdp.pac4.exceptions.GroupNotEmptyException;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
+import edu.uoc.tdp.pac4.util.ComboItem;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author JavaBeginers
- */
+/**********************************************************************
+ ******************** @author JavaBeginers - Cristian******************
+ *********************************************************************/
 public class PnlMantenimientoAulas extends javax.swing.JDialog 
 {
     private Mantenimiento manager;
     private LanguageUtils language;
     private ArrayList<Aula> aulas; 
     private boolean dofilter = false;
-    
-   
-/**
-* PnlGroupGestor
-*/
+
 public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
         super(parent, modal); 
         this.language       = language;
         this.manager        = manager;
         initComponents();
         setLocationRelativeTo(null);
-        addaptToPreferences();
-        listData();
+        prepararTextos();
+        setCombos();
+        listarAulas();
+      
 }
 
    /**
@@ -53,10 +58,14 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         fldcapacity = new javax.swing.JTextField();
-        lblcapacity = new javax.swing.JLabel();
+        lblCapacidad = new javax.swing.JLabel();
         btnFilter = new javax.swing.JButton();
         btnClearFilter = new javax.swing.JButton();
         btnView = new javax.swing.JButton();
+        comboActiva = new javax.swing.JComboBox();
+        lblActivas = new javax.swing.JLabel();
+        comboCentro = new javax.swing.JComboBox();
+        lblCentro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,7 +121,7 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
             }
         });
 
-        lblcapacity.setText("Capacidad Mínima");
+        lblCapacidad.setText("Capacidad Mínima");
 
         btnFilter.setText("Filtrar");
         btnFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +147,10 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
             }
         });
 
+        lblActivas.setText("Activa");
+
+        lblCentro.setText("Centro");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,20 +171,29 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblcapacity)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCentro)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblActivas, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboActiva, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(lblCapacidad)
+                                .addGap(18, 18, 18)
+                                .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(206, 206, 206)
+                        .addComponent(btnClose))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -189,45 +211,56 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblcapacity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblCapacidad)
+                    .addComponent(comboActiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblActivas)
+                    .addComponent(comboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCentro))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFilter)
                     .addComponent(btnClearFilter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnClose)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-  private void addaptToPreferences() {
-      
-      //Establir textos en funció de l'idioma:
-       this.setTitle(language.getProperty("mantenimiento.aulas.Mantenimiento"));
-       this.setLabelsLanguage();
-   }
-       
-    private void setLabelsLanguage() {
+//Establece los textos segun idioma seleccionado      
+   private void prepararTextos() {
+        this.setTitle(language.getProperty("mantenimiento.aulas.Mantenimiento"));
         this.btnAdd.setText         (language.getProperty("mantenimiento.Nueva"));
         this.btnEdit.setText        (language.getProperty("mantenimiento.Editar"));
         this.btnDelete.setText      (language.getProperty("mantenimiento.Eliminar"));
         this.btnView.setText     (language.getProperty("mantenimiento.Ver"));
+        this.lblActivas.setText (language.getProperty("mantenimiento.aulas.Activas"));
+        this.lblCapacidad.setText (language.getProperty("mantenimiento.aulas.Capacidadminima"));
+        this.lblCentro.setText (language.getProperty("mantenimiento.aulas.Centro"));
                 
         this.btnClose.setText       (language.getProperty("mantenimiento.Cerrar"));
         this.btnFilter.setText      (language.getProperty("mantenimiento.Filtrar"));
         this.btnClearFilter.setText (language.getProperty("mantenimiento.Restablecer")); 
+        
+        this.fldcapacity.setText (language.getProperty("0")); 
+        this.fldcapacity.addKeyListener(new KeyAdapter(){
+				public void keyTyped(KeyEvent e){
+                                    char c= e.getKeyChar();
+                                    if (Character.isDigit(c) == false) {
+			            e.consume();//Solo permite introducir dígitos
+			        }}});
     }
    
+//Se escoge 'Alta de Aula'  
    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
            PnlMantenimientoAulaGestor form = new PnlMantenimientoAulaGestor(null, true ,manager, language, "Add", 0);
            form.setLocationRelativeTo(null);
            form.setVisible(true);
-           listData();
+           listarAulas();
    }//GEN-LAST:event_btnAddActionPerformed
 
+//Se escoge 'Edición de Aula'     
    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
       //No hay  fila seleccionada
       if (tblData.getSelectedRow() < 0)
@@ -244,14 +277,15 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
       PnlMantenimientoAulaGestor form = new PnlMantenimientoAulaGestor(null, true, manager, language, "Edit", aula.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
-      listData();
+      listarAulas();
    }//GEN-LAST:event_btnEditActionPerformed
 
+//Cerrar el Formulario
    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-      // Cierra el formulario
       this.dispose();
    }//GEN-LAST:event_btnCloseActionPerformed
 
+//Se escoge Desactivar el Aula
    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
       //No hay fila seleccionada:
       if (tblData.getSelectedRow() < 0)
@@ -262,26 +296,19 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
+      
       //Hay fila seleccionada:
+      
       Aula aula = aulas.get(tblData.getSelectedRow());
-      Object[] options = {language.getProperty("mantenimiento.si"), language.getProperty("mantenimiento.no")};
+      Object[] options = {language.getProperty("mantenimiento.Si"), language.getProperty("mantenimiento.No")};
+      
       int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.EliminarAula"),
                                                language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, 
                                                JOptionPane.QUESTION_MESSAGE, null, options, aula);
       if (reply == 0) {
       try {
-          int grupos_aula = manager.checkGruposAula(aula.getId());
-          if (grupos_aula == 0) {
-            if (manager.deleteAula(aula.getId())) {
-                manager.liberarRecursosAula(aula.getId());
-            }
-          }
-          else {
-              JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("mantenimiento.err.EliminarAulaGrupos"), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-          }
+            manager.eliminarAula(aula.getId());
+
       }
       catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, 
@@ -296,25 +323,30 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                                           JOptionPane.ERROR_MESSAGE);
       }
       
-      listData();
+      listarAulas();
       }
    }//GEN-LAST:event_btnDeleteActionPerformed
-
+   
+//Botón Filtrar
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
-        
-        if (!this.fldcapacity.getText().equals("")) {
             this.dofilter = true;
-            listData();
-        }
+            if(this.fldcapacity.getText().equals("")){
+                this.fldcapacity.setText("0");
+            }
+            listarAulas();
     }//GEN-LAST:event_btnFilterActionPerformed
 
+//Botón Limpiar Filtro
     private void btnClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFilterActionPerformed
         // TODO add your handling code here:
-        this.fldcapacity.setText("");
+        this.fldcapacity.setText("0");
+        this.comboActiva.setSelectedIndex(0);
+        this.comboCentro.setSelectedIndex(0);
         this.dofilter = false;
-        listData();
+        listarAulas();
     }//GEN-LAST:event_btnClearFilterActionPerformed
 
+//Consultar Aula
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // No hay fila seleccionada
       if (tblData.getSelectedRow() < 0)
@@ -334,11 +366,26 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
       form.setVisible(true);
     }//GEN-LAST:event_btnViewActionPerformed
 
-   
-   /**
-    * Rellena la tabla de aulas.
-    */
-    private void listFullAulasData() throws SQLException, RemoteException, Exception {
+//Carga el Combo de los Centros
+  private void setCombos() {
+        comboCentro.removeAll();
+        List<Centro> centros = new ArrayList<Centro>();
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        comboCentro.addItem(new ComboItem(language.getProperty("mantenimiento.Todos"), 0));
+        for(Centro centro: centros) {
+        comboCentro.addItem(new ComboItem(centro.getNom(),centro.getId()));
+        }  
+        comboActiva.addItem(new ComboItem(language.getProperty("mantenimiento.Si"), 0));
+        comboActiva.addItem(new ComboItem(language.getProperty("mantenimiento.No"), 1));
+        
+    }
+
+//Cargar todas las Aulas
+    private void todasAulas() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.aulas.Codigo"));
@@ -368,7 +415,8 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
             });
     }
     
-    private void listFilteredAulasData() throws SQLException, RemoteException, Exception {
+//Cargar Aulas Filtradas
+    private void filtrarAulas() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.aulas.Codigo"));
@@ -376,22 +424,31 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
         header.add(language.getProperty("mantenimiento.aulas.Capacidad"));
         header.add(language.getProperty("mantenimiento.aulas.Ubicacion"));
 
-      
         String[][] gridData;
-        
+        if (comboActiva.getSelectedIndex()==0){
         aulas = manager.getAulas();
-        
+        }else{
+            aulas=manager.getAulasInactivas();
+        }
         gridData = new String[aulas.size()][4];
-        
         int i = 0;
         for (Aula aula : aulas) {
             if (new Integer(this.fldcapacity.getText()) <= aula.getCapacidad()) {
-                gridData[i][0] = aula.getNombre();
+                if(comboCentro.getSelectedIndex()==0){
             gridData[i][0] = "" + aula.getCodigo();
             gridData[i][1] = aula.getNombre();
             gridData[i][2] = "" + aula.getCapacidad();
             gridData[i][3] = aula.getUbicacion();
             i++;
+                } else{
+                    if(aula.getCentro()==((ComboItem)comboCentro.getSelectedItem()).getId()){
+                             gridData[i][0] = "" + aula.getCodigo();
+                             gridData[i][1] = aula.getNombre();
+                             gridData[i][2] = "" + aula.getCapacidad();
+                             gridData[i][3] = aula.getUbicacion();
+                             i++;
+                    }
+                }
             }
         }
         
@@ -400,15 +457,25 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                 { return false; } 
             });
     }
-    
-   private void listData()
+ 
+//filtrar si el filtro esta activo. Mostrar todas en caso contrario
+   private void listarAulas()
    {
       try {
+            if(comboActiva.getSelectedIndex()==1){
+                this.btnDelete.setEnabled(false);
+                this.btnEdit.setEnabled(false);
+            }else{
+                this.btnDelete.setEnabled(true);
+                this.btnEdit.setEnabled(true);  
+            }
           if (!this.dofilter) {
-              this.listFullAulasData();
+              this.todasAulas();
+              comboActiva.setSelectedIndex(0);
+              comboCentro.setSelectedIndex(0);
           }
           else {
-              this.listFilteredAulasData();
+              this.filtrarAulas();
           }
       } 
       catch (SQLException ex)
@@ -417,9 +484,6 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                                        language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
       catch (RemoteException ex)
       {
@@ -427,9 +491,6 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                                        language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
       catch (Exception ex) 
       {
@@ -437,9 +498,6 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
                                        language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
    
@@ -451,10 +509,14 @@ public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnView;
+    private javax.swing.JComboBox comboActiva;
+    private javax.swing.JComboBox comboCentro;
     private javax.swing.JTextField fldcapacity;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblcapacity;
+    private javax.swing.JLabel lblActivas;
+    private javax.swing.JLabel lblCapacidad;
+    private javax.swing.JLabel lblCentro;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 }
