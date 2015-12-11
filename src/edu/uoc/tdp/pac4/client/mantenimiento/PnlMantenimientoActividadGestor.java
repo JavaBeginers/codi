@@ -2,6 +2,8 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Aula;
+import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.util.FieldLimit;
@@ -13,11 +15,10 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.ArrayList;
-import javax.swing.JFileChooser;
-import java.io.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,33 +26,35 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
-    private Mantenimiento manager;
-    private LanguageUtils language;
-    private List<ComboItem> tipus;
+    private final Mantenimiento manager;
+    private final LanguageUtils language;
+    private List<ComboItem> tiposActividad;
+    private List<ComboItem> universidades;
 
-    private String ActionType;
+    private final String actionType;
 
-    private Date now = new Date();
-    private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private final Date now = new Date();
+    private final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     private Actividad actividad = null;
-    private ArrayList<Actividad> actividades = null;
-    private int actividadID;
-    private int NAME_LENGTH = 50;
+    private final int actividadID;
+    private final int NAME_LENGTH = 50;
 
     /**
      * Creates new form PnlGroupGestor
+     *
+     * @param parent
+     * @param modal
+     * @param manager
      */
-    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String ActionType, int actividadID) {
+    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String actionType, int actividadID) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
 
         this.manager = manager;
         this.language = language;
-        this.ActionType = ActionType;
+        this.actionType = actionType;
         this.actividadID = actividadID;
-
-        setTipoActividades();
 
         addaptToPreferences();
 
@@ -68,25 +71,36 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
         jToolBar1 = new javax.swing.JToolBar();
         cmdClose = new javax.swing.JButton();
-        fldName = new javax.swing.JTextField();
-        lblName = new javax.swing.JLabel();
-        lblAsistencia = new javax.swing.JLabel();
-        lblBiblio = new javax.swing.JLabel();
-        lblPlan = new javax.swing.JLabel();
+        fldTitulo = new javax.swing.JTextField();
+        lblTitulo = new javax.swing.JLabel();
         cmdAccept = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tarPlan = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tarBiblio = new javax.swing.JTextArea();
         lblDateIni = new javax.swing.JLabel();
-        lblDateEnd = new javax.swing.JLabel();
-        btnPlanDocente = new javax.swing.JButton();
-        btnBibliografia = new javax.swing.JButton();
-        fldAsistencia = new javax.swing.JFormattedTextField();
+        lblDateMaximaInscripcion = new javax.swing.JLabel();
         fldDateIni = new javax.swing.JFormattedTextField();
-        fldDateEnd = new javax.swing.JFormattedTextField();
+        fldDateMaximaInscripcion = new javax.swing.JFormattedTextField();
         lblTipoActividad = new javax.swing.JLabel();
         cboTipoActividad = new javax.swing.JComboBox();
+        lblUniversidad = new javax.swing.JLabel();
+        cboUniversidad = new javax.swing.JComboBox();
+        lblCentro = new javax.swing.JLabel();
+        cboCentro = new javax.swing.JComboBox();
+        lblSitio = new javax.swing.JLabel();
+        cboSitio = new javax.swing.JComboBox();
+        lblAreaConocimiento = new javax.swing.JLabel();
+        lblEspecialización = new javax.swing.JLabel();
+        fldEspecializacion = new javax.swing.JTextField();
+        lblDecanatura = new javax.swing.JLabel();
+        fldDecanatura = new javax.swing.JTextField();
+        lblInvestigador = new javax.swing.JLabel();
+        fldInvestigador = new javax.swing.JTextField();
+        lblCambios = new javax.swing.JLabel();
+        fldCambios = new javax.swing.JFormattedTextField();
+        lblPrecio = new javax.swing.JLabel();
+        fldPrecio = new javax.swing.JFormattedTextField();
+        cbCancelada = new javax.swing.JCheckBox();
+        fldAreaConocimiento = new javax.swing.JTextField();
+        lblDateFin = new javax.swing.JLabel();
+        fldDateFin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,13 +114,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             }
         });
 
-        lblName.setText("Nombre");
-
-        lblAsistencia.setText("Minima Asistencia");
-
-        lblBiblio.setText("Bibliografía");
-
-        lblPlan.setText("Plan Docente");
+        lblTitulo.setText("Título");
 
         cmdAccept.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ok_st_obj.gif"))); // NOI18N
         cmdAccept.setText("Acceptar");
@@ -116,98 +124,137 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             }
         });
 
-        tarPlan.setColumns(20);
-        tarPlan.setLineWrap(true);
-        tarPlan.setRows(5);
-        jScrollPane1.setViewportView(tarPlan);
-
-        tarBiblio.setColumns(20);
-        tarBiblio.setLineWrap(true);
-        tarBiblio.setRows(5);
-        jScrollPane2.setViewportView(tarBiblio);
-
         lblDateIni.setText("Fecha Inicio");
 
-        lblDateEnd.setText("Fecha Fin");
-
-        btnPlanDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/disk--plus.png"))); // NOI18N
-        btnPlanDocente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlanDocenteActionPerformed(evt);
-            }
-        });
-
-        btnBibliografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/disk--plus.png"))); // NOI18N
-        btnBibliografia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBibliografiaActionPerformed(evt);
-            }
-        });
-
-        fldAsistencia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        lblDateMaximaInscripcion.setText("Fecha Máxima Inscripción");
 
         fldDateIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         fldDateIni.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        fldDateEnd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        fldDateEnd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fldDateMaximaInscripcion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldDateMaximaInscripcion.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        lblTipoActividad.setText("Tipo");
+        lblTipoActividad.setText("Tipos de Actividad");
 
-        cboTipoActividad.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         cboTipoActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboTipoActividadActionPerformed(evt);
             }
         });
 
+        lblUniversidad.setText("Universidad");
+
+        cboUniversidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboUniversidadActionPerformed(evt);
+            }
+        });
+
+        lblCentro.setText("Centro");
+
+        cboCentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboCentroActionPerformed(evt);
+            }
+        });
+
+        lblSitio.setText("Sitio");
+
+        cboSitio.setEnabled(false);
+        cboSitio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboSitioActionPerformed(evt);
+            }
+        });
+
+        lblAreaConocimiento.setText("Área de conocimiento");
+
+        lblEspecialización.setText("Especialización");
+
+        lblDecanatura.setText("Decanatura Responsable");
+
+        lblInvestigador.setText("Investigador Principal");
+
+        lblCambios.setText("% de incritos que bloquea cambios");
+
+        fldCambios.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fldCambios.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        lblPrecio.setText("Precio");
+
+        fldPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fldPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        cbCancelada.setText("Cancelada");
+        cbCancelada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCanceladaActionPerformed(evt);
+            }
+        });
+
+        lblDateFin.setText("Fecha Fin");
+
+        fldDateFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldDateFin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmdAccept)
+                .addGap(18, 18, 18)
+                .addComponent(cmdClose)
+                .addGap(34, 34, 34))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdAccept)
-                        .addGap(45, 45, 45)
-                        .addComponent(cmdClose))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblPlan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnPlanDocente))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDateIni)
-                                    .addComponent(lblName)
-                                    .addComponent(lblTipoActividad))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fldName, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                                    .addComponent(fldDateIni)
-                                    .addComponent(cboTipoActividad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(64, 64, 64)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                            .addComponent(lblCentro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblBiblio)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBibliografia))
+                                .addComponent(lblDecanatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(20, 20, 20))
+                            .addComponent(lblUniversidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDateEnd)
-                                    .addComponent(lblAsistencia))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fldAsistencia)
-                                    .addComponent(fldDateEnd))))))
-                .addContainerGap())
+                                .addComponent(lblDateFin, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                                .addGap(173, 173, 173))
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTipoActividad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblAreaConocimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(42, 42, 42))
+                            .addComponent(lblSitio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEspecialización, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblInvestigador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(81, 81, 81))
+                            .addComponent(lblCambios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDateIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDateMaximaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(216, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbCancelada)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,28 +266,58 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblName)
-                    .addComponent(lblAsistencia)
-                    .addComponent(fldAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblUniversidad)
+                    .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDateIni)
-                    .addComponent(lblDateEnd)
-                    .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fldDateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCentro)
+                    .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSitio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAreaConocimiento)
+                    .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEspecialización)
+                    .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDecanatura)
+                    .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblInvestigador)
+                    .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCambios)
+                    .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnPlanDocente)
-                            .addComponent(btnBibliografia))
-                        .addComponent(lblPlan, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(lblBiblio, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblPrecio)
+                    .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDateIni)
+                    .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDateFin)
+                    .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDateMaximaInscripcion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbCancelada)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdClose)
@@ -252,20 +329,19 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean allDataFilled() {
-        if (fldName.getText().isEmpty() || fldName.getText().equals("")) {
+        //TODO: validate
+        if (fldTitulo.getText().isEmpty()) {
             return false;
         }
-        if (fldAsistencia.getText().isEmpty() || Double.parseDouble(fldAsistencia.getText()) < 0) {
+        if (fldDateIni.getText().isEmpty()) {
             return false;
         }
-        if (fldDateIni.getText().isEmpty() || fldDateIni.getText().equals("")) {
+        if (fldDateFin.getText().isEmpty()) {
             return false;
         }
-        if (fldDateIni.getText().isEmpty() || fldDateIni.getText().equals("")) {
+        if (fldDateMaximaInscripcion.getText().isEmpty()) {
             return false;
         }
-        //if (tarPlan.getText().isEmpty()       || tarPlan.getText().equals(""))       {return false;}
-        //if (tarBiblio.getText().isEmpty()     || tarBiblio.getText().equals(""))     {return false;}
 
         return true;
     }
@@ -274,16 +350,25 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         /*
          * Definimos el texto de las labels del panel en función del idioma seleccionado
          */
-        lblName.setText(language.getProperty("mantenimiento.usermain.name"));
-        lblAsistencia.setText(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
-        lblBiblio.setText(language.getProperty("mantenimiento.actividadesmain.plandocente"));
-        lblPlan.setText(language.getProperty("mantenimiento.actividadesmain.biblio"));
-        lblDateIni.setText(language.getProperty("mantenimiento.actividadesmain.fechaini"));
-        lblDateEnd.setText(language.getProperty("mantenimiento.actividadesmain.fechaend"));
+        lblTipoActividad.setText(language.getProperty("mantenimiento.actividad.tipo.actividad"));
+        lblUniversidad.setText(language.getProperty("mantenimiento.actividad.universidad"));
+        lblCentro.setText(language.getProperty("mantenimiento.actividad.centro"));
+        lblSitio.setText(language.getProperty("mantenimiento.actividad.sitio"));
+        lblAreaConocimiento.setText(language.getProperty("mantenimiento.actividad.area.conocimiento"));
+        lblEspecialización.setText(language.getProperty("mantenimiento.actividad.area.especializacion"));
+        lblTitulo.setText(language.getProperty("mantenimiento.actividad.titulo"));
+        lblDecanatura.setText(language.getProperty("mantenimiento.actividad.decanatura"));
+        lblInvestigador.setText(language.getProperty("mantenimiento.actividad.investigador"));
+        lblCambios.setText(language.getProperty("mantenimiento.actividad.cambios"));
+        lblPrecio.setText(language.getProperty("mantenimiento.actividad.precio"));
+        lblDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
+        lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechaend"));
+        lblDateMaximaInscripcion.setText(language.getProperty("mantenimiento.actividad.fechamaximainscripcion"));
+        cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
 
-        if (this.ActionType.equalsIgnoreCase("Add")) {
+        if (this.actionType.equalsIgnoreCase("Add")) {
             this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
         }
         this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
@@ -296,50 +381,49 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
          */
         this.setLabelsLanguage();
 
-        this.fldName.setDocument(new FieldLimit(NAME_LENGTH));
+        this.fldTitulo.setDocument(new FieldLimit(NAME_LENGTH));
 
         // Cambios Vinculados al tipo de llamada
-        if (this.ActionType.equalsIgnoreCase("Add")) {
+        if (this.actionType.equalsIgnoreCase("Add")) {
             this.addaptToAddActividad();
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.addaptToEditActividad();
         }
     }
 
     private void addaptToAddActividad() {
 
+        //Titulo de la cabecera
         this.setTitle(language.getProperty("mantenimiento.main.title") + ". "
                 + language.getProperty("mantenimiento.main.aula") + ". "
                 + language.getProperty("mantenimiento.usermain.newUser"));
 
-        /*
-        * Cuando vamos a añadir un nuevo usuario los parametros (excepto Fecha de Registro)
-        * se inicializan en blanco
-        * 
-        * El usuario de creación por defecto es Alumno, que debería ser el más abundante
-         */
-        fldName.setText("");
-        fldAsistencia.setText("");
-        tarBiblio.setText("");
-        tarPlan.setText("");
+        //Inicializamos el combo de tipo de actividad
+        setTipoActividades();
+        //Inicializamos el combo de universidades
+        setUniversidades();
+        //Inicializamos Centros
+        setCentros();
+        //Inicializamos todos los campos
+        cboTipoActividad.setSelectedIndex(0);
+        cboUniversidad.setSelectedIndex(0);
+        cboCentro.setSelectedIndex(0);
+        cboSitio.setSelectedIndex(-1);
+        fldAreaConocimiento.setText("");
+        fldEspecializacion.setText("");
+        fldTitulo.setText("");
+        fldDecanatura.setText("");
+        fldInvestigador.setText("");
+        fldCambios.setText("");
+        fldPrecio.setText("");
+        cbCancelada.setSelected(false);
+
         fldDateIni.setText("");
-        fldDateEnd.setText("");
+        fldDateFin.setText("");
+        fldDateMaximaInscripcion.setText("");
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
 
-        try {
-            actividades = manager.getActividadesInactivas();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
-                    language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                    language.getProperty("app.title"),
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,
-                    language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                    language.getProperty("app.title"),
-                    JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void addaptToEditActividad() {
@@ -355,20 +439,34 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
             this.actividad = manager.getActividad(this.actividadID);
 
-            this.fldName.setText(actividad.getTitol());
-            this.fldAsistencia.setText("" + actividad.getMinimPercentatge());
+            //Inicializamos el combo de tipo de actividad
+            setTipoActividades(actividad.getTipus());
+            //Inicializamos el combo de universidades
+            setUniversidades( Math.toIntExact(actividad.getUniversitatId()));
+            //Inicializamos Centros
+            setCentros(actividad.getCentreId(), actividad.getAulaId());
+            this.fldAreaConocimiento.setText(actividad.getArea());
+            this.fldEspecializacion.setText(actividad.getEspecialitat());
+            this.fldTitulo.setText(actividad.getTitol());
+            this.fldDecanatura.setText(actividad.getDecanatura());
+            this.fldInvestigador.setText(actividad.getInvestigator());
+            this.fldCambios.setText(String.valueOf(actividad.getMinimPercentatge()));
+            this.fldPrecio.setText(String.valueOf(actividad.getPreu()));
             if (actividad.getDataInici() != null) {
                 this.fldDateIni.setText(df.format(actividad.getDataInici()));
             } else {
                 this.fldDateIni.setText("");
             }
             if (actividad.getDataFi() != null) {
-                this.fldDateEnd.setText(df.format(actividad.getDataFi()));
+                this.fldDateFin.setText(df.format(actividad.getDataFi()));
             } else {
-                this.fldDateEnd.setText("");
+                this.fldDateFin.setText("");
             }
-//            this.tarPlan.setText       (actividad.getPlandocente());
-//            this.tarBiblio.setText     (actividad.getBibliografia());
+            if (actividad.getDataMaxInscripcio() != null) {
+                this.fldDateMaximaInscripcion.setText(df.format(actividad.getDataMaxInscripcio()));
+            } else {
+                this.fldDateMaximaInscripcion.setText("");
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
@@ -384,6 +482,21 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         }
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
+        //Validar si se pueden modificar las fechas
+        int numInscripciones;
+        try {
+            numInscripciones = manager.getInscritosByActividadId(actividad.getId());
+            int capacidad = manager.getCapacidadByAulaId(Math.toIntExact(actividad.getAulaId()));
+            if(((numInscripciones/capacidad)*100) > actividad.getMinimPercentatge() ||
+                    actividad.getDataMaxInscripcio().getTime()<new Date().getTime()) {
+                fldDateIni.setEditable(false);
+                fldDateFin.setEditable(false);
+                fldDateMaximaInscripcion.setEditable(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
@@ -405,10 +518,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
          */
 
         Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-        Date endActividad = DateTimeUtils.strToDate(this.fldDateEnd.getText());
+        Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
 
         if (!DateTimeUtils.isDate(this.fldDateIni.getText())
-                || !DateTimeUtils.isDate(this.fldDateEnd.getText())) {
+                || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
             JOptionPane.showMessageDialog(null,
                     language.getProperty("mantenimiento.err.date.mal"),
                     language.getProperty("app.title"),
@@ -424,13 +537,28 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
             this.actividad = new Actividad();
 
-            actividad.setTitol(this.fldName.getText());
-            actividad.setMinimPercentatge(new Double(this.fldAsistencia.getText()));
+            actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
+            actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
+            actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
+            actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
+            actividad.setArea(fldAreaConocimiento.getText());
+            actividad.setEspecialitat(fldEspecializacion.getText());
+            actividad.setTitol(fldTitulo.getText());
+            actividad.setDecanatura(fldDecanatura.getText());
+            actividad.setInvestigator(fldInvestigador.getText());
+            try {
+                actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+            } catch (NumberFormatException ex) {}
+            try {
+                actividad.setPreu(new Double(fldPrecio.getText()));
+            } catch (NumberFormatException ex) {}
             actividad.setDataInici(iniActividad);
             actividad.setDataFi(endActividad);
-//            actividad.setPlandocente(this.tarPlan.getText());
-//            actividad.setBibliografia(this.tarBiblio.getText());
-
+            actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            actividad.setCancelada(cbCancelada.isSelected());
+            
+            ArrayList<Actividad> actividades = manager.getActividadesInactivas();
+                    
             for (Actividad oldActividad : actividades) {
                 if (actividad.getTitol().equalsIgnoreCase(oldActividad.getTitol())) {
                     if (manager.undeleteActividad(oldActividad.getId())) {
@@ -463,7 +591,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     private void cmdModActividadAction() {
         /*
-         * Gestión de odificar Usuario
+         * Gestión de modificar Usuario
          * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
          * para que la actualize la BD (no se accede al UserID)
          * 
@@ -474,10 +602,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
 
             Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-            Date endActividad = DateTimeUtils.strToDate(this.fldDateEnd.getText());
+            Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
 
             if (!DateTimeUtils.isDate(this.fldDateIni.getText())
-                    || !DateTimeUtils.isDate(this.fldDateEnd.getText())) {
+                    || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
                 JOptionPane.showMessageDialog(null,
                         language.getProperty("mantenimiento.err.date.mal"),
                         language.getProperty("app.title"),
@@ -494,12 +622,26 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             Actividad new_actividad = new Actividad();
 
             new_actividad.setId(this.actividadID);
-            new_actividad.setTitol(this.fldName.getText());
-            new_actividad.setMinimPercentatge(new Double(this.fldAsistencia.getText()));
+
+            new_actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
+            new_actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
+            new_actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
+            new_actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
+            new_actividad.setArea(fldAreaConocimiento.getText());
+            new_actividad.setEspecialitat(fldEspecializacion.getText());
+            new_actividad.setTitol(fldTitulo.getText());
+            new_actividad.setDecanatura(fldDecanatura.getText());
+            new_actividad.setInvestigator(fldInvestigador.getText());
+            try {
+                new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
+            } catch (NumberFormatException ex) {}
+            try {
+                new_actividad.setPreu(new Double(fldPrecio.getText()));
+            } catch (NumberFormatException ex) {}
             new_actividad.setDataInici(iniActividad);
             new_actividad.setDataFi(endActividad);
-//            new_actividad.setBibliografia(this.tarBiblio.getText());
-//            new_actividad.setPlandocente(this.tarPlan.getText());
+            new_actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            new_actividad.setCancelada(cbCancelada.isSelected());
 
             Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
             int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, now);
@@ -532,179 +674,241 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     language.getProperty("mantenimiento.err.fields"),
                     language.getProperty("app.title"),
                     JOptionPane.ERROR_MESSAGE);
-        } else if (this.ActionType.equalsIgnoreCase("Add")) {
+        } else if (this.actionType.equalsIgnoreCase("Add")) {
             this.cmdAddActividadAction();
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+        } else if (this.actionType.equalsIgnoreCase("Edit")) {
             this.cmdModActividadAction();
         }
     }//GEN-LAST:event_cmdAcceptActionPerformed
 
-    /**
-     * Método que carga un html en el cuadro de texto
-     *
-     * @param evt
-     */
-    private void btnPlanDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanDocenteActionPerformed
-
-        BufferedReader reader = null;
-        StringBuilder contenido = new StringBuilder();
-        final JFileChooser fc = new JFileChooser();
-        FileNameExtensionFilter filtroHTML
-                = new FileNameExtensionFilter("HTML, html", "html", "htm");
-
-        fc.setMultiSelectionEnabled(false);
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.setFileFilter(filtroHTML);
-        int retval = fc.showOpenDialog(this);
-        if (retval == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            try {
-                if (fc.getFileFilter() == filtroHTML) {
-                    reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
-                    String text = null;
-                    while ((text = reader.readLine()) != null) {
-                        contenido.append(text);
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            language.getProperty("mantenimiento.err.extension"),
-                            language.getProperty("app.title"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-            } catch (IOException ex) {
-
-                JOptionPane.showMessageDialog(null,
-                        language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                        language.getProperty("app.title"),
-                        JOptionPane.ERROR_MESSAGE);
-
-            } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,
-                            language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                            language.getProperty("app.title"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-                tarPlan.setText(contenido != null ? contenido.toString().replace("'", "''") : "");
-            }
-
-        }
-    }//GEN-LAST:event_btnPlanDocenteActionPerformed
-
-    /**
-     * Método que carga un html en el cuadro de texto.
-     *
-     * @param evt
-     */
-    private void btnBibliografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBibliografiaActionPerformed
-        BufferedReader reader = null;
-        StringBuilder contenido = new StringBuilder();
-        final JFileChooser fc = new JFileChooser();
-        FileNameExtensionFilter filtroHTML
-                = new FileNameExtensionFilter("HTML, html", "html", "htm");
-
-        fc.setMultiSelectionEnabled(false);
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.setFileFilter(filtroHTML);
-        int retval = fc.showOpenDialog(this);
-        if (retval == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            try {
-                if (fc.getFileFilter() == filtroHTML) {
-                    reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
-                    String text = null;
-                    while ((text = reader.readLine()) != null) {
-                        contenido.append(text);
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            language.getProperty("mantenimiento.err.extension"),
-                            language.getProperty("app.title"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-            } catch (IOException ex) {
-
-                JOptionPane.showMessageDialog(null,
-                        language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                        language.getProperty("app.title"),
-                        JOptionPane.ERROR_MESSAGE);
-
-            } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,
-                            language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-                            language.getProperty("app.title"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-
-                tarBiblio.setText(contenido != null ? contenido.toString().replace("'", "''") : "");
-            }
-
-        }
-    }//GEN-LAST:event_btnBibliografiaActionPerformed
-
     private void cboTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoActividadActionPerformed
         // TODO add your handling code here:
-//        cboTipoActividad.setSelectedIndex(-1);
-//        cboTipoActividad.removeAll();
-//        setTipoActividades();
-//        cboTipoActividad.setModel(new DefaultComboBoxModel(tipus.toArray()));
-
     }//GEN-LAST:event_cboTipoActividadActionPerformed
 
-    private void setTipoActividades() {
-        if (tipus==null) {
-            tipus = new ArrayList<ComboItem>();
+    private void cboUniversidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUniversidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboUniversidadActionPerformed
+
+    private void cboCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCentroActionPerformed
+        // TODO add your handling code here:
+        if (cboCentro.getSelectedIndex() > 0) {
+            try {
+                // Limpiar el combo de aulas
+                cboSitio.removeAllItems();
+                //Actualitzar la llista de aules
+                List<Aula> aulasByCentro;
+                ComboItem item = (ComboItem) cboCentro.getSelectedItem();
+                aulasByCentro = manager.getAulasByIdCentro(item.getId());
+                List<ComboItem> aulasCB = new ArrayList<ComboItem>();
+
+                aulasCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+                for (Aula aula : aulasByCentro) {
+                    aulasCB.add(new ComboItem(aula.getNombre(), aula.getId()));
+                }
+                cboSitio.setModel(new DefaultComboBoxModel(aulasCB.toArray()));
+                //Habilitar el combo de sitios
+                cboSitio.setEnabled(true);
+            } catch (Exception ex) {
+                Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            cboSitio.removeAllItems();
+            cboSitio.setEnabled(false);
         }
-        ComboItem cb = new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1);
-        tipus.add(cb);
-        tipus.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language), Actividad.ACTIVIDAD_TIPO_CONGRESO_ID));
-        tipus.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
-        tipus.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
-        tipus.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
-        cboTipoActividad.setSelectedIndex(-1);
-        cboTipoActividad.removeAll();
-        cboTipoActividad.setModel(new DefaultComboBoxModel(tipus.toArray()));
+    }//GEN-LAST:event_cboCentroActionPerformed
+
+    private void cboSitioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSitioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboSitioActionPerformed
+
+    private void cbCanceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCanceladaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCanceladaActionPerformed
+
+    //Inicializamos Centros
+    private void setCentros(long centreId, long aulaId){
+        
+        List<ComboItem> centrosCB;
+        centrosCB = new ArrayList<ComboItem>();
+        List<Centro> centros = new ArrayList<Centro>();
+        int index=0;
+        
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        for (int i = 0;i<centros.size();i++){
+            if(centreId==centros.get(i).getId()) {
+                index = i+1;
+            }
+            centrosCB.add(new ComboItem(centros.get(i).getNom(), centros.get(i).getId()));
+        }
+        cboCentro.removeAll();
+        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
+        cboCentro.setSelectedIndex(index);
+        index=0;
+        for(int i = 0;i<cboSitio.getComponentCount();i++) {
+            if (aulaId == ((ComboItem)cboSitio.getItemAt(i)).getId()) {
+                index = i;
+            }
+        }
+        cboSitio.setSelectedIndex(index);
+    }
+
+    private void setCentros() {
+
+        List<ComboItem> centrosCB;
+        centrosCB = new ArrayList<ComboItem>();
+        List<Centro> centros = new ArrayList<Centro>();
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
+        for (Centro centro : centros) {
+            centrosCB.add(new ComboItem(centro.getNom(), centro.getId()));
+        }
+        cboCentro.removeAll();
+        cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
 
     }
 
+    private void setUniversidades() {
+        if (universidades == null) {
+            universidades = new ArrayList<ComboItem>();
+        }
+        //Buscar todas las universidades
+        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+        cboUniversidad.removeAll();
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
+    }
+
+    private void setTipoActividades() {
+
+        if (tiposActividad == null) {
+            tiposActividad = new ArrayList<ComboItem>();
+        }
+        ComboItem cb = new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1);
+        tiposActividad.add(cb);
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language), Actividad.ACTIVIDAD_TIPO_CONGRESO_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
+        cboTipoActividad.removeAll();
+        cboTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
+
+    }
+
+    private void setTipoActividades(int tipus) {
+
+        int index;
+        if (tiposActividad == null) {
+            tiposActividad = new ArrayList<ComboItem>();
+        }
+        tiposActividad.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language), Actividad.ACTIVIDAD_TIPO_CONGRESO_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
+        switch (tipus) {
+            case Actividad.ACTIVIDAD_TIPO_CONGRESO_ID:
+                index = 1;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_JORNADA_ID:
+                index = 2;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_MASTER_ID:
+                index = 3;
+                break;
+            case Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID:
+                index = 4;
+                break;
+            default:
+                index = 0;
+        }
+
+        cboTipoActividad.removeAll();
+        cboTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
+        cboTipoActividad.setSelectedIndex(index);
+        
+    }
+
+    private void setUniversidades(int universidad) {
+        
+        int index;
+        if (universidades == null) {
+            universidades = new ArrayList<ComboItem>();
+        }
+        //Buscar todas las universidades
+        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
+        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+        switch (universidad) {
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID:
+                index = 1;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID:
+                index = 2;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID:
+                index = 3;
+                break;
+            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID:
+                index = 4;
+                break;
+            default:
+                index = 0;
+        }        
+        
+        cboUniversidad.removeAll();
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
+        cboUniversidad.setSelectedIndex(index);
+        
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBibliografia;
-    private javax.swing.JButton btnPlanDocente;
+    private javax.swing.JCheckBox cbCancelada;
+    private javax.swing.JComboBox cboCentro;
+    private javax.swing.JComboBox cboSitio;
     private javax.swing.JComboBox cboTipoActividad;
+    private javax.swing.JComboBox cboUniversidad;
     private javax.swing.JButton cmdAccept;
     private javax.swing.JButton cmdClose;
-    private javax.swing.JFormattedTextField fldAsistencia;
-    private javax.swing.JFormattedTextField fldDateEnd;
+    private javax.swing.JTextField fldAreaConocimiento;
+    private javax.swing.JFormattedTextField fldCambios;
+    private javax.swing.JFormattedTextField fldDateFin;
     private javax.swing.JFormattedTextField fldDateIni;
-    private javax.swing.JTextField fldName;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JFormattedTextField fldDateMaximaInscripcion;
+    private javax.swing.JTextField fldDecanatura;
+    private javax.swing.JTextField fldEspecializacion;
+    private javax.swing.JTextField fldInvestigador;
+    private javax.swing.JFormattedTextField fldPrecio;
+    private javax.swing.JTextField fldTitulo;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblAsistencia;
-    private javax.swing.JLabel lblBiblio;
-    private javax.swing.JLabel lblDateEnd;
+    private javax.swing.JLabel lblAreaConocimiento;
+    private javax.swing.JLabel lblCambios;
+    private javax.swing.JLabel lblCentro;
+    private javax.swing.JLabel lblDateFin;
     private javax.swing.JLabel lblDateIni;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblPlan;
+    private javax.swing.JLabel lblDateMaximaInscripcion;
+    private javax.swing.JLabel lblDecanatura;
+    private javax.swing.JLabel lblEspecialización;
+    private javax.swing.JLabel lblInvestigador;
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblSitio;
     private javax.swing.JLabel lblTipoActividad;
-    private javax.swing.JTextArea tarBiblio;
-    private javax.swing.JTextArea tarPlan;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblUniversidad;
     // End of variables declaration//GEN-END:variables
 }

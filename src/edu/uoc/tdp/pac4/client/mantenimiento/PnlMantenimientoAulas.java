@@ -2,45 +2,44 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.client.gestion.*;
 import edu.uoc.tdp.pac4.beans.Aula;
+import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.eAcademiaEU;
 import edu.uoc.tdp.pac4.exceptions.GroupNotEmptyException;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
+import edu.uoc.tdp.pac4.util.ComboItem;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author eSupport Netbeans
- */
+/**********************************************************************
+ ******************** @author JavaBeginers - Cristian******************
+ *********************************************************************/
 public class PnlMantenimientoAulas extends javax.swing.JDialog 
 {
     private Mantenimiento manager;
     private LanguageUtils language;
-    private ArrayList<Aula> aulas;
-    
+    private ArrayList<Aula> aulas; 
     private boolean dofilter = false;
-    
-   
-    /**
-     * Creates new form PnlGroupGestor
-     */
-    public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
-        super(parent, modal);
-            
+
+public PnlMantenimientoAulas(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
+        super(parent, modal); 
         this.language       = language;
         this.manager        = manager;
-        
         initComponents();
-      
         setLocationRelativeTo(null);
-
-        addaptToPreferences();
-        
-        listData();
-    }
+        prepararTextos();
+        setCombos();
+        listarAulas();
+      
+}
 
    /**
     * This method is called from within the constructor to initialize the form.
@@ -52,27 +51,30 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        cmdClose = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         fldcapacity = new javax.swing.JTextField();
-        lblcapacity = new javax.swing.JLabel();
-        cmdFilter = new javax.swing.JButton();
-        cmdClearFilter = new javax.swing.JButton();
-        btnExplore = new javax.swing.JButton();
+        lblCapacidad = new javax.swing.JLabel();
+        btnFilter = new javax.swing.JButton();
+        btnClearFilter = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        comboActiva = new javax.swing.JComboBox();
+        lblActivas = new javax.swing.JLabel();
+        comboCentro = new javax.swing.JComboBox();
+        lblCentro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jToolBar1.setRollover(true);
 
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
-        cmdClose.setText("Cerrar");
-        cmdClose.addActionListener(new java.awt.event.ActionListener() {
+        btnClose.setText("Cerrar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdCloseActionPerformed(evt);
+                btnCloseActionPerformed(evt);
             }
         });
 
@@ -89,7 +91,6 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
         ));
         jScrollPane1.setViewportView(tblData);
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sofa--plus.png"))); // NOI18N
         btnAdd.setText("Nuevo");
         btnAdd.setFocusable(false);
         btnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -100,7 +101,6 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
             }
         });
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sofa--pencil.png"))); // NOI18N
         btnEdit.setText("Editar");
         btnEdit.setFocusable(false);
         btnEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -111,7 +111,6 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
             }
         });
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sofa--minus.png"))); // NOI18N
         btnDelete.setText("Eliminar");
         btnDelete.setFocusable(false);
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -122,34 +121,35 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
             }
         });
 
-        lblcapacity.setText("Capacidad Mínima");
+        lblCapacidad.setText("Capacidad Mínima");
 
-        cmdFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/refresh_002_16.gif"))); // NOI18N
-        cmdFilter.setText("Filtrar");
-        cmdFilter.addActionListener(new java.awt.event.ActionListener() {
+        btnFilter.setText("Filtrar");
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdFilterActionPerformed(evt);
+                btnFilterActionPerformed(evt);
             }
         });
 
-        cmdClearFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/eraser.png"))); // NOI18N
-        cmdClearFilter.setText("Limpiar Filtro");
-        cmdClearFilter.addActionListener(new java.awt.event.ActionListener() {
+        btnClearFilter.setText("Reestablecer");
+        btnClearFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdClearFilterActionPerformed(evt);
+                btnClearFilterActionPerformed(evt);
             }
         });
 
-        btnExplore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sofa--exclamation.png"))); // NOI18N
-        btnExplore.setText("Explorar");
-        btnExplore.setFocusable(false);
-        btnExplore.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExplore.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnExplore.addActionListener(new java.awt.event.ActionListener() {
+        btnView.setText("Ver");
+        btnView.setFocusable(false);
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnView.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExploreActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
+
+        lblActivas.setText("Activa");
+
+        lblCentro.setText("Centro");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,27 +164,36 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                         .addComponent(btnEdit)
                         .addGap(0, 0, 0)
                         .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExplore)
-                        .addGap(95, 95, 95)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnView)
+                        .addGap(140, 140, 140)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmdClose, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblcapacity)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCentro)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblActivas, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboActiva, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(lblCapacidad)
+                                .addGap(18, 18, 18)
+                                .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmdFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(206, 206, 206)
+                        .addComponent(btnClose))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -195,120 +204,111 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnAdd)
                         .addComponent(btnEdit)
-                        .addComponent(btnDelete))
-                    .addComponent(btnExplore))
+                        .addComponent(btnDelete)
+                        .addComponent(btnView)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fldcapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblcapacity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblCapacidad)
+                    .addComponent(comboActiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblActivas)
+                    .addComponent(comboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCentro))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdFilter)
-                    .addComponent(cmdClearFilter))
+                    .addComponent(btnFilter)
+                    .addComponent(btnClearFilter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmdClose)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addComponent(btnClose)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-   
-   private void addaptToPreferences() {
-       
-       this.setTitle(language.getProperty("mantenimiento.main.title") + ". " + 
-                     language.getProperty("mantenimiento.main.aula"));
-       
-       this.setLabelsLanguage();
-
-       this.fldcapacity.setText("");
-   }
-       
-    private void setLabelsLanguage() {
-        this.btnAdd.setText         (language.getProperty("mantenimiento.usermain.newUser"));
-        this.btnEdit.setText        (language.getProperty("mantenimiento.usermain.modUser"));
-        this.btnDelete.setText      (language.getProperty("mantenimiento.usermain.delUser"));
-        this.cmdClose.setText       (language.getProperty("mantenimiento.usermain.back"));
-        this.lblcapacity.setText    (language.getProperty("mantenimiento.aulasmain.mincapacidad"));
-        this.cmdFilter.setText      (language.getProperty("mantenimiento.usermain.dofilter"));
-        this.cmdClearFilter.setText (language.getProperty("mantenimiento.usermain.clearfilter"));
-        this.btnExplore.setText     (language.getProperty("mantenimiento.usermain.explore"));
+//Establece los textos segun idioma seleccionado      
+   private void prepararTextos() {
+        this.setTitle(language.getProperty("mantenimiento.aulas.Mantenimiento"));
+        this.btnAdd.setText         (language.getProperty("mantenimiento.Nueva"));
+        this.btnEdit.setText        (language.getProperty("mantenimiento.Editar"));
+        this.btnDelete.setText      (language.getProperty("mantenimiento.Eliminar"));
+        this.btnView.setText     (language.getProperty("mantenimiento.Ver"));
+        this.lblActivas.setText (language.getProperty("mantenimiento.aulas.Activas"));
+        this.lblCapacidad.setText (language.getProperty("mantenimiento.aulas.Capacidadminima"));
+        this.lblCentro.setText (language.getProperty("mantenimiento.aulas.Centro"));
+                
+        this.btnClose.setText       (language.getProperty("mantenimiento.Cerrar"));
+        this.btnFilter.setText      (language.getProperty("mantenimiento.Filtrar"));
+        this.btnClearFilter.setText (language.getProperty("mantenimiento.Restablecer")); 
+        
+        this.fldcapacity.setText (language.getProperty("0")); 
+        this.fldcapacity.addKeyListener(new KeyAdapter(){
+				public void keyTyped(KeyEvent e){
+                                    char c= e.getKeyChar();
+                                    if (Character.isDigit(c) == false) {
+			            e.consume();//Solo permite introducir dígitos
+			        }}});
     }
    
+//Se escoge 'Alta de Aula'  
    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       
            PnlMantenimientoAulaGestor form = new PnlMantenimientoAulaGestor(null, true ,manager, language, "Add", 0);
            form.setLocationRelativeTo(null);
            form.setVisible(true);
-
-       listData();
+           listarAulas();
    }//GEN-LAST:event_btnAddActionPerformed
 
+//Se escoge 'Edición de Aula'     
    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-
+      //No hay  fila seleccionada
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.msg.sele.aula"),
+                                       language.getProperty("mantenimiento.msg.NoAula"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
 
-      // Obtiene el ID del grupo a editar
+      //Hay fila seleccionada:
       Aula aula = aulas.get(tblData.getSelectedRow());
-
       PnlMantenimientoAulaGestor form = new PnlMantenimientoAulaGestor(null, true, manager, language, "Edit", aula.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
-
-      listData();
-
+      listarAulas();
    }//GEN-LAST:event_btnEditActionPerformed
 
-   private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
-
-      // Cierra el formulario
+//Cerrar el Formulario
+   private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
       this.dispose();
+   }//GEN-LAST:event_btnCloseActionPerformed
 
-   }//GEN-LAST:event_cmdCloseActionPerformed
-
+//Se escoge Desactivar el Aula
    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      
+      //No hay fila seleccionada:
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.msg.sele.aula"),
+                                       language.getProperty("mantenimiento.msg.NoAula"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
       
+      //Hay fila seleccionada:
+      
       Aula aula = aulas.get(tblData.getSelectedRow());
+      Object[] options = {language.getProperty("mantenimiento.Si"), language.getProperty("mantenimiento.No")};
       
-      
-      
-      Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
-      int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimientomsg.dele.aula"),
+      int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.EliminarAula"),
                                                language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, 
                                                JOptionPane.QUESTION_MESSAGE, null, options, aula);
       if (reply == 0) {
       try {
-          int grupos_aula = manager.checkGruposAula(aula.getId());
-          if (grupos_aula == 0) {
-            if (manager.deleteAula(aula.getId())) {
-                manager.liberarRecursosAula(aula.getId());
-            }
-          }
-          else {
-              JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("mantenimiento.err.link.aula"), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-          }
+            manager.eliminarAula(aula.getId());
+
       }
       catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, 
@@ -323,67 +323,89 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                                           JOptionPane.ERROR_MESSAGE);
       }
       
-      listData();
+      listarAulas();
       }
    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
-        
-        if (!this.fldcapacity.getText().equals("")) {
+   
+//Botón Filtrar
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
             this.dofilter = true;
-            listData();
-        }
-    }//GEN-LAST:event_cmdFilterActionPerformed
+            if(this.fldcapacity.getText().equals("")){
+                this.fldcapacity.setText("0");
+            }
+            listarAulas();
+    }//GEN-LAST:event_btnFilterActionPerformed
 
-    private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
+//Botón Limpiar Filtro
+    private void btnClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFilterActionPerformed
         // TODO add your handling code here:
-        this.fldcapacity.setText("");
+        this.fldcapacity.setText("0");
+        this.comboActiva.setSelectedIndex(0);
+        this.comboCentro.setSelectedIndex(0);
         this.dofilter = false;
-        listData();
-    }//GEN-LAST:event_cmdClearFilterActionPerformed
+        listarAulas();
+    }//GEN-LAST:event_btnClearFilterActionPerformed
 
-    private void btnExploreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExploreActionPerformed
-        // TODO add your handling code here:
+//Consultar Aula
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // No hay fila seleccionada
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
-                                       language.getProperty("mantenimiento.msg.sele.aula"),
+                                       language.getProperty("mantenimiento.msg.NoAula"),
                                        language.getProperty("app.title"),
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
 
-      // Obtiene el ID del grupo a editar
+      // Hay fila seleccionada:
       Aula aula = aulas.get(tblData.getSelectedRow());
 
       PnlMantenimientoAulaGestor form = new PnlMantenimientoAulaGestor(null, true, manager, language, "Explore", aula.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
-    }//GEN-LAST:event_btnExploreActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
-   
-   /**
-    * Rellena la tabla de aulas.
-    */
-    private void listFullAulasData() throws SQLException, RemoteException, Exception {
+//Carga el Combo de los Centros
+  private void setCombos() {
+        comboCentro.removeAll();
+        List<Centro> centros = new ArrayList<Centro>();
+        try {
+            centros = manager.getCentros();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        comboCentro.addItem(new ComboItem(language.getProperty("mantenimiento.Todos"), 0));
+        for(Centro centro: centros) {
+        comboCentro.addItem(new ComboItem(centro.getNom(),centro.getId()));
+        }  
+        comboActiva.addItem(new ComboItem(language.getProperty("mantenimiento.Si"), 0));
+        comboActiva.addItem(new ComboItem(language.getProperty("mantenimiento.No"), 1));
+        
+    }
+
+//Cargar todas las Aulas
+    private void todasAulas() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
-        header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.aulasmain.capacidad"));
-        header.add(language.getProperty("mantenimiento.aulasmain.localizacion"));
+        header.add(language.getProperty("mantenimiento.aulas.Codigo"));
+        header.add(language.getProperty("mantenimiento.aulas.Nombre"));
+        header.add(language.getProperty("mantenimiento.aulas.Capacidad"));
+        header.add(language.getProperty("mantenimiento.aulas.Ubicacion"));
 
         
         String[][] gridData;
         
         aulas = manager.getAulas();
         
-        gridData = new String[aulas.size()][3];
+        gridData = new String[aulas.size()][4];
         
         int i = 0;
         for (Aula aula : aulas) {
-            gridData[i][0] = aula.getNombre();
-            gridData[i][1] = "" + aula.getCapacidad();
-            gridData[i][2] = aula.getUbicacion();
+            gridData[i][0] = aula.getCodigo();
+            gridData[i][1] = aula.getNombre();
+            gridData[i][2] = "" + aula.getCapacidad();
+            gridData[i][3] = aula.getUbicacion();
             i++;
         }
         
@@ -393,26 +415,40 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
             });
     }
     
-    private void listFilteredAulasData() throws SQLException, RemoteException, Exception {
+//Cargar Aulas Filtradas
+    private void filtrarAulas() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
-        header.add(language.getProperty("mantenimiento.usermain.name"));
-        header.add(language.getProperty("mantenimiento.aulasmain.capacidad"));
-        header.add(language.getProperty("mantenimiento.aulasmain.localizacion"));
-      
+        header.add(language.getProperty("mantenimiento.aulas.Codigo"));
+        header.add(language.getProperty("mantenimiento.aulas.Nombre"));
+        header.add(language.getProperty("mantenimiento.aulas.Capacidad"));
+        header.add(language.getProperty("mantenimiento.aulas.Ubicacion"));
+
         String[][] gridData;
-        
+        if (comboActiva.getSelectedIndex()==0){
         aulas = manager.getAulas();
-        
-        gridData = new String[aulas.size()][3];
-        
+        }else{
+            aulas=manager.getAulasInactivas();
+        }
+        gridData = new String[aulas.size()][4];
         int i = 0;
         for (Aula aula : aulas) {
             if (new Integer(this.fldcapacity.getText()) <= aula.getCapacidad()) {
-                gridData[i][0] = aula.getNombre();
-                gridData[i][1] = "" + aula.getCapacidad();
-                gridData[i][2] = aula.getUbicacion();
-                i++;
+                if(comboCentro.getSelectedIndex()==0){
+            gridData[i][0] = "" + aula.getCodigo();
+            gridData[i][1] = aula.getNombre();
+            gridData[i][2] = "" + aula.getCapacidad();
+            gridData[i][3] = aula.getUbicacion();
+            i++;
+                } else{
+                    if(aula.getCentro()==((ComboItem)comboCentro.getSelectedItem()).getId()){
+                             gridData[i][0] = "" + aula.getCodigo();
+                             gridData[i][1] = aula.getNombre();
+                             gridData[i][2] = "" + aula.getCapacidad();
+                             gridData[i][3] = aula.getUbicacion();
+                             i++;
+                    }
+                }
             }
         }
         
@@ -421,15 +457,25 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                 { return false; } 
             });
     }
-    
-   private void listData()
+ 
+//filtrar si el filtro esta activo. Mostrar todas en caso contrario
+   private void listarAulas()
    {
       try {
+            if(comboActiva.getSelectedIndex()==1){
+                this.btnDelete.setEnabled(false);
+                this.btnEdit.setEnabled(false);
+            }else{
+                this.btnDelete.setEnabled(true);
+                this.btnEdit.setEnabled(true);  
+            }
           if (!this.dofilter) {
-              this.listFullAulasData();
+              this.todasAulas();
+              comboActiva.setSelectedIndex(0);
+              comboCentro.setSelectedIndex(0);
           }
           else {
-              this.listFilteredAulasData();
+              this.filtrarAulas();
           }
       } 
       catch (SQLException ex)
@@ -438,9 +484,6 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                                        language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
       catch (RemoteException ex)
       {
@@ -448,9 +491,6 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                                        language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
       catch (Exception ex) 
       {
@@ -458,24 +498,25 @@ public class PnlMantenimientoAulas extends javax.swing.JDialog
                                        language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClearFilter;
+    private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnExplore;
-    private javax.swing.JButton cmdClearFilter;
-    private javax.swing.JButton cmdClose;
-    private javax.swing.JButton cmdFilter;
+    private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnView;
+    private javax.swing.JComboBox comboActiva;
+    private javax.swing.JComboBox comboCentro;
     private javax.swing.JTextField fldcapacity;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblcapacity;
+    private javax.swing.JLabel lblActivas;
+    private javax.swing.JLabel lblCapacidad;
+    private javax.swing.JLabel lblCentro;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 }
