@@ -3,92 +3,109 @@ package edu.uoc.tdp.pac4.beans;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Implementa un recurso.
- * 
- * @author JavaBeginers
- */
+   /*************************************
+   ***************RECURSO****************
+   ***@AUTHOR: Cristian - JavaBeginers***
+   **************************************/
 public class Recurso implements Serializable 
 {
    /** Serial version UID */
    private static final long serialVersionUID = 1L;
 
-   private int id_recurso;
-   private String nombre_recurso;
-   private int cantidad_stock;
-   private Date fecha_ultima_entrada_stock;
-   private Date fecha_ultima_salida_stock;
+   private int idRecurso;
+   private String nombreRecurso;
+   private int aulaRecurso;
+   private String codigoRecurso;
+   private String descripcionRecurso;
+   private Date altaRecurso;
+   private Date bajaRecurso;
 
-   /**
-    * Constructor de la clase.
-    */
+    /*************************************
+   **********CONSTRUCTOR*****************
+   **************************************/
    public Recurso() { }
    
-   /**
-    * Constructor de la clase.
-    */
-   public Recurso(int id_recurso, String nombre_recurso, int cantidad_stock, Date fecha_ultima_entrada_stock, Date fecha_ultima_salida_stock) 
+  
+   public Recurso(int id_recurso, String nombre_recurso, int aula_recurso, String codigo_recurso, Date fecha_alta, Date fecha_baja) 
    {
-      this.id_recurso = id_recurso;
-      this.nombre_recurso = nombre_recurso;
-      this.cantidad_stock = cantidad_stock;
-      this.fecha_ultima_entrada_stock = fecha_ultima_entrada_stock;
-      this.fecha_ultima_salida_stock = fecha_ultima_salida_stock;
+      this.idRecurso = id_recurso;
+      this.nombreRecurso = nombre_recurso;
+      this.aulaRecurso = aula_recurso;
+      this.codigoRecurso=codigo_recurso;
+      this.altaRecurso=fecha_alta;
+      this.bajaRecurso=fecha_baja;
    }
 
+      /*************************************
+   **********PROPERTIES*****************
+   **************************************/
    public int getIdRecurso() 
    {
-      return id_recurso;
+      return idRecurso;
    }
 
    public String getNombreRecurso() 
    {
-      return nombre_recurso;
+      return nombreRecurso;
    }
 
-   public int getCantidadStock() 
+   public String getCodigoRecurso() 
    {
-      return cantidad_stock;
+      return codigoRecurso;
+   }
+   
+   public String getDescripcionRecurso() 
+   {
+      return descripcionRecurso;
+   }
+   
+   public int getAulaRecurso()
+   {
+       return aulaRecurso;
    }
 
-   public Date getFechaUltimaEntradaStock() 
+   public Date getFechaAlta() 
    {
-      return fecha_ultima_entrada_stock;
+      return altaRecurso;
    }
 
-   public Date getFechaUltimaSalidaStock() 
+   public Date getFechaBaja() 
    {
-      return fecha_ultima_salida_stock;
+      return bajaRecurso;
    }
 
    public void setIdRecurso(int id_recurso) 
    {
-      this.id_recurso = id_recurso;
+      this.idRecurso = id_recurso;
    }
 
    public void setNombreRecurso(String nombre_recurso) 
    {
-      this.nombre_recurso = nombre_recurso;
+      this.nombreRecurso = nombre_recurso;
+   }
+   
+   public void setDescripcionRecurso(String descripcion_recurso) 
+   {
+      this.descripcionRecurso = descripcion_recurso;
    }
 
-   public void setCantidadStock(int cantidad_stock) 
+   public void setCodigoRecurso(String codigo_recurso) 
    {
-      this.cantidad_stock = cantidad_stock;
+      this.codigoRecurso = codigo_recurso;
+   }
+   
+    public void setAulaRecurso(int aula_recurso) 
+   {
+      this.aulaRecurso = aula_recurso;
    }
 
-   public void setFechaUltimaEntradaStock(Date fecha_ultima_entrada_stock) 
+   public void setFechaAltaRecurso(Date fecha_alta) 
    {
-      this.fecha_ultima_entrada_stock = fecha_ultima_entrada_stock;
+      this.altaRecurso=fecha_alta;
    }
 
-   public void setFechaUltimaSalidaStock(Date fecha_ultima_salida_stock) 
+   public void setFechaBajaRecurso(Date fecha_baja) 
    {
-      this.fecha_ultima_salida_stock = fecha_ultima_salida_stock;
-   }
-
-   @Override
-   public String toString() 
-   {
-      return this.nombre_recurso + " (" + this.cantidad_stock + ")";
+      this.bajaRecurso=fecha_baja;
    }
 }

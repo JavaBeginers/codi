@@ -9,77 +9,39 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Implementa el gestor de aulas.
- *
- * @author eSupport Netbeans
- */
-public class GestorAulas {
-
-    private static final String AULATABLE = "aula";
-    private static final String AULATABLE_ID = "aula_id";
-    private static final String AULATABLE_CENTER = "centre_id";
-    private static final String AULATABLE_CODE = "codi_aula";
-    private static final String AULATABLE_NAME = "nom";
-    private static final String AULATABLE_CAPACITY = "capacitat";
-    private static final String AULATABLE_LOCATION = "ubicacio";
-    private static final String AULATABLE_DATE = "data_alta";
-    private static final String AULATABLE_CANCELLDATE = "data_baixa";
-
-    /*
-     * Definimos los campos de la tabla recursosaula
-     */
-    private static final String REAULTABLE = "recursosaula";
-    private static final String REAULTABLE_AULAID = "idaula";
-    // private static final String REAULTABLE_RECID       = "idrecurso";
-
-    /*
-     * Definimos los campos de la tabla grupo
-     */
-    private static final String GRUPOTABLE = "grupo";
-    private static final String GRUPOTABLE_AULA = "idaula";
-
-    private Connection conn = null;
-
+public class GestorAulas extends GestorDisco
+{
+    private static final String AULATABLE              = "aula";
+    private static final String AULATABLE_ID           = "aula_id";
+    private static final String AULATABLE_CENTER       = "centre_id";
+    private static final String AULATABLE_CODE         = "codi_aula";
+    private static final String AULATABLE_NAME         = "nom";
+    private static final String AULATABLE_CAPACITY     = "capacitat";
+    private static final String AULATABLE_LOCATION     = "ubicacio";
+    private static final String AULATABLE_DATE         = "data_alta";
+    private static final String AULATABLE_CANCELLDATE  = "data_baixa";
+    
+    private Connection conn     = null;
     private SimpleDateFormat df = new SimpleDateFormat("yyy/MM/dd");
 
-    /**
-     * Constructor de la clase.
-     *
-     * @param conn Una instancia de {@link Connection} que contiene la conexión
-     * a la base de datos.
-     */
-    public GestorAulas(Connection conn) {
-        this.conn = conn;
-    }
 
-    //===========================================
-    // Propiedades
-    //===========================================
-    /**
-     * Devuelve la conexión a la base de datos usada en la instancia para
-     * realizar las operaciones sobre la bbdd.
-     */
-    public Connection getConnection() {
-        return conn;
-    }
-
-    //===========================================
-    // Métodos
-    //===========================================
-    /**
-     * Construye un objecto usuario de la información extraída de la consulta
-     * SQL
-     *
-     * @param rs {@link ResulsSet} proviniente de una consulta SQL que recoja
-     * TODA la info proviniente de un usuario
-     * @return Una instancia de {@link Usuario}
-     *
-     * @throws SQLException
-     * @throws Exception
-     *
-     */
+//Constructor
+   public GestorAulas(Connection conn) 
+   {
+      this.conn = conn;
+   }
+   
+//Properties
+   public Connection getConnection() 
+   {
+      return conn;
+   }
+   
+//Métodos
+   
+ //Construir Aula
     private Aula buildAula(ResultSet rs) throws SQLException, Exception {
+
         Aula aula = new Aula();
 
         aula.setId(rs.getInt(AULATABLE_ID));
@@ -94,111 +56,83 @@ public class GestorAulas {
         return aula;
     }
 
-    /**
-     * Recupera la información de una aula.
-     *
-     * @param id Identificador único de la aula.
-     * @return Una instancia de {@link Aula} que representa la aula solicitada.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public Aula get(int id) throws SQLException, Exception {
-        String sql;
-        Aula aula = null;
+//Obtener aula
+   public Aula get(int id) throws SQLException, Exception 
+   {
+      String sql;
+      Aula aula = null;
+      
+      sql = "SELECT * FROM " + AULATABLE        + " " +
+            "WHERE "         + AULATABLE_ID     + " = "  + id;
 
-        sql = "SELECT * FROM " + AULATABLE + " "
-                + "WHERE " + AULATABLE_ID + " = " + id;
-
-        try {
-            Statement objStt = (Statement) getConnection().createStatement();
-            ResultSet rs = objStt.executeQuery(sql);
-            if (rs.next()) {
-                aula = buildAula(rs);
-            }
-        } catch (SQLException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw ex;
-        }
-
-        return aula;
-    }
-
-    /**
-     * Recupera la lista de aulas.
-     *
-     * @return Una lista de instancias de {@link Aula} que representan todas las
-     * aulas del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Aula> getAulas() throws SQLException, Exception {
-        String sql;
-        Aula aula;
-        ArrayList<Aula> aulas = new ArrayList<Aula>();
-
-        sql = "SELECT * FROM " + AULATABLE + " "
-                + "WHERE " + AULATABLE_CANCELLDATE + " IS NULL ORDER BY " + AULATABLE_NAME;
-
-        try {
-            Statement objStt = (Statement) getConnection().createStatement();
-            ResultSet rs = objStt.executeQuery(sql);
-            while (rs.next()) {
-                aula = buildAula(rs);
-                aulas.add(aula);
-            }
-        } catch (SQLException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw ex;
-        }
-
-        return aulas;
-    }
-
-    /**
-     * Recupera la lista de aulas por centro.
-     *
-     * @param idCentro
-     * @return Una lista de instancias de {@link Aula} que representan todas las
-     * aulas del centro.
-     *
-     */
+      try 
+      {
+         Statement objStt = (Statement) getConnection().createStatement();
+         ResultSet rs = objStt.executeQuery(sql);
+         if (rs.next()) 
+         {
+             aula = buildAula(rs);
+         }
+      } 
+      catch (SQLException ex) {throw ex;} 
+      catch (Exception ex)    {throw ex;}
+      
+      return aula;
+   }
+   
+//Lista de aulas
+   public ArrayList<Aula> getAulas() throws SQLException, Exception 
+   {
+      String sql;
+      Aula aula;
+      ArrayList<Aula> aulas = new ArrayList<Aula>();
+      
+      sql = "SELECT * FROM " + AULATABLE        + " "    + 
+            "WHERE "+ AULATABLE_CANCELLDATE + " IS NULL ORDER BY " + AULATABLE_NAME;
+      try 
+      {
+         Statement objStt = (Statement) getConnection().createStatement();
+         ResultSet rs = objStt.executeQuery(sql);
+         while (rs.next()) 
+         {
+            aula = buildAula(rs);
+            aulas.add(aula);
+         }
+      } 
+      catch (SQLException ex) {throw ex;} 
+      catch (Exception ex)    {throw ex;}
+      
+      return aulas;
+   }
+   
+//Aulas de un centro
     public ArrayList<Aula> getAulasByCentro(int idCentro) {
         String sql;
         Aula aula;
         ArrayList<Aula> aulas = new ArrayList<Aula>();
-
-        sql = "SELECT * FROM " + AULATABLE + " "
-                + "WHERE " + AULATABLE_CANCELLDATE + " IS NULL and centre_id = " + idCentro + " ORDER BY " + AULATABLE_NAME;
-
-        try {
-            Statement objStt = (Statement) getConnection().createStatement();
-            ResultSet rs = objStt.executeQuery(sql);
-            while (rs.next()) {
-                aula = buildAula(rs);
-                aulas.add(aula);
-            }
-        } catch (SQLException ex) {
-
-        } catch (Exception ex) {
-
-        }
-
-        return aulas;
-    }
-
-    /**
-     * Recupera la lista de aulas.
-     *
-     * @return Una lista de instancias de {@link Aula} que representan todas las
-     * aulas del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+            sql = "SELECT * FROM " + AULATABLE        + " "    + 
+            "WHERE "+ AULATABLE_CANCELLDATE + " IS NULL and centre_id = " + idCentro + " ORDER BY " + AULATABLE_NAME;
+      try 
+      {
+         Statement objStt = (Statement) getConnection().createStatement();
+         ResultSet rs = objStt.executeQuery(sql);
+         while (rs.next()) 
+         {
+            aula = buildAula(rs);
+            aulas.add(aula);
+         }
+      } 
+      catch (SQLException ex) {
+          
+      } 
+      catch (Exception ex)    {
+          
+      }
+      
+      return aulas;   
+   }
+           
+//Aulas eliminadas (existe fecha de baja)
     public ArrayList<Aula> getAulasInactivas() throws SQLException, Exception {
         String sql;
         Aula aula;
@@ -287,6 +221,10 @@ public class GestorAulas {
         Date now = new Date();
 
         try {
+            sql = "UPDATE " + AULATABLE + " "        +
+                  "SET "   +  AULATABLE_CANCELLDATE + " = '"     + df.format(now) + "' "  +
+                  "WHERE "  + AULATABLE_ID           + " = "      + id;
+
             sql = "UPDATE " + AULATABLE + " "
                     + "SET " + AULATABLE_CANCELLDATE + " = '" + df.format(now) + "' "
                     + "WHERE " + AULATABLE_ID + " = " + id;
@@ -300,36 +238,7 @@ public class GestorAulas {
         }
     }
 
-    /**
-     * Recupera (de un borrado lógico) una Aula del centro.
-     *
-     * El aula se activa asignando el bit '1' a AULATABLE_ACTIVE
-     *
-     * @param id Identificador de la Aula a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public void undelete(int id) throws SQLException, Exception {
-        String sql;
-        Statement statement;
-
-        Date now = new Date();
-
-        try {
-            sql = "UPDATE " + AULATABLE + " "
-                    + "SET " + AULATABLE_CANCELLDATE + " = NULL "
-                    + "WHERE " + AULATABLE_ID + " = " + id;
-
-            statement = getConnection().createStatement();
-            statement.execute(sql);
-        } catch (SQLException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
+//Devuelve el número de plazas de una aula
     public int getCapacidadByAulaId(int aulaId) {
 
         String sql;

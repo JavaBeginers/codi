@@ -4,6 +4,7 @@ import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.beans.Recurso;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
 import edu.uoc.tdp.pac4.dao.GestorUsuario;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
@@ -15,6 +16,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import edu.uoc.tdp.pac4.dao.GestorRecursos;
 
 /**
  *
@@ -188,61 +190,26 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Devuelve una lista de Aulas del centro.
-     *
-     * @return Una lista de instancias {@link Aula} que representan las Aulas
-     * del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+
+//*********************************AULA**********************************
     @Override
     public ArrayList<Aula> getAulas() throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getAulas();
     }
 
-    /**
-     * Devuelve una lista de Aulas inactivas del centro.
-     *
-     * @return Una lista de instancias {@link Aula} que representan las Aulas
-     * del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public ArrayList<Aula> getAulasInactivas() throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getAulasInactivas();
     }
 
-    /**
-     * Obtiene una determinada Aula.
-     *
-     * @param id Identificador único de la Aula.
-     * @return Una instancia de {@link Aula} que representa la Aula
-     * seleccionada.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public Aula getAula(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.get(id);
     }
 
-    /**
-     * Agrega un nueva Aula al centro.
-     *
-     * @param aula Una instancia de {@link Aula} que contiene los datos de la
-     * Aula.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public boolean altaAula(Aula aula) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
@@ -251,15 +218,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Actualiza los datos de una Aula.
-     *
-     * @param aula Una instancia de {@link Aula} que contiene los datos
-     * actualizados de la Aula.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public boolean actualizarAula(Aula aula) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
@@ -268,14 +226,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Elimina una Aula.
-     *
-     * @param id Identificador de la Aula a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public boolean eliminarAula(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
@@ -283,24 +233,66 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
 
         return true;
     }
-
-
-
-    /**
-     * Recupera una Aula.
-     *
-     * @param id Identificador de la Aula a recuperar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+    
     @Override
-    public boolean undeleteAula(int id) throws SQLException, Exception {
+    public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        ga.undelete(id);
-
-        return true;
+        return ga.getAulasByCentro(id);
     }
+    
+        @Override
+    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
+        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+        return ga.getCapacidadByAulaId(aulaId);
+    }
+    
+
+//***********************************************************************
+    
+//********************************RECURSO********************************
+    @Override
+    public ArrayList<Recurso> getRecursos() throws SQLException, Exception {
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        return gr.getRecursos();
+    }
+
+    @Override
+    public ArrayList<Recurso> getRecursosInactivos() throws SQLException, Exception {
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        return gr.getRecursosInactivos();
+    }
+
+    @Override
+    public Recurso getRecurso(int id) throws SQLException, Exception {
+          GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        return gr.get(id);
+    }
+
+    @Override
+    public boolean altaRecurso(Recurso rec) throws SQLException, Exception {
+      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+      gr.alta(rec);
+      return true;
+    }
+
+    @Override
+    public boolean actualizarRecurso(Recurso rec) throws SQLException, Exception {
+      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+      gr.actualizar(rec);
+      return true;
+    }
+
+    @Override
+    public boolean eliminarRecurso(int id) throws SQLException, Exception {
+      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+      gr.eliminar(id);
+      return true;
+    }
+
+
+//***********************************************************************
+
+
 
     /**
      * Devuelve una lista de Actividades del centro.
@@ -463,11 +455,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gc.getCentros();
     }
 
-    @Override
-    public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception {
-        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        return ga.getAulasByCentro(id);
-    }
+
 
     @Override
     public int getInscritosByActividadId(int actividadId) throws SQLException, Exception {
@@ -475,10 +463,5 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gm.getInscritosByActividad(actividadId);
     }
 
-    @Override
-    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
-        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
-        return ga.getCapacidadByAulaId(aulaId);
-    }
-    
+
 }

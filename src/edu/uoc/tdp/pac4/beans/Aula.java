@@ -4,7 +4,7 @@ import java.util.Date;
 
    /*************************************
    *****************AULA*****************
-   *******@AUTHOR: JavaBegines***********
+   ***@AUTHOR: Cristian - JavaBeginers***
    **************************************/
 
 public class Aula extends IdentifiableObject implements Serializable

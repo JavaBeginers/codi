@@ -6,8 +6,8 @@ import edu.uoc.tdp.pac4.remote.Estadisticas;
 import edu.uoc.tdp.pac4.remote.EstadisticasImpl;
 import edu.uoc.tdp.pac4.remote.GestAcademica;
 import edu.uoc.tdp.pac4.remote.GestAcademicaImpl;
-import edu.uoc.tdp.pac4.remote.GestorEstoc;
-import edu.uoc.tdp.pac4.remote.GestorEstocImpl;
+//import edu.uoc.tdp.pac4.remote.GestorEstoc;
+//import edu.uoc.tdp.pac4.remote.GestorEstocImpl;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.remote.MantenimientoImpl;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
@@ -22,7 +22,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 /**
  * Implementa el formulario correspondiente al servidor del proyecto.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class Servidor extends javax.swing.JFrame 
 {
@@ -33,7 +33,7 @@ public class Servidor extends javax.swing.JFrame
    private Registry registry;
 
    // Objetos remotos -> subsistemas
-   private GestorEstoc stock;
+   //private GestorEstoc stock;
    private Mantenimiento mant;
    private Estadisticas estad;
    private GestAcademica gacad;
@@ -146,13 +146,13 @@ public class Servidor extends javax.swing.JFrame
          
          registry = LocateRegistry.createRegistry(eAcademiaEU.RMI_PORT);    
          
-         stock = new GestorEstocImpl();
+         //stock = new GestorEstocImpl();
          mant = new MantenimientoImpl();
          estad = new EstadisticasImpl();
          gacad = new GestAcademicaImpl();
          conex = new ConexionImpl();
          
-         Naming.rebind(eAcademiaEU.RMI_URI_STOCK, stock);
+         //Naming.rebind(eAcademiaEU.RMI_URI_STOCK, stock);
          Naming.rebind(eAcademiaEU.RMI_URI_MANTENIMIENTO, mant);
          Naming.rebind(eAcademiaEU.RMI_URI_ESTADISTICAS, estad);
          Naming.rebind(eAcademiaEU.RMI_URI_GESTIONACAD, gacad);
@@ -168,7 +168,7 @@ public class Servidor extends javax.swing.JFrame
          printToConsole(language.getProperty("rmi.errConnection") + ": " + ex.getMessage());
          printToConsole(language.getProperty("console.stopped"));
          
-         stock = null;
+         //stock = null;
          
          cmdStart.setEnabled(true);
          cmdStop.setEnabled(false);
@@ -178,7 +178,7 @@ public class Servidor extends javax.swing.JFrame
          printToConsole("== ERROR =======\nClassNotFoundException: " + ex.getMessage());
          printToConsole(language.getProperty("console.stopped"));
          
-         stock = null;
+         //stock = null;
          
          cmdStart.setEnabled(true);
          cmdStop.setEnabled(false);
@@ -188,7 +188,7 @@ public class Servidor extends javax.swing.JFrame
          printToConsole("== ERROR =======\n" + ex.getMessage());
          printToConsole(language.getProperty("console.stopped"));
          
-         stock = null;
+         //stock = null;
          
          cmdStart.setEnabled(true);
          cmdStop.setEnabled(false);
@@ -203,8 +203,8 @@ public class Servidor extends javax.swing.JFrame
             Naming.unbind(eAcademiaEU.RMI_URI_ESTADISTICAS);            
             Naming.unbind(eAcademiaEU.RMI_URI_MANTENIMIENTO);            
             Naming.unbind(eAcademiaEU.RMI_URI_GESTIONACAD);            
-            Naming.unbind(eAcademiaEU.RMI_URI_STOCK);             
-            UnicastRemoteObject.unexportObject(stock, true);
+            //Naming.unbind(eAcademiaEU.RMI_URI_STOCK);             
+            //UnicastRemoteObject.unexportObject(stock, true);
             UnicastRemoteObject.unexportObject(mant, true);
             UnicastRemoteObject.unexportObject(estad, true);
             UnicastRemoteObject.unexportObject(gacad, true);
@@ -233,7 +233,7 @@ public class Servidor extends javax.swing.JFrame
       finally 
       {
         cmdStop.setEnabled(false);     
-        stock = null;
+        //stock = null;
         mant = null;
         estad = null;
         gacad = null;
