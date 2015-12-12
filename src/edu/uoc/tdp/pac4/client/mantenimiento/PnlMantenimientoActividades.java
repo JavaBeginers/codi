@@ -1,6 +1,7 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import java.rmi.RemoteException;
@@ -15,21 +16,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
+    private static final int ROL_ADMINISTRADOR = 1;
+    private static final int ROL_SECRETARIA = 2;
+    private static final int ROL_PROFESOR = 2;
+    private static final int ROL_ALUMNO = 3;
+    
     private Mantenimiento manager;
     private LanguageUtils language;
     private ArrayList<Actividad> actividades;
+    private Usuario usuario;
 
     private boolean dofilter = false;
 
     /**
      * Creates new form PnlGroupGestor
      */
-    public PnlMantenimientoActividades(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language) {
+    public PnlMantenimientoActividades(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language, Usuario usuario) {
 
         super(parent, modal);
         this.language = language;
         this.manager = manager;
-
+        this.usuario = usuario;
         initComponents();
 
         setLocationRelativeTo(null);
@@ -59,6 +66,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         lblassistencia = new javax.swing.JLabel();
         cmdFilter = new javax.swing.JButton();
         cmdClearFilter = new javax.swing.JButton();
+        btnAsistencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -136,6 +144,17 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             }
         });
 
+        btnAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/projection-screen-presentation.png"))); // NOI18N
+        btnAsistencia.setText("Asistencia");
+        btnAsistencia.setFocusable(false);
+        btnAsistencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAsistencia.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsistenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,12 +163,14 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAsistencia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdd)
                         .addGap(0, 0, 0)
                         .addComponent(btnEdit)
                         .addGap(0, 0, 0)
                         .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(83, 83, 83)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +199,8 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnAdd)
                         .addComponent(btnEdit)
-                        .addComponent(btnDelete)))
+                        .addComponent(btnDelete)
+                        .addComponent(btnAsistencia)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
@@ -304,6 +326,10 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         listData();
     }//GEN-LAST:event_cmdClearFilterActionPerformed
 
+    private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAsistenciaActionPerformed
+
     /**
      * Rellena la tabla de usuarios.
      */
@@ -316,19 +342,21 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         header.add(language.getProperty("mantenimiento.actividad.cambios"));
 
         String[][] gridData;
-
-        actividades = manager.getActividades();
-        gridData = new String[actividades.size()][4];
-
-        int i = 0;
-        for (Actividad actividad : actividades) {
-            gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
-            gridData[i][1] = getDescTipus(actividad.getTipus());
-            gridData[i][2] = actividad.getTitol();
-            gridData[i][3] = "" + actividad.getMinimPercentatge();
-            i++;
+        if(usuario.getIdRol() == ROL_SECRETARIA) {
+            actividades = manager.getActividadesByUniversidadId(usuario.getUniversidadId());
+            gridData = new String[actividades.size()][4];
+            int i = 0;
+            for (Actividad actividad : actividades) {
+                gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
+                gridData[i][1] = getDescTipus(actividad.getTipus());
+                gridData[i][2] = actividad.getTitol();
+                gridData[i][3] = "" + actividad.getMinimPercentatge();
+                i++;
+            }
+        } else {
+            gridData = new String[0][4];
         }
-
+        
         //Modificamos la tabla para que no sea editable
         this.tblData.setModel(new DefaultTableModel(gridData, header.toArray()) {
             @Override
@@ -435,6 +463,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAsistencia;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton cmdClearFilter;
@@ -446,4 +475,18 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private javax.swing.JLabel lblassistencia;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

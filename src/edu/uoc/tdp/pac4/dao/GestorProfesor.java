@@ -81,6 +81,8 @@ public class GestorProfesor extends GestorDisco
             profesor.setFechaInactividad(rs.getDate("fechainactividad"));
             profesor.setNif(rs.getString("nif"));
             profesor.setIdRol(rs.getInt("idrol"));
+            profesor.setUniversidadId(rs.getInt("universitat_id"));
+
 
             return profesor;
          }
@@ -136,6 +138,7 @@ public class GestorProfesor extends GestorDisco
             profesor.setFechaInactividad(rs.getDate("fechainactividad"));
             profesor.setNif(rs.getString("nif"));
             profesor.setIdRol(rs.getInt("idrol"));
+            profesor.setUniversidadId(rs.getInt("universitat_id"));
 
             profesores.add(profesor);
          }

@@ -143,6 +143,35 @@ public class GestorActividad extends GestorDisco {
 
         return list;
     }
+    
+    public ArrayList<Actividad> getActividadesByUniversidadId(int universidadId) throws SQLException, Exception {
+        
+        Actividad actividad;
+        String sql;
+        ArrayList<Actividad> list = new ArrayList<Actividad>();
+
+        sql = "SELECT * FROM " + ACTIVIDADTABLE + " "
+                + "WHERE " + ACTIVIDADTABLE_CANCELADA + " = '" + 0 + "'"
+                + " AND " + ACTIVIDADTABLE_UNIVERSITAT_ID + " = " + universidadId
+                + "ORDER BY " + ACTIVIDADTABLE_TITOL + " Asc";
+
+        try {
+            ResultSet rs = executeSql(sql);
+            while (rs.next()) {
+                actividad = new Actividad();
+                readActividad(actividad, rs);
+                list.add(actividad);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return list;
+        
+    }
+
 
     /**
      * Obtiene una lista completa de los actividadess inactivos del centro.

@@ -98,7 +98,7 @@ public class PnlMain extends javax.swing.JFrame
                 mnuGestionRecuento.setEnabled(false);
                 mnuGestionGrupos.setEnabled(true);
                 mnuGestionMatriculas.setEnabled(true);
-                mnuMantenimiento.setEnabled(false);     
+                mnuMantenimiento.setEnabled(true);     
                 mnuEstadisticas.setEnabled(true);
                 mnuEstadisticasAlumno.setEnabled(false);
                 mnuEstadisticasProfesor.setEnabled(false);
@@ -668,7 +668,7 @@ public class PnlMain extends javax.swing.JFrame
     
     private void mnuMantenimientoActividadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMantenimientoActividadesActionPerformed
         // TODO add your handling code here:
-        PnlMantenimientoActividades form = new PnlMantenimientoActividades(this, true, rmiMantenimiento, language);
+        PnlMantenimientoActividades form = new PnlMantenimientoActividades(this, true, rmiMantenimiento, language, usuario);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
     }//GEN-LAST:event_mnuMantenimientoActividadesActionPerformed

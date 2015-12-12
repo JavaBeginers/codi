@@ -280,6 +280,17 @@ public interface Mantenimiento extends Remote {
      */
     public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception;
     
+     /**
+     * Devuelve las actividades de una universidad
+     *
+     * @param universidadId Identificador del Actividad
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public ArrayList<Actividad> getActividadesByUniversidadId(int universidadId) throws SQLException, Exception;
+
+
     //*********************************RECURSO********************************
     public ArrayList<Recurso> getRecursos() throws SQLException, Exception;
 

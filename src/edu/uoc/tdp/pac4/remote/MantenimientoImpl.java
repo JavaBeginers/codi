@@ -463,5 +463,11 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gm.getInscritosByActividad(actividadId);
     }
 
+    @Override
+    public ArrayList<Actividad> getActividadesByUniversidadId(int universidadId) throws SQLException, Exception {
+        GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+        return gc.getActividadesByUniversidadId(universidadId);
+    }
+
 
 }

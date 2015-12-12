@@ -52,7 +52,7 @@ public class GestorConexion extends GestorDisco {
         ResultSet rs = null;
         StringBuffer sql = new StringBuffer();
 
-        sql.append("SELECT USUARI.usuari_id, USUARI.nom_usuari, USUARI.contrasenya, USUARI.noms, USUARI.cognoms, USUARI.rol, USUARI.actiu ");
+        sql.append("SELECT USUARI.usuari_id, USUARI.nom_usuari, USUARI.contrasenya, USUARI.noms, USUARI.cognoms, USUARI.rol, USUARI.universitat_id, USUARI.actiu ");
         sql.append("FROM USUARI ");
         sql.append("WHERE lower(USUARI.nom_usuari)= '" + login.trim().toLowerCase() + "' AND ");
         sql.append("USUARI.contrasenya= ('" + password + "') AND ");
@@ -72,6 +72,7 @@ public class GestorConexion extends GestorDisco {
                 usuario.setNombre(rs.getString("noms"));
                 usuario.setApellidos(rs.getString("cognoms"));
                 usuario.setIdRol(rs.getInt("rol"));
+                usuario.setUniversidadId(rs.getInt("universitat_id"));
                 //usuario.setDescrol(rs.getString("rol_desc"));
             }
         } catch (SQLException ex) {

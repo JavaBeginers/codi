@@ -21,6 +21,7 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
    private String nif;
    private int rol;
    private String descrol;
+   private int universidadId;
    private int usuari_id;
    
    //===========================================
@@ -198,5 +199,19 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
 
     public void setId(int id) {
         this.usuari_id = id;
+    }
+
+    /**
+     * @return the universidadId
+     */
+    public int getUniversidadId() {
+        return universidadId;
+    }
+
+    /**
+     * @param universidadId the universidadId to set
+     */
+    public void setUniversidadId(int universidadId) {
+        this.universidadId = universidadId;
     }
 }

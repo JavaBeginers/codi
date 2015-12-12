@@ -83,6 +83,8 @@ public class GestorAlumno extends GestorDisco
             alumno.setFechaInactividad(rs.getDate("fechainactividad"));
             alumno.setNif(rs.getString("nif"));
             alumno.setIdRol(rs.getInt("idrol"));
+            alumno.setUniversidadId(rs.getInt("universitat_id"));
+
 
             return alumno;
          }
