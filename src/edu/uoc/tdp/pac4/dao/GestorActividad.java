@@ -36,7 +36,7 @@ public class GestorActividad extends GestorDisco {
     private static final String ACTIVIDADTABLE_INVESTIGADOR = "investigador";
     private static final String ACTIVIDADTABLE_DATA_INICI = "data_inici";
     private static final String ACTIVIDADTABLE_DATA_FI = "data_fi";
-    private static final String ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO = "data_max_inscripcio";    
+    private static final String ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO = "data_max_inscripcio";
     private static final String ACTIVIDADTABLE_PREU = "preu";
     private static final String ACTIVIDADTABLE_MINIM_PERCENTAGE = "minim_percentatge";
     private static final String ACTIVIDADTABLE_CANCELADA = "cancelada";
@@ -56,6 +56,7 @@ public class GestorActividad extends GestorDisco {
     //===========================================
     /**
      * Constructor de la clase.
+     *
      * @param conn
      */
     public GestorActividad(Connection conn) {
@@ -67,7 +68,8 @@ public class GestorActividad extends GestorDisco {
     //===========================================
     /**
      * Devuelve la conexión a base de datos.
-     * @return 
+     *
+     * @return
      */
     @Override
     public Connection getConnection() {
@@ -143,9 +145,9 @@ public class GestorActividad extends GestorDisco {
 
         return list;
     }
-    
+
     public ArrayList<Actividad> getActividadesByUniversidadId(int universidadId) throws SQLException, Exception {
-        
+
         Actividad actividad;
         String sql;
         ArrayList<Actividad> list = new ArrayList<Actividad>();
@@ -169,9 +171,8 @@ public class GestorActividad extends GestorDisco {
         }
 
         return list;
-        
-    }
 
+    }
 
     /**
      * Obtiene una lista completa de los actividadess inactivos del centro.
@@ -246,8 +247,7 @@ public class GestorActividad extends GestorDisco {
 
     /**
      * Devuelve el número de plazas disponibles para un determinado actividad y
-     * turno.
-     * Se calcula en función de las matrículas aceptadas para tener mayor
+     * turno. Se calcula en función de las matrículas aceptadas para tener mayor
      * fiabilidad.
      *
      * @param idActividad Identificador único del actividad.
@@ -298,7 +298,7 @@ public class GestorActividad extends GestorDisco {
 
         return plazas - alumnos;
     }
-    
+
     /**
      * Agrega un nuevo usuario al centro.
      *
@@ -312,7 +312,6 @@ public class GestorActividad extends GestorDisco {
         StringBuilder sql = new StringBuilder();
         Statement statement;
 
-        
         try {
             sql.append("INSERT INTO " + ACTIVIDADTABLE + " (");
             sql.append(ACTIVIDADTABLE_UNIVERSITAT_ID + ",");
@@ -320,16 +319,16 @@ public class GestorActividad extends GestorDisco {
             sql.append(ACTIVIDADTABLE_AULA_ID + ",");
             sql.append(ACTIVIDADTABLE_TIPUS + ",");
             sql.append(ACTIVIDADTABLE_TITOL + ",");
-            sql.append(ACTIVIDADTABLE_AREA  + ",");
+            sql.append(ACTIVIDADTABLE_AREA + ",");
             sql.append(ACTIVIDADTABLE_ESPECIALITAT + ",");
-            sql.append(ACTIVIDADTABLE_DECANATURA  + ",");
-            sql.append(ACTIVIDADTABLE_INVESTIGADOR  + ",");
-            sql.append(ACTIVIDADTABLE_DATA_INICI  + ",");
-            sql.append(ACTIVIDADTABLE_DATA_FI  + ",");
-            sql.append(ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO  + ",");
-            sql.append(ACTIVIDADTABLE_PREU  + ",");
-            sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE  + ",");
-            sql.append(ACTIVIDADTABLE_CANCELADA  + ") ");
+            sql.append(ACTIVIDADTABLE_DECANATURA + ",");
+            sql.append(ACTIVIDADTABLE_INVESTIGADOR + ",");
+            sql.append(ACTIVIDADTABLE_DATA_INICI + ",");
+            sql.append(ACTIVIDADTABLE_DATA_FI + ",");
+            sql.append(ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO + ",");
+            sql.append(ACTIVIDADTABLE_PREU + ",");
+            sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE + ",");
+            sql.append(ACTIVIDADTABLE_CANCELADA + ") ");
             sql.append("VALUES ");
             sql.append("(");
             sql.append(actividad.getUniversitatId()).append(", ");
@@ -343,14 +342,14 @@ public class GestorActividad extends GestorDisco {
             sql.append(actividad.getInvestigator()).append(", ");
             sql.append("'").append(df.format(actividad.getDataInici())).append("', ");
             sql.append("'").append(df.format(actividad.getDataFi())).append("', ");
-            if(actividad.getDataMaxInscripcio()!=null) {
+            if (actividad.getDataMaxInscripcio() != null) {
                 sql.append("'").append(df.format(actividad.getDataMaxInscripcio())).append("', ");
             } else {
                 sql.append("null");
             }
             sql.append(actividad.getPreu()).append(", ");
             sql.append(actividad.getMinimPercentatge()).append(", ");
-            sql.append(actividad.isCancelada()?"1":"0");
+            sql.append(actividad.isCancelada() ? "1" : "0");
             sql.append(")");
 
             statement = getConnection().createStatement();
@@ -365,8 +364,8 @@ public class GestorActividad extends GestorDisco {
     /**
      * Actualiza los datos de un Actividad.
      *
-     * @param actividad Una instancia de {@link Actividad} que contiene los datos
-     * actualizados del actividad.
+     * @param actividad Una instancia de {@link Actividad} que contiene los
+     * datos actualizados del actividad.
      *
      * @throws SQLException
      * @throws Exception
@@ -374,7 +373,7 @@ public class GestorActividad extends GestorDisco {
     public void update(Actividad actividad) throws SQLException, Exception {
         StringBuilder sql = new StringBuilder();
         Statement statement;
-        
+
         try {
             sql.append("UPDATE " + ACTIVIDADTABLE);
             sql.append(" SET ");
@@ -436,14 +435,14 @@ public class GestorActividad extends GestorDisco {
             sql.append(", ");
             sql.append(ACTIVIDADTABLE_CANCELADA);
             sql.append(" = ");
-            sql.append(actividad.isCancelada()?"1":"0");
+            sql.append(actividad.isCancelada() ? "1" : "0");
             sql.append(" WHERE " + ACTIVIDADTABLE_ID);
             sql.append(" = ");
             sql.append(actividad.getId());
 
             statement = getConnection().createStatement();
             statement.execute(sql.toString());
-            
+
         } catch (SQLException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -542,11 +541,11 @@ public class GestorActividad extends GestorDisco {
     // Private members
     //===========================================
     /**
-     * Actualiza los datos de una instancia de {@link Actividad} con los datos de
-     * una fila de {@link Resultset}.
+     * Actualiza los datos de una instancia de {@link Actividad} con los datos
+     * de una fila de {@link Resultset}.
      */
     private void readActividad(Actividad actividad, ResultSet rs) throws SQLException {
-        
+
         actividad.setId(rs.getInt(ACTIVIDADTABLE_ID));
         actividad.setUniversitatId(rs.getLong(ACTIVIDADTABLE_UNIVERSITAT_ID));
         actividad.setCentreId(rs.getLong(ACTIVIDADTABLE_CENTRE_ID));
@@ -563,7 +562,72 @@ public class GestorActividad extends GestorDisco {
         actividad.setPreu(rs.getDouble(ACTIVIDADTABLE_PREU));
         actividad.setMinimPercentatge(rs.getDouble(ACTIVIDADTABLE_MINIM_PERCENTAGE));
         actividad.setCancelada(rs.getBoolean(ACTIVIDADTABLE_CANCELADA));
-        
+
     }
-    
+
+    public boolean canAddActivity(int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception {
+
+        String sql;
+        ResultSet rs;
+
+        try {
+            sql = "SELECT COUNT(*) as actividad FROM " + ACTIVIDADTABLE + " "
+                + "WHERE (" + ACTIVIDADTABLE_CANCELADA + " = '" + 0 + "' or " + ACTIVIDADTABLE_CANCELADA + " IS NULL) "
+                + " AND " + ACTIVIDADTABLE_TIPUS + " = " + tipusActivitat 
+                + " AND " + ACTIVIDADTABLE_CENTRE_ID + " = " + centreId
+                + " AND (" + ACTIVIDADTABLE_DATA_INICI + " BETWEEN '" + iniActividad + "' AND '" + endActividad
+                + "' OR " + ACTIVIDADTABLE_DATA_FI + " BETWEEN '" + iniActividad + "' AND '" + endActividad + "')";
+            Statement objStt = (Statement) getConnection().createStatement();
+            rs = objStt.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getInt("actividad")==0;
+            } else {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
+     *
+     * @param activitatId
+     * @param tipusActivitat
+     * @param centreId
+     * @param iniActividad
+     * @param endActividad
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public boolean canUpdateActivity(int activitatId, int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception {
+
+        String sql;
+        ResultSet rs;
+
+        try {
+            sql = "SELECT COUNT(*) as actividad FROM " + ACTIVIDADTABLE + " "
+                + "WHERE id <> "+activitatId+" AND (" + ACTIVIDADTABLE_CANCELADA + " = '" + 0 + "' or " + ACTIVIDADTABLE_CANCELADA + " IS NULL) "
+                + " AND " + ACTIVIDADTABLE_TIPUS + " = " + tipusActivitat 
+                + " AND " + ACTIVIDADTABLE_CENTRE_ID + " = " + centreId
+                + " AND (" + ACTIVIDADTABLE_DATA_INICI + " BETWEEN '" + iniActividad + "' AND '" + endActividad
+                + "' OR " + ACTIVIDADTABLE_DATA_FI + " BETWEEN '" + iniActividad + "' AND '" + endActividad + "')";
+            Statement objStt = (Statement) getConnection().createStatement();
+            rs = objStt.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getInt("actividad")==0;
+            } else {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+            
 }

@@ -17,6 +17,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import edu.uoc.tdp.pac4.dao.GestorRecursos;
+import java.util.Date;
 
 /**
  *
@@ -469,5 +470,16 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gc.getActividadesByUniversidadId(universidadId);
     }
 
+    @Override
+    public boolean canAddActivity(int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception {
+        GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+        return gc.canAddActivity(tipusActivitat, centreId, iniActividad, endActividad);
+    }
 
+    @Override
+    public boolean canUpdateActivity(int activitatId, int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception {
+        GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
+        return gc.canUpdateActivity(activitatId, tipusActivitat, centreId, iniActividad, endActividad);
+    }
+        
 }

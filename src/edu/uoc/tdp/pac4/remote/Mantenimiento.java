@@ -8,6 +8,7 @@ import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Recurso;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -290,7 +291,11 @@ public interface Mantenimiento extends Remote {
      */
     public ArrayList<Actividad> getActividadesByUniversidadId(int universidadId) throws SQLException, Exception;
 
-
+    public boolean canAddActivity(int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception;
+    
+    public boolean canUpdateActivity(int activitatId, int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception;
+            
+        
     //*********************************RECURSO********************************
     public ArrayList<Recurso> getRecursos() throws SQLException, Exception;
 

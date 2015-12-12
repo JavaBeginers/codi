@@ -4,6 +4,7 @@ import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.util.FieldLimit;
@@ -38,6 +39,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private Actividad actividad = null;
     private final int actividadID;
     private final int NAME_LENGTH = 50;
+    private final Usuario usuario;
 
     /**
      * Creates new form PnlGroupGestor
@@ -46,7 +48,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
      * @param modal
      * @param manager
      */
-    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String actionType, int actividadID) {
+    public PnlMantenimientoActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String actionType, int actividadID, Usuario usuario) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -55,6 +57,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         this.language = language;
         this.actionType = actionType;
         this.actividadID = actividadID;
+        this.usuario = usuario;
 
         addaptToPreferences();
 
@@ -330,16 +333,56 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     private boolean allDataFilled() {
         //TODO: validate
+        //Tipo de actividad no puede ser vacía
+        if (cboTipoActividad.getSelectedIndex() < 1) {
+            return false;
+        }
+        //Universidad no puede ser vacía
+        if (cboUniversidad.getSelectedIndex() < 1) {
+            return false;
+        }
+        //Centro no puede ser vacío
+        if (cboCentro.getSelectedIndex() < 1) {
+            return false;
+        }
+        //Aula no puede ser vacía
+        if (cboSitio.getSelectedIndex() < 1) {
+            return false;
+        }
+        //Titulo no puede ser vacía
         if (fldTitulo.getText().isEmpty()) {
             return false;
         }
+        //Fecha inicio inscripción no puede ser vacía
         if (fldDateIni.getText().isEmpty()) {
             return false;
         }
+        //Fecha fin inscripción no puede ser vacía
         if (fldDateFin.getText().isEmpty()) {
             return false;
         }
+        //Fecha maxima inscripción no puede ser vacía
         if (fldDateMaximaInscripcion.getText().isEmpty()) {
+            return false;
+        }
+        //No se pueden solapar activitats del mateix tipus en el mateix centre docent
+        int tipusActivitat = ((ComboItem) cboTipoActividad.getSelectedItem()).getId();
+        int centreId = ((ComboItem) cboCentro.getSelectedItem()).getId();
+        Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
+        Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
+        try {
+            if (this.actionType.equalsIgnoreCase("Add")) {
+                if (!manager.canAddActivity(tipusActivitat, centreId, iniActividad, endActividad)) {
+                    return false;
+                }
+            } else {
+                if (!manager.canUpdateActivity(actividadID, tipusActivitat, centreId, iniActividad, endActividad)) {
+                    return false;
+                }
+            }
+        } catch(SQLException sqlex) {
+            return false;
+        } catch(Exception ex) {
             return false;
         }
 
@@ -442,7 +485,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             //Inicializamos el combo de tipo de actividad
             setTipoActividades(actividad.getTipus());
             //Inicializamos el combo de universidades
-            setUniversidades( Math.toIntExact(actividad.getUniversitatId()));
+            setUniversidades(Math.toIntExact(actividad.getUniversitatId()));
             //Inicializamos Centros
             setCentros(actividad.getCentreId(), actividad.getAulaId());
             this.fldAreaConocimiento.setText(actividad.getArea());
@@ -487,8 +530,8 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         try {
             numInscripciones = manager.getInscritosByActividadId(actividad.getId());
             int capacidad = manager.getCapacidadByAulaId(Math.toIntExact(actividad.getAulaId()));
-            if(((numInscripciones/capacidad)*100) > actividad.getMinimPercentatge() ||
-                    actividad.getDataMaxInscripcio().getTime()<new Date().getTime()) {
+            if (((numInscripciones / capacidad) * 100) > actividad.getMinimPercentatge()
+                    || actividad.getDataMaxInscripcio().getTime() < new Date().getTime()) {
                 fldDateIni.setEditable(false);
                 fldDateFin.setEditable(false);
                 fldDateMaximaInscripcion.setEditable(false);
@@ -496,7 +539,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
@@ -548,17 +591,19 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             actividad.setInvestigator(fldInvestigador.getText());
             try {
                 actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
-            } catch (NumberFormatException ex) {}
+            } catch (NumberFormatException ex) {
+            }
             try {
                 actividad.setPreu(new Double(fldPrecio.getText()));
-            } catch (NumberFormatException ex) {}
+            } catch (NumberFormatException ex) {
+            }
             actividad.setDataInici(iniActividad);
             actividad.setDataFi(endActividad);
             actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
             actividad.setCancelada(cbCancelada.isSelected());
-            
+
             ArrayList<Actividad> actividades = manager.getActividadesInactivas();
-                    
+
             for (Actividad oldActividad : actividades) {
                 if (actividad.getTitol().equalsIgnoreCase(oldActividad.getTitol())) {
                     if (manager.undeleteActividad(oldActividad.getId())) {
@@ -634,10 +679,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             new_actividad.setInvestigator(fldInvestigador.getText());
             try {
                 new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
-            } catch (NumberFormatException ex) {}
+            } catch (NumberFormatException ex) {
+            }
             try {
                 new_actividad.setPreu(new Double(fldPrecio.getText()));
-            } catch (NumberFormatException ex) {}
+            } catch (NumberFormatException ex) {
+            }
             new_actividad.setDataInici(iniActividad);
             new_actividad.setDataFi(endActividad);
             new_actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
@@ -726,13 +773,13 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     }//GEN-LAST:event_cbCanceladaActionPerformed
 
     //Inicializamos Centros
-    private void setCentros(long centreId, long aulaId){
-        
+    private void setCentros(long centreId, long aulaId) {
+
         List<ComboItem> centrosCB;
         centrosCB = new ArrayList<ComboItem>();
         List<Centro> centros = new ArrayList<Centro>();
-        int index=0;
-        
+        int index = 0;
+
         try {
             centros = manager.getCentros();
         } catch (Exception ex) {
@@ -740,18 +787,18 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         }
 
         centrosCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_CENTRO_SELECCIONA), -1));
-        for (int i = 0;i<centros.size();i++){
-            if(centreId==centros.get(i).getId()) {
-                index = i+1;
+        for (int i = 0; i < centros.size(); i++) {
+            if (centreId == centros.get(i).getId()) {
+                index = i + 1;
             }
             centrosCB.add(new ComboItem(centros.get(i).getNom(), centros.get(i).getId()));
         }
         cboCentro.removeAll();
         cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
         cboCentro.setSelectedIndex(index);
-        index=0;
-        for(int i = 0;i<cboSitio.getComponentCount();i++) {
-            if (aulaId == ((ComboItem)cboSitio.getItemAt(i)).getId()) {
+        index = 0;
+        for (int i = 0; i < cboSitio.getComponentCount(); i++) {
+            if (aulaId == ((ComboItem) cboSitio.getItemAt(i)).getId()) {
                 index = i;
             }
         }
@@ -784,10 +831,18 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         }
         //Buscar todas las universidades
         universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID) {
+            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
+        }
+        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID) {
+            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
+        }
+        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID) {
+            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
+        }
+        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID) {
+            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+        }
         cboUniversidad.removeAll();
         cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
     }
@@ -839,11 +894,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cboTipoActividad.removeAll();
         cboTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
         cboTipoActividad.setSelectedIndex(index);
-        
+
     }
 
     private void setUniversidades(int universidad) {
-        
+
         int index;
         if (universidades == null) {
             universidades = new ArrayList<ComboItem>();
@@ -869,13 +924,13 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                 break;
             default:
                 index = 0;
-        }        
-        
+        }
+
         cboUniversidad.removeAll();
         cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
         cboUniversidad.setSelectedIndex(index);
-        
-    }    
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbCancelada;

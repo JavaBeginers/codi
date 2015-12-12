@@ -2,11 +2,17 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Usuario;
+import edu.uoc.tdp.pac4.eAcademiaEU;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
+import edu.uoc.tdp.pac4.util.ComboItem;
+import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +26,8 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private static final int ROL_SECRETARIA = 2;
     private static final int ROL_PROFESOR = 2;
     private static final int ROL_ALUMNO = 3;
-    
+    private List<ComboItem> tiposActividad;
+
     private Mantenimiento manager;
     private LanguageUtils language;
     private ArrayList<Actividad> actividades;
@@ -42,6 +49,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         setLocationRelativeTo(null);
 
         addaptToPreferences();
+        setTipoActividades();
 
         listData();
     }
@@ -62,11 +70,15 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        fldasistencia = new javax.swing.JTextField();
-        lblassistencia = new javax.swing.JLabel();
         cmdFilter = new javax.swing.JButton();
         cmdClearFilter = new javax.swing.JButton();
         btnAsistencia = new javax.swing.JButton();
+        lblFiltroTipoActividad = new javax.swing.JLabel();
+        cboFiltroTipoActividad = new javax.swing.JComboBox();
+        lblFiltroDateIni = new javax.swing.JLabel();
+        fldFiltroDateIni = new javax.swing.JFormattedTextField();
+        lblFiltroDateEnd = new javax.swing.JLabel();
+        fldFiltroDateFin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -126,8 +138,6 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             }
         });
 
-        lblassistencia.setText("Asistencia Mínima");
-
         cmdFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/refresh_002_16.gif"))); // NOI18N
         cmdFilter.setText("Filtrar");
         cmdFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +165,24 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             }
         });
 
+        lblFiltroTipoActividad.setText("Tipo de Actividad");
+
+        cboFiltroTipoActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboFiltroTipoActividadActionPerformed(evt);
+            }
+        });
+
+        lblFiltroDateIni.setText("Fecha Inicio");
+
+        fldFiltroDateIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldFiltroDateIni.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        lblFiltroDateEnd.setText("Fecha Inicio");
+
+        fldFiltroDateFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        fldFiltroDateFin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,15 +202,23 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmdClose, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblassistencia)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(fldasistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(cmdClose))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblFiltroTipoActividad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cboFiltroTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblFiltroDateIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fldFiltroDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFiltroDateEnd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fldFiltroDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(81, 81, 81)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,9 +241,15 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fldasistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblassistencia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblFiltroTipoActividad)
+                    .addComponent(cboFiltroTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFiltroDateIni)
+                        .addComponent(fldFiltroDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFiltroDateEnd)
+                            .addComponent(fldFiltroDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdFilter)
                     .addComponent(cmdClearFilter))
@@ -226,7 +268,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
         this.setLabelsLanguage();
 
-        this.fldasistencia.setText("");
+        //this.fldasistencia.setText("");
     }
 
     private void setLabelsLanguage() {
@@ -234,14 +276,18 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         this.btnEdit.setText(language.getProperty("mantenimiento.usermain.modUser"));
         this.btnDelete.setText(language.getProperty("mantenimiento.usermain.delUser"));
         this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
-        this.lblassistencia.setText(language.getProperty("mantenimiento.actividadesmain.minasistencia"));
+        
+        this.lblFiltroTipoActividad.setText(language.getProperty("mantenimiento.actividad.tipo.actividad"));
+        this.lblFiltroDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
+        this.lblFiltroDateEnd.setText(language.getProperty("mantenimiento.actividad.fechaend"));
+
         this.cmdFilter.setText(language.getProperty("mantenimiento.usermain.dofilter"));
         this.cmdClearFilter.setText(language.getProperty("mantenimiento.usermain.clearfilter"));
     }
 
    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-       PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(this, true, manager, language, "Add", 0);
+       PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(this, true, manager, language, "Add", 0, usuario);
        form.setLocationRelativeTo(null);
        form.setVisible(true);
 
@@ -261,7 +307,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
        // Obtiene el ID del grupo a editar
        Actividad actividad = actividades.get(tblData.getSelectedRow());
 
-       PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(null, true, manager, language, "Edit", actividad.getId());
+       PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(null, true, manager, language, "Edit", actividad.getId(), usuario);
        form.setLocationRelativeTo(null);
        form.setVisible(true);
 
@@ -312,16 +358,26 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
-        // TODO add your handling code here:
-        if (!this.fldasistencia.getText().equals("")) {
+        if (this.cboFiltroTipoActividad.getSelectedIndex()>0) {
             this.dofilter = true;
             listData();
         }
+        if (!this.fldFiltroDateIni.getText().equals("")) {
+            this.dofilter = true;
+            listData();
+        }
+        if (!this.fldFiltroDateFin.getText().equals("")) {
+            this.dofilter = true;
+            listData();
+        }
+        
     }//GEN-LAST:event_cmdFilterActionPerformed
 
     private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
         // TODO add your handling code here:
-        this.fldasistencia.setText("");
+        this.cboFiltroTipoActividad.setSelectedIndex(0);
+        this.fldFiltroDateIni.setText("");
+        this.fldFiltroDateFin.setText("");
         this.dofilter = false;
         listData();
     }//GEN-LAST:event_cmdClearFilterActionPerformed
@@ -329,6 +385,10 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAsistenciaActionPerformed
+
+    private void cboFiltroTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltroTipoActividadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFiltroTipoActividadActionPerformed
 
     /**
      * Rellena la tabla de usuarios.
@@ -339,22 +399,24 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         header.add(language.getProperty("mantenimiento.usermain.universidad"));
         header.add(language.getProperty("mantenimiento.usermain.tipo"));
         header.add(language.getProperty("mantenimiento.usermain.name"));        
-        header.add(language.getProperty("mantenimiento.actividad.cambios"));
+        header.add(language.getProperty("mantenimiento.actividad.fechaini"));        
+        header.add(language.getProperty("mantenimiento.actividad.fechaend"));
 
         String[][] gridData;
         if(usuario.getIdRol() == ROL_SECRETARIA) {
             actividades = manager.getActividadesByUniversidadId(usuario.getUniversidadId());
-            gridData = new String[actividades.size()][4];
+            gridData = new String[actividades.size()][5];
             int i = 0;
             for (Actividad actividad : actividades) {
                 gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
                 gridData[i][1] = getDescTipus(actividad.getTipus());
                 gridData[i][2] = actividad.getTitol();
-                gridData[i][3] = "" + actividad.getMinimPercentatge();
+                gridData[i][3] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataInici());
+                gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
                 i++;
             }
         } else {
-            gridData = new String[0][4];
+            gridData = new String[0][5];
         }
         
         //Modificamos la tabla para que no sea editable
@@ -372,22 +434,40 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         header.add(language.getProperty("mantenimiento.usermain.universidad"));
         header.add(language.getProperty("mantenimiento.usermain.tipo"));
         header.add(language.getProperty("mantenimiento.usermain.name"));        
-        header.add(language.getProperty("mantenimiento.actividad.cambios"));
+        header.add(language.getProperty("mantenimiento.actividad.fechaini"));        
+        header.add(language.getProperty("mantenimiento.actividad.fechaend"));
 
         String[][] gridData;
 
-        actividades = manager.getActividades();
-        gridData = new String[actividades.size()][4];
+        actividades = manager.getActividadesByUniversidadId(usuario.getUniversidadId());
+        gridData = new String[actividades.size()][5];
 
         int i = 0;
+        boolean filtrar=false;
         for (Actividad actividad : actividades) {
-            if (new Integer(this.fldasistencia.getText()) <= actividad.getMinimPercentatge()) {
+            if(this.cboFiltroTipoActividad.getSelectedIndex()>0) {
+                int tipusActivitat = ((ComboItem) cboFiltroTipoActividad.getSelectedItem()).getId();
+                if(actividad.getTipus()!=tipusActivitat) {
+                    filtrar=true;
+                }
+            }
+            if(!fldFiltroDateIni.getText().equals("")) {
+                if (actividad.getDataFi().getTime() < DateTimeUtils.strToDate(this.fldFiltroDateIni.getText()).getTime())
+                    filtrar=true;
+            }
+            if(!fldFiltroDateFin.getText().equals("")) {
+                if (actividad.getDataInici().getTime() > DateTimeUtils.strToDate(this.fldFiltroDateFin.getText()).getTime())
+                    filtrar=true;   
+            }
+            if (!filtrar) {
                 gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
                 gridData[i][1] = getDescTipus(actividad.getTipus());
                 gridData[i][2] = actividad.getTitol();
-                gridData[i][3] = "" + actividad.getMinimPercentatge();
+                gridData[i][3] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataInici());
+                gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
                 i++;
             }
+            filtrar=false;
         }
 
         this.tblData.setModel(new javax.swing.table.DefaultTableModel(gridData, header.toArray()));
@@ -466,13 +546,17 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JComboBox cboFiltroTipoActividad;
     private javax.swing.JButton cmdClearFilter;
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdFilter;
-    private javax.swing.JTextField fldasistencia;
+    private javax.swing.JFormattedTextField fldFiltroDateFin;
+    private javax.swing.JFormattedTextField fldFiltroDateIni;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblassistencia;
+    private javax.swing.JLabel lblFiltroDateEnd;
+    private javax.swing.JLabel lblFiltroDateIni;
+    private javax.swing.JLabel lblFiltroTipoActividad;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 
@@ -489,4 +573,21 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+    private void setTipoActividades() {
+
+        if (tiposActividad == null) {
+            tiposActividad = new ArrayList<ComboItem>();
+        }
+        ComboItem cb = new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_TIPO_ACTIVIDAD_SELECCIONA), -1);
+        tiposActividad.add(cb);
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language), Actividad.ACTIVIDAD_TIPO_CONGRESO_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_JORNADA_ID, language), Actividad.ACTIVIDAD_TIPO_JORNADA_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_MASTER_ID, language), Actividad.ACTIVIDAD_TIPO_MASTER_ID));
+        tiposActividad.add(new ComboItem(Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID, language), Actividad.ACTIVIDAD_TIPO_CONFERENCIA_ID));
+        cboFiltroTipoActividad.removeAll();
+        cboFiltroTipoActividad.setModel(new DefaultComboBoxModel(tiposActividad.toArray()));
+
+    }
+
 }
