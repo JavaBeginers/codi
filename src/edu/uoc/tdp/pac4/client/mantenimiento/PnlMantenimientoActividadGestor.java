@@ -482,7 +482,21 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         }
 
         this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
-
+        //Validar si se pueden modificar las fechas
+        int numInscripciones;
+        try {
+            numInscripciones = manager.getInscritosByActividadId(actividad.getId());
+            int capacidad = manager.getCapacidadByAulaId(Math.toIntExact(actividad.getAulaId()));
+            if(((numInscripciones/capacidad)*100) > actividad.getMinimPercentatge() ||
+                    actividad.getDataMaxInscripcio().getTime()<new Date().getTime()) {
+                fldDateIni.setEditable(false);
+                fldDateFin.setEditable(false);
+                fldDateMaximaInscripcion.setEditable(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
@@ -577,7 +591,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     private void cmdModActividadAction() {
         /*
-         * Gestión de odificar Usuario
+         * Gestión de modificar Usuario
          * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
          * para que la actualize la BD (no se accede al UserID)
          * 
@@ -735,9 +749,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cboCentro.removeAll();
         cboCentro.setModel(new DefaultComboBoxModel(centrosCB.toArray()));
         cboCentro.setSelectedIndex(index);
+        index=0;
         for(int i = 0;i<cboSitio.getComponentCount();i++) {
-            if (aulaId == cboSitio.getItemAt(i).hashCode()) {
-                index = i+1;
+            if (aulaId == ((ComboItem)cboSitio.getItemAt(i)).getId()) {
+                index = i;
             }
         }
         cboSitio.setSelectedIndex(index);

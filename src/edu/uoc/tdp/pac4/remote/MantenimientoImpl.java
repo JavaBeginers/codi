@@ -10,12 +10,13 @@ import edu.uoc.tdp.pac4.dao.GestorUsuario;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
 import edu.uoc.tdp.pac4.dao.GestorActividad;
 import edu.uoc.tdp.pac4.dao.GestorCentro;
-import edu.uoc.tdp.pac4.dao.GestorRecursos;
+import edu.uoc.tdp.pac4.dao.GestorMatricula;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import edu.uoc.tdp.pac4.dao.GestorRecursos;
 
 /**
  *
@@ -238,6 +239,13 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getAulasByCentro(id);
     }
+    
+        @Override
+    public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
+        GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
+        return ga.getCapacidadByAulaId(aulaId);
+    }
+    
 
 //***********************************************************************
     
@@ -447,6 +455,13 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gc.getCentros();
     }
 
-    
-    
+
+
+    @Override
+    public int getInscritosByActividadId(int actividadId) throws SQLException, Exception {
+        GestorMatricula gm = new GestorMatricula(gestorDisc.getConnection());
+        return gm.getInscritosByActividad(actividadId);
+    }
+
+
 }
