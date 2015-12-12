@@ -30,16 +30,6 @@ INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom
 INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(3, 3,'ES', 'Universitat Politècnica de Catalunya');
 INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(4, 4,'ES', 'Universitat Pompeu Fabra');
 
-INSERT INTO USUARI_UNIVERSITAT_GESTOR(usuari_universitat_gestor_id, universitat_id, usuari_id) VALUES(1, 1, 1);
-INSERT INTO USUARI_UNIVERSITAT_GESTOR(usuari_universitat_gestor_id, universitat_id, usuari_id) VALUES(2, 2, 2);
-INSERT INTO USUARI_UNIVERSITAT_GESTOR(usuari_universitat_gestor_id, universitat_id, usuari_id) VALUES(3, 3, 3);
-INSERT INTO USUARI_UNIVERSITAT_GESTOR(usuari_universitat_gestor_id, universitat_id, usuari_id) VALUES(4, 4, 4);
-
-INSERT INTO USUARI_UNIVERSITAT_ROL(usuari_universitat_rol_id, universitat_id, usuari_id, rol) VALUES(1, 1, 1, 'administrador');
-INSERT INTO USUARI_UNIVERSITAT_ROL(usuari_universitat_rol_id, universitat_id, usuari_id, rol) VALUES(2, 2, 2, 'administrador');
-INSERT INTO USUARI_UNIVERSITAT_ROL(usuari_universitat_rol_id, universitat_id, usuari_id, rol) VALUES(3, 3, 3, 'administrador');
-INSERT INTO USUARI_UNIVERSITAT_ROL(usuari_universitat_rol_id, universitat_id, usuari_id, rol) VALUES(4, 4, 4, 'administrador');
-
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
 VALUES(1, 1, 'Centre 1', 'Adreça 1', 'Poblacio 1', '01234', 'ES', 'centre1@centre1.edu', '01/12/2015');
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
@@ -59,15 +49,15 @@ INSERT INTO RECURS(recurs_id, aula_id, codi_recurs, nom, descripcio, data_alta) 
 INSERT INTO RECURS(recurs_id, aula_id, codi_recurs, nom, descripcio, data_alta) VALUES(3, 3, 'R1A3', 'Recurs 1', 'Descripcio del recurs 1 de aula 3', '01/12/2015');
 INSERT INTO RECURS(recurs_id, aula_id, codi_recurs, nom, descripcio, data_alta) VALUES(4, 4, 'R1A4', 'Recurs 1', 'Descripcio del recurs 1 de aula 4', '01/12/2015');
 
-INSERT INTO ACTIVITATS(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(1,1,1,1,'Activitat 1', '10/12/2015', '05/12/2015', '60');
-INSERT INTO ACTIVITATS(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(2,2,2,2,'Activitat 2', '15/12/2015', '05/12/2015', '50');
-INSERT INTO ACTIVITATS(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(3,3,3,3,'Activitat 3', '20/12/2015', '15/12/2015', '40');
-INSERT INTO ACTIVITATS(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(4,4,4,4,'Activitat 4', '25/12/2015', '15/12/2015', '70');
+INSERT INTO ACTIVIDAD(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(1,1,1,1,'Activitat 1', '10/12/2015', '05/12/2015', '60');
+INSERT INTO ACTIVIDAD(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(2,2,2,2,'Activitat 2', '15/12/2015', '05/12/2015', '50');
+INSERT INTO ACTIVIDAD(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(3,3,3,3,'Activitat 3', '20/12/2015', '15/12/2015', '40');
+INSERT INTO ACTIVIDAD(id, universitat_id, centre_id, aula_id, titol, data_inici, data_max_inscripcio, minim_percentatge) VALUES(4,4,4,4,'Activitat 4', '25/12/2015', '15/12/2015', '70');
 
-INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, data_assistencia) VALUES(1, 1, 1, '10/12/2015');
-INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, data_assistencia) VALUES(2, 2, 2, '15/12/2015');
-INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, data_assistencia) VALUES(3, 3, 3, '20/12/2015');
-INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, data_assistencia) VALUES(4, 4, 4, '25/12/2015');
+INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, assistencia) VALUES(1, 1, 1, '1');
+INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, assistencia) VALUES(2, 2, 2, '1');
+INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, assistencia) VALUES(3, 3, 3, '1');
+INSERT INTO ASSISTENCIA(id, activitat_id, usuari_id, assistencia) VALUES(4, 4, 4, '1');
 
 INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Compte) VALUES(1, 1, 1, '01/12/2015', '2', '0', 1234);
 INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Compte) VALUES(2, 2, 2, '01/12/2015', '2', '0', 1212);
