@@ -30,6 +30,7 @@ data_baixa date,
 rol varchar(8),
 idioma_id integer,
 actiu boolean,
+universitat_id integer;
 CONSTRAINT PK_USUARI PRIMARY KEY(usuari_id),
 CONSTRAINT FK_IDIOMA FOREIGN KEY(idioma_id) REFERENCES IDIOMA (idioma_id)
 );
