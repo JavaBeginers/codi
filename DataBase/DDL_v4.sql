@@ -151,7 +151,7 @@ CREATE TABLE ASSISTENCIA
  id bigint NOT NULL, -- Identificador
  activitat_id bigint NOT NULL, -- Identificador de la activitat.
  usuari_id bigint NOT NULL, -- Identificador del usuari.
- data_assistencia date NOT NULL, -- Data de lÂ´assistencia
+ assistencia boolean NOT NULL, -- Data de lÂ´assistencia
  CONSTRAINT ASSISTANCE_PK PRIMARY KEY (id),
  CONSTRAINT ASSISTANCE_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVITATS
 (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
