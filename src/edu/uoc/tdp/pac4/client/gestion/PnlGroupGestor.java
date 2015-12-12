@@ -80,7 +80,7 @@ public class PnlGroupGestor extends javax.swing.JDialog
         jToolBar1.setRollover(true);
 
         cmdAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/users--plus.png"))); // NOI18N
-        cmdAdd.setText("Nuevo");
+        cmdAdd.setText("Nou");
         cmdAdd.setFocusable(false);
         cmdAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cmdAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -129,7 +129,7 @@ public class PnlGroupGestor extends javax.swing.JDialog
         jToolBar1.add(cmdFilter);
 
         cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
-        cmdClose.setText("Cerrar");
+        cmdClose.setText("Tancar");
         cmdClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdCloseActionPerformed(evt);
@@ -151,9 +151,9 @@ public class PnlGroupGestor extends javax.swing.JDialog
 
         pnlFilter.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblTurno.setText("Turno");
+        lblTurno.setText("Torn");
 
-        lblActividad.setText("Actividad");
+        lblActividad.setText("Activitat");
         lblActividad.setToolTipText("");
 
         cmdSetFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/funnel--plus.png"))); // NOI18N
@@ -164,12 +164,12 @@ public class PnlGroupGestor extends javax.swing.JDialog
             }
         });
 
-        lblFechaIni.setText("Fecha inicio");
+        lblFechaIni.setText("Data inici");
 
-        lblFechaFin.setText("Fecha finalización");
+        lblFechaFin.setText("Data finalització");
 
         cmdFilterDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/eraser.png"))); // NOI18N
-        cmdFilterDelete.setText("Limpiar");
+        cmdFilterDelete.setText("Borrar");
         cmdFilterDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdFilterDeleteActionPerformed(evt);

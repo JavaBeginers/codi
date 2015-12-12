@@ -106,7 +106,7 @@ public class PnlMain extends javax.swing.JFrame
                 mnuStock.setEnabled(true);
                 mnuRequest.setEnabled(true); 
                 break;
-        /**        
+                
             // Es Profesor
             case 3:
                 mnuFileConnect.setEnabled(false);
@@ -123,9 +123,9 @@ public class PnlMain extends javax.swing.JFrame
                 mnuStock.setEnabled(false);
                 mnuRequest.setEnabled(false); 
                 break;
-           */     
+                
             //Es Usuari
-            case 3:
+            case 4:
                 mnuFileConnect.setEnabled(false);
                 mnuGestion.setEnabled(false);
                 mnuGestionRecuento.setEnabled(false);
@@ -142,14 +142,7 @@ public class PnlMain extends javax.swing.JFrame
                 break;
        }
    }
-   /**
-    @Override
-    public java.awt.Image getIconImage() {
-        java.awt.Image retValue = java.awt.Toolkit.getDefaultToolkit().
-                //getImage(ClassLoader.getSystemResource("resources/eassistencia.gif"));     
-        return retValue;
-    }  
-*/
+   
    /**
     * This method is called from within the constructor to initialize the form.
     * WARNING: Do NOT modify this code. The content of this method is always

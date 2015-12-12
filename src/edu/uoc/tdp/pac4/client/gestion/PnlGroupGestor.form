@@ -67,7 +67,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resources/users--plus.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="text" type="java.lang.String" value="Nou"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -127,7 +127,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/arrow-curve-180.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Cerrar"/>
+        <Property name="text" type="java.lang.String" value="Tancar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdCloseActionPerformed"/>
@@ -229,12 +229,12 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblTurno">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Turno"/>
+            <Property name="text" type="java.lang.String" value="Torn"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblActividad">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Actividad"/>
+            <Property name="text" type="java.lang.String" value="Activitat"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -258,12 +258,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblFechaIni">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha inicio"/>
+            <Property name="text" type="java.lang.String" value="Data inici"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblFechaFin">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha finalizaci&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value="Data finalitzaci&#xf3;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboTurno">
@@ -278,7 +278,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resources/eraser.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Limpiar"/>
+            <Property name="text" type="java.lang.String" value="Borrar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdFilterDeleteActionPerformed"/>

@@ -16,7 +16,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 /**
  * Formulario de gestión de matrículas.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlMatriculaGestor extends javax.swing.JDialog 
 {

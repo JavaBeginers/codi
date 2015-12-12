@@ -19,7 +19,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 /**
  * Implementa el formulario de edición de matriculas.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlMatricula extends javax.swing.JDialog 
 {
