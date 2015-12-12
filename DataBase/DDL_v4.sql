@@ -29,7 +29,7 @@ data_alta date NOT NULL,
 data_baixa date,
 rol varchar(8),
 idioma_id integer,
-activo boolean,
+actiu boolean,
 CONSTRAINT PK_USUARI PRIMARY KEY(usuari_id),
 CONSTRAINT FK_IDIOMA FOREIGN KEY(idioma_id) REFERENCES IDIOMA (idioma_id)
 );
