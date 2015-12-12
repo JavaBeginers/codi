@@ -7,6 +7,11 @@ INSERT INTO IDIOMA (idioma_id, idioma_nom) VALUES (1, 'ES');
 INSERT INTO IDIOMA (idioma_id, idioma_nom) VALUES (2, 'CA');
 INSERT INTO IDIOMA (idioma_id, idioma_nom) VALUES (3, 'EN');
 
+INSERT INTO ROL(id, descripcio) VALUES(1, 'administrador');
+INSERT INTO ROL(id, descripcio) VALUES(2, 'secretaria');
+INSERT INTO ROL(id, descripcio) VALUES(3, 'professor');
+INSERT INTO ROL(id, descripcio) VALUES(4, 'usuari');
+
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
 VALUES (1, 'jdominguez', '1234', 'Joan Antoni', 'Dominguez', '12345678A', 'ES', 'Carrer 1', 'Ciutat 1', '54321', 'ES', 'jdominguez@uoc.edu', '01/12/2015', 2, 'true');
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)

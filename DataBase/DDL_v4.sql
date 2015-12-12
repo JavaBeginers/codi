@@ -19,7 +19,7 @@ CREATE SEQUENCE rol_id_seq ;
 
 CREATE TABLE ROL (
 id integer default nextval('rol_id_seq') not null,
-descripcio varchar(3),
+descripcio varchar(30),
 CONSTRAINT PK_ROL PRIMARY KEY(id)
 );
 
