@@ -14,11 +14,11 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
    private String nombre;
    private int maxAlumnos;
    private int plazasDisponibles;
-   private boolean grupoVigente;
+   private boolean grupovigente;
    private int turno;
    private int idAula;
    private int idProfesor;
-   private int idActividad;
+   private int idcurso;
    
    // Propiedades de sólo lectura
    private String nombreAula;
@@ -53,11 +53,11 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
       this.plazasDisponibles = 0;
       //this.fechaInicio = null;
       //this.fechaFin = null;
-      this.grupoVigente = false;
+      this.grupovigente = false;
       this.turno = 0;
       this.idAula = 0;
       this.idProfesor = 0;
-      this.idActividad = 0;
+      this.idcurso = 0;
       
       this.nombreAula = "";
       this.nombreActividad = "";
@@ -101,12 +101,12 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
 
    public boolean isGrupoVigente() 
    {
-      return grupoVigente;
+      return grupovigente;
    }
 
    public void setGrupoVigente(boolean grupoVigente)
    {
-      this.grupoVigente = grupoVigente;
+      this.grupovigente = grupoVigente;
    }
 
    public int getTurno()
@@ -141,12 +141,12 @@ public class Grupo extends IdentifiableObject implements java.io.Serializable
 
    public int getIdActividad()
    {
-      return idActividad;
+      return idcurso;
    }
 
    public void setIdActividad(int idActividad)
    {
-      this.idActividad = idActividad;
+      this.idcurso = idActividad;
    }
 
    public String getNombreAula() 

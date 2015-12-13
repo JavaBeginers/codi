@@ -286,25 +286,4 @@ public interface GestAcademica extends Remote
     */
    ArrayList<Alumno> getAlumnos() throws SQLException, Exception;
 
-   /**
-    * Agrega un nuevo recuento de asistencia.
-    * 
-    * @param asistencia Una instancia de {@link Asistencia} que contiene los datos del recuento.
-    * @return El identificador del recuento.
-    * 
-    * @throws SQLException
-    * @throws GroupAlreadyCountedException
-    * @throws Exception 
-    */
-   int startRecuento(Asistencia asistencia) throws SQLException, GroupAlreadyCountedException, Exception;
-   
-   /**
-    * Detiene el recuento.
-    * 
-    * @param asistencia Una instancia de {@link Asistencia} que contiene los datos del recuento.
-    * 
-    * @throws SQLException
-    * @throws Exception 
-    */
-   void stopRecuento(Asistencia asistencia) throws SQLException, Exception;
 }

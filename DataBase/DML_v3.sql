@@ -1,7 +1,7 @@
-INSERT INTO PAISOS (codi_pais, codi_idioma, nom) VALUES ('DE','ES','Alemania' );
-INSERT INTO PAISOS (codi_pais, codi_idioma, nom) VALUES ('AT','ES','Austria' );
-INSERT INTO PAISOS (codi_pais, codi_idioma, nom) VALUES ('BE','ES','Belgica' );
-INSERT INTO PAISOS (codi_pais, codi_idioma, nom) VALUES ('ES','ES','España' );
+INSERT INTO PAISOS (pais_id, codi_pais, codi_idioma, nom) VALUES (1, 'DE','ES','Alemania' );
+INSERT INTO PAISOS (pais_id, codi_pais, codi_idioma, nom) VALUES (2, 'AT','ES','Austria' );
+INSERT INTO PAISOS (pais_id, codi_pais, codi_idioma, nom) VALUES (3, 'BE','ES','Belgica' );
+INSERT INTO PAISOS (pais_id, codi_pais, codi_idioma, nom) VALUES (4, 'ES','ES','España' );
 
 INSERT INTO IDIOMA (idioma_id, idioma_nom) VALUES (1, 'ES');
 INSERT INTO IDIOMA (idioma_id, idioma_nom) VALUES (2, 'CA');

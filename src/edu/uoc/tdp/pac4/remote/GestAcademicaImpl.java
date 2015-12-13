@@ -424,38 +424,6 @@ public class GestAcademicaImpl extends UnicastRemoteObject implements GestAcadem
    }
 
    /**
-    * Agrega un nuevo recuento de asistencia.
-    * 
-    * @param asistencia Una instancia de {@link Asistencia} que contiene los datos del recuento.
-    * @return El identificador del recuento.
-    * 
-    * @throws SQLException
-    * @throws GroupAlreadyCountedException
-    * @throws Exception 
-    */
-   @Override
-   public int startRecuento(Asistencia asistencia) throws SQLException, GroupAlreadyCountedException, Exception 
-   {
-      GestorAsistencia ga = new GestorAsistencia(gestorDisc.getConnection());
-      return ga.startRecuento(asistencia);
-   }
-
-   /**
-    * Detiene el recuento.
-    * 
-    * @param asistencia Una instancia de {@link Asistencia} que contiene los datos del recuento.
-    * 
-    * @throws SQLException
-    * @throws Exception 
-    */
-   @Override
-   public void stopRecuento(Asistencia asistencia) throws SQLException, Exception 
-   {
-      GestorAsistencia ga = new GestorAsistencia(gestorDisc.getConnection());
-      ga.stopRecuento(asistencia);
-   }
-
-   /**
     * Acepta un matricula para un alumno y grupo.<br />
     * Este método actualiza el número de plazas disponibles en el grupo.
     * 

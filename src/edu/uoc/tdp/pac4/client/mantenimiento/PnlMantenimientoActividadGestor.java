@@ -4,6 +4,7 @@ import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Centro;
+import edu.uoc.tdp.pac4.beans.Universitat;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
@@ -23,7 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
@@ -207,9 +208,9 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cmdAccept)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmdClose)
-                .addGap(34, 34, 34))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -826,25 +827,25 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     }
 
     private void setUniversidades() {
-        if (universidades == null) {
-            universidades = new ArrayList<ComboItem>();
+
+        List<ComboItem> universidadesCB;
+        universidadesCB = new ArrayList<ComboItem>();
+        List<Universitat> universidades = new ArrayList<Universitat>();
+        try {
+            universidades = manager.getUniversidadesRaw();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Buscar todas las universidades
-        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
-        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID) {
-            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
-        }
-        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID) {
-            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
-        }
-        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID) {
-            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
-        }
-        if(usuario.getUniversidadId()==Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID) {
-            universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
+
+        universidadesCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
+        for (Universitat universidad : universidades) {
+            if(usuario.getUniversidadId()==universidad.getUniversitat_id()) {
+                universidadesCB.add(new ComboItem(universidad.getNom(), universidad.getUniversitat_id()));
+            }
         }
         cboUniversidad.removeAll();
-        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidadesCB.toArray()));
+
     }
 
     private void setTipoActividades() {

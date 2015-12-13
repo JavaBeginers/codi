@@ -18,7 +18,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 /**
  * Implementa el formulario de gestión de grupos.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlGroupGestor extends javax.swing.JDialog 
 {

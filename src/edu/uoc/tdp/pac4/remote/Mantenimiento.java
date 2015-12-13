@@ -4,9 +4,11 @@ import java.rmi.Remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Asistencia;
 import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Recurso;
+import edu.uoc.tdp.pac4.beans.Universitat;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +76,14 @@ public interface Mantenimiento extends Remote {
     public ArrayList<AuxiliarCombo> getRoles() throws SQLException, Exception;
     
     public ArrayList<AuxiliarCombo> getUniversidades() throws SQLException, Exception;
+    
+    /**
+     *
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public ArrayList<Universitat> getUniversidadesRaw() throws SQLException, Exception;
     
     public ArrayList<AuxiliarCombo> getIdiomas() throws SQLException, Exception;
 //***********************************************************************
@@ -225,6 +235,7 @@ public interface Mantenimiento extends Remote {
     
     public boolean canUpdateActivity(int activitatId, int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception;
             
+    public ArrayList<Asistencia> getAsistenciasByActividadId(int activitatId) throws SQLException, Exception;
         
     //*********************************RECURSO********************************
     public ArrayList<Recurso> getRecursos() throws SQLException, Exception;

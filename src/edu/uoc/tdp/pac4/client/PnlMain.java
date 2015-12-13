@@ -5,7 +5,6 @@ import edu.uoc.tdp.pac4.client.conexion.*;
 import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroActividades;
 import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroPersonalAcademico;
 import edu.uoc.tdp.pac4.client.estadisticas.PnlFiltroProfesor;
-import edu.uoc.tdp.pac4.client.gestion.PnlAsistencia;
 import edu.uoc.tdp.pac4.client.gestion.PnlGroupGestor;
 import edu.uoc.tdp.pac4.client.gestion.PnlMatriculaGestor;
 import edu.uoc.tdp.pac4.client.mantenimiento.PnlMantenimientoAulas;
@@ -77,7 +76,6 @@ public class PnlMain extends javax.swing.JFrame
             case 1:
                 mnuFileConnect.setEnabled(false);
                 mnuGestion.setEnabled(true);
-                mnuGestionRecuento.setEnabled(true);
                 mnuGestionGrupos.setEnabled(true);
                 mnuGestionMatriculas.setEnabled(true);
                 mnuMantenimiento.setEnabled(true);     
@@ -95,7 +93,6 @@ public class PnlMain extends javax.swing.JFrame
             case 2:
                 mnuFileConnect.setEnabled(false);
                 mnuGestion.setEnabled(true);
-                mnuGestionRecuento.setEnabled(false);
                 mnuGestionGrupos.setEnabled(true);
                 mnuGestionMatriculas.setEnabled(true);
                 mnuMantenimiento.setEnabled(true);     
@@ -112,7 +109,6 @@ public class PnlMain extends javax.swing.JFrame
             case 3:
                 mnuFileConnect.setEnabled(false);
                 mnuGestion.setEnabled(true);
-                mnuGestionRecuento.setEnabled(true);
                 mnuGestionGrupos.setEnabled(false);
                 mnuGestionMatriculas.setEnabled(false);
                 mnuMantenimiento.setEnabled(false);     
@@ -129,7 +125,6 @@ public class PnlMain extends javax.swing.JFrame
             case 4:
                 mnuFileConnect.setEnabled(false);
                 mnuGestion.setEnabled(false);
-                mnuGestionRecuento.setEnabled(false);
                 mnuGestionGrupos.setEnabled(false);
                 mnuGestionMatriculas.setEnabled(false);
                 mnuMantenimiento.setEnabled(false);     
@@ -171,7 +166,6 @@ public class PnlMain extends javax.swing.JFrame
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnuFileExit = new javax.swing.JMenuItem();
         mnuGestion = new javax.swing.JMenu();
-        mnuGestionRecuento = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         mnuGestionGrupos = new javax.swing.JMenuItem();
         mnuGestionMatriculas = new javax.swing.JMenuItem();
@@ -185,8 +179,6 @@ public class PnlMain extends javax.swing.JFrame
         mnuEstadisticasProfesor = new javax.swing.JMenuItem();
         mnuEstadisticasPersonal = new javax.swing.JMenuItem();
         mnuMatriculas = new javax.swing.JMenu();
-        mnuAsistencia = new javax.swing.JMenuItem();
-        sprtAsistencia = new javax.swing.JPopupMenu.Separator();
         mnuAltaMatricula = new javax.swing.JMenuItem();
         mnuConsultaSolicitudes = new javax.swing.JMenuItem();
         mnuRequest = new javax.swing.JMenu();
@@ -292,15 +284,6 @@ public class PnlMain extends javax.swing.JFrame
         mnuBarMenuPrincipal.add(mnuFile);
 
         mnuGestion.setText("Gestión");
-
-        mnuGestionRecuento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/asistencia.png"))); // NOI18N
-        mnuGestionRecuento.setText("Iniciar recuento de asistencia...");
-        mnuGestionRecuento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuGestionRecuentoActionPerformed(evt);
-            }
-        });
-        mnuGestion.add(mnuGestionRecuento);
         mnuGestion.add(jSeparator3);
 
         mnuGestionGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/users.png"))); // NOI18N
@@ -395,16 +378,6 @@ public class PnlMain extends javax.swing.JFrame
         mnuBarMenuPrincipal.add(mnuEstadisticas);
 
         mnuMatriculas.setText("Matrícula");
-
-        mnuAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sofa--plus.png"))); // NOI18N
-        mnuAsistencia.setText("Marcar Asistencia");
-        mnuAsistencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuAsistenciaActionPerformed(evt);
-            }
-        });
-        mnuMatriculas.add(mnuAsistencia);
-        mnuMatriculas.add(sprtAsistencia);
 
         mnuAltaMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/book--plus.png"))); // NOI18N
         mnuAltaMatricula.setText("Solicitud de Matrícula");
@@ -643,14 +616,6 @@ public class PnlMain extends javax.swing.JFrame
         
     }//GEN-LAST:event_mnuEstadisticasPersonalActionPerformed
 
-   private void mnuGestionRecuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuGestionRecuentoActionPerformed
-      
-      PnlAsistencia form = new PnlAsistencia(this, true, rmiGestAcademica, language, usuario);
-      form.setLocationRelativeTo(null);
-      form.setVisible(true);
-      
-   }//GEN-LAST:event_mnuGestionRecuentoActionPerformed
-
     private void mnuConsultaSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConsultaSolicitudesActionPerformed
       
       PnlConsultaMatricula form = new PnlConsultaMatricula(this, true, rmiConexion, language, usuario);
@@ -731,11 +696,6 @@ public class PnlMain extends javax.swing.JFrame
         form.setVisible(true);
     }//GEN-LAST:event_mnuMantenimientoRecursosActionPerformed
 
-    private void mnuAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {
-        PnlMarcaAsistencia form = new PnlMarcaAsistencia(this, true, rmiConexion, language, usuario);
-        form.setLocationRelativeTo(null);
-        form.setVisible(true);
-    }
    
    /**
     * Internacionaliza el contenido del formulario.
@@ -765,12 +725,10 @@ public class PnlMain extends javax.swing.JFrame
       mnuMantenimientoActividades.setText(language.getProperty("mantenimiento.main.actividades"));
       
       mnuMatriculas.setText(language.getProperty("cnxmatricula.pnlmain.matriculas"));
-      mnuAsistencia.setText(language.getProperty("cnxmatricula.pnlmain.marcarasistencia"));
       mnuAltaMatricula.setText(language.getProperty("cnxmatricula.pnlmain.solicitud"));
       mnuConsultaSolicitudes.setText(language.getProperty("cnxmatricula.pnlmain.consultasolicitud"));
       
       mnuGestion.setText(language.getProperty(eAcademiaEU.MENU_GESTION));
-      mnuGestionRecuento.setText(language.getProperty(eAcademiaEU.MENU_GESTION_RECUENTO));
       mnuGestionGrupos.setText(language.getProperty(eAcademiaEU.MENU_GESTION_GRUPOS));
       mnuGestionMatriculas.setText(language.getProperty(eAcademiaEU.MENU_GESTION_MATRICULAS));
       
@@ -874,7 +832,6 @@ public class PnlMain extends javax.swing.JFrame
     private javax.swing.JLabel lblUserSession;
     private javax.swing.JLabel lbleSupport;
     private javax.swing.JMenuItem mnuAltaMatricula;
-    private javax.swing.JMenuItem mnuAsistencia;
     private javax.swing.JMenuBar mnuBarMenuPrincipal;
     private javax.swing.JMenuItem mnuConsultaSolicitudes;
     private javax.swing.JMenuItem mnuDesconectar;
@@ -888,7 +845,6 @@ public class PnlMain extends javax.swing.JFrame
     private javax.swing.JMenu mnuGestion;
     private javax.swing.JMenuItem mnuGestionGrupos;
     private javax.swing.JMenuItem mnuGestionMatriculas;
-    private javax.swing.JMenuItem mnuGestionRecuento;
     private javax.swing.JMenu mnuIdioma;
     private javax.swing.JMenuItem mnuLanguageCat;
     private javax.swing.JMenuItem mnuLanguageEng;
@@ -903,6 +859,5 @@ public class PnlMain extends javax.swing.JFrame
     private javax.swing.JMenuItem mnuRequestAdd;
     private javax.swing.JMenuItem mnuRequestServe;
     private javax.swing.JPanel pnlMain;
-    private javax.swing.JPopupMenu.Separator sprtAsistencia;
     // End of variables declaration//GEN-END:variables
 }
