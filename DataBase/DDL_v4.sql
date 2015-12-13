@@ -96,14 +96,15 @@ nom_centre varchar(255) NOT NULL,
 adreca varchar(255) NOT NULL,
 poblacio varchar(255) NOT NULL,
 codi_postal varchar(32) NOT NULL,
-pais varchar(2) NOT NULL,
+pais integer NOT NULL,
 telefono varchar(16),
 email varchar(128) NOT NULL,
 url varchar(255),
 data_alta date NOT NULL,
 data_baixa date,
 CONSTRAINT PK_CENTRE PRIMARY KEY(centre_id),
-CONSTRAINT FK_CENTRE_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id)
+CONSTRAINT FK_CENTRE_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id),
+CONSTRAINT FK_CENTRE_PAIS FOREIGN KEY(pais_id) REFERENCES PAISOS(pais_id)
 );
 
 DROP SEQUENCE IF EXISTS aula_id_seq CASCADE;
