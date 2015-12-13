@@ -13,6 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -20,30 +26,24 @@ import java.util.ArrayList;
  */
 public class GestorCentro extends GestorDisco {
 
-    /*
-     * Definimos los campos de la tabla actividad
-     */
+  //Tabla Centro
     private static final String CENTROTABLE = "centre";
     private static final String CENTROTABLE_ID = "centre_id";
     private static final String CENTROTABLE_NOMBRE = "nom_centre";
-//    private static final String ACTIVIDADTABLE_CENTRE_ID = "centre_id";
-//    private static final String ACTIVIDADTABLE_AULA_ID = "aula_id";
-//    private static final String ACTIVIDADTABLE_TIPUS = "tipus";
-//    private static final String ACTIVIDADTABLE_TITOL = "titol";
-//    private static final String ACTIVIDADTABLE_AREA = "area";
-//    private static final String ACTIVIDADTABLE_ESPECIALITAT = "especialitat";
-//    private static final String ACTIVIDADTABLE_DECANATURA = "decanatura";
-//    private static final String ACTIVIDADTABLE_INVESTIGADOR = "investigador";
-//    private static final String ACTIVIDADTABLE_DATA_INICI = "data_inici";
-//    private static final String ACTIVIDADTABLE_DATA_FI = "data_fi";
-//    private static final String ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO = "data_max_inscripcio";
-//    private static final String ACTIVIDADTABLE_PREU = "preu";
-//    private static final String ACTIVIDADTABLE_MINIM_PERCENTAGE = "minim_percentatge";
-//    private static final String ACTIVIDADTABLE_CANCELADA = "cancelada";
+    private static final String CENTROTABLE_ADRESS = "adreca";
+    private static final String CENTROTABLE_TOWN = "poblacio";
+    private static final String CENTROTABLE_CP = "codi_postal";
+    private static final String CENTROTABLE_UNI = "universitat_id";
+    private static final String CENTROTABLE_PAIS = "pais";
+    private static final String CENTROTABLE_MAIL = "email";
+    private static final String CENTROTABLE_PHONE = "telefono";
+    private static final String CENTROTABLE_URL = "url";
+    private static final String CENTROTABLE_DATE = "data_alta";
+    private static final String CENTROTABLE_BAJA = "data_baixa";
+    
 
-//    /*
-//     * Definimos los campos de interes de la tabla grupo
-//     */
+
+    //Tabla Grupo
     private static final String GRUPOTABLE = "grupo";
     private static final String GRUPOTABLE_ACTIVIDAD = "idactividad";
 
@@ -79,14 +79,8 @@ public class GestorCentro extends GestorDisco {
     //===========================================
     // Métodos
     //===========================================
-    /**
-     * Obtiene una lista completa de los actividades del centro.
-     *
-     * @return Una lista de instancia de {@link Actividad}.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+
+    //Obtener listado de centros
     public ArrayList<Centro> getCentros() throws SQLException, Exception {
         Centro centro;
         String sql;
@@ -112,18 +106,163 @@ public class GestorCentro extends GestorDisco {
 
     }
 
-        //===========================================
-    // Private members
-    //===========================================
-    /**
-     * Actualiza los datos de una instancia de {@link Actividad} con los datos de
-     * una fila de {@link Resultset}.
-     */
+    //Obtener listado de centros inactivos
+    public ArrayList<Centro> getCentrosInactivos() throws SQLException, Exception {
+        Centro centro;
+        String sql;
+        ArrayList<Centro> list = new ArrayList<Centro>();
+
+        sql = "SELECT * FROM " + CENTROTABLE + " "
+                + "WHERE data_baixa IS NOT NULL ORDER BY " + CENTROTABLE_NOMBRE + " Asc";
+
+        try {
+            ResultSet rs = executeSql(sql);
+            while (rs.next()) {
+                centro = new Centro();
+                readCentro(centro, rs);
+                list.add(centro);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return list;
+
+    }
+    
+     public Centro get(int id) throws SQLException, Exception 
+   {
+      String sql;
+      Centro cen = null;
+      
+      sql = "SELECT * FROM " + CENTROTABLE     + " " +
+            "WHERE "         + CENTROTABLE_ID     + " = "  + id;
+
+      try 
+      {
+         Statement objStt = (Statement) getConnection().createStatement();
+         ResultSet rs = objStt.executeQuery(sql);
+         if (rs.next()) 
+         {
+             cen= new Centro();
+                readCentro(cen, rs);
+         }
+      } 
+      catch (SQLException ex) {throw ex;} 
+      catch (Exception ex)    {throw ex;}
+      
+      return cen;
+   }
+   
+    
+    //Preparar Centro
     private void readCentro(Centro centro, ResultSet rs) throws SQLException {
         
         centro.setId(rs.getInt(CENTROTABLE_ID));
         centro.setNom(rs.getString(CENTROTABLE_NOMBRE));
-
+        centro.setAdreca(rs.getString(CENTROTABLE_ADRESS));
+        centro.setCP(rs.getString(CENTROTABLE_CP));
+        centro.setDataAlta(rs.getDate(CENTROTABLE_DATE));
+        centro.setDataBaixa(rs.getDate(CENTROTABLE_BAJA));
+        centro.setEmail(rs.getString(CENTROTABLE_MAIL));
+        centro.setPais(rs.getInt(CENTROTABLE_PAIS));
+        centro.setPoblacio(rs.getString(CENTROTABLE_TOWN));
+        centro.setTelf(rs.getString(CENTROTABLE_PHONE));
+        centro.setURL(rs.getString(CENTROTABLE_URL));
+        centro.setUniversitat(rs.getInt(CENTROTABLE_UNI));
+        
     }
     
+    //Alta de Centro
+    public void add(Centro centro) throws SQLException, Exception {
+        String sql;
+        Statement statement;
+        ResultSet rs;
+
+        try {
+            sql = "INSERT INTO " + CENTROTABLE + " "
+                    + "(" + CENTROTABLE_NOMBRE + ","
+                    + " " + CENTROTABLE_ADRESS + ","
+                    + " " + CENTROTABLE_TOWN+ ","
+                    + " " + CENTROTABLE_CP + ","
+                    + " " + CENTROTABLE_UNI + ","
+                    + " " + CENTROTABLE_PAIS+ ","
+                    + " " + CENTROTABLE_MAIL + ","
+                    + " " + CENTROTABLE_PHONE + ","
+                    + " " + CENTROTABLE_URL + ","
+                    + " " + CENTROTABLE_DATE + ") "
+                    + "VALUES "
+                    + "('" + centro.getNom() + "', "
+                    + " '" + centro.getAdreca() + "', "
+                    + " '" + centro.getPoblacio() + "', "
+                    + " '" + centro.getCP() + "', "
+                     + " " + centro.getUniversitat() + ", "
+                     + " " + centro.getPais() + ", "
+                    + " '" + centro.getEmail() + "', "
+                    + " '" + centro.getTelf() + "', "
+                    + " '" + centro.getURL() + "', "
+                    + " '" + df.format(centro.getDataAlta()) + "')";
+
+            statement = getConnection().createStatement();
+            statement.execute(sql);
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+    
+    //Modificar Centro
+    public void update(Centro centro) throws SQLException, Exception {
+        String sql;
+        Statement statement;
+
+        try {
+
+            sql = "UPDATE " + CENTROTABLE + " "
+                    + "SET " + CENTROTABLE_NOMBRE + " = '" + centro.getNom() + "', "
+                    + CENTROTABLE_ADRESS + " = '" + centro.getAdreca() + "', "
+                    + CENTROTABLE_TOWN + " = '" + centro.getPoblacio() + "', "
+                    + CENTROTABLE_CP  + " = '" + centro.getCP() + "', "
+                    + CENTROTABLE_UNI + " = " + centro.getUniversitat() + ", "
+                    + CENTROTABLE_PAIS + " = " + centro.getPais() + ", "
+                    + CENTROTABLE_MAIL + " = '" + centro.getEmail() + "', "
+                    + CENTROTABLE_PHONE + " = '" + centro.getTelf() + "', "
+                    + CENTROTABLE_URL + " = '" + centro.getURL() + "', "
+                    + CENTROTABLE_DATE + " = '" + df.format(centro.getDataAlta()) + "' "
+                    + "WHERE " + CENTROTABLE_ID + " = " + centro.getId();
+
+            statement = getConnection().createStatement();
+            statement.execute(sql);
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    //Eliminar Centro
+    public void delete(int id) throws SQLException, Exception {
+        String sql;
+        Statement statement;
+
+        Date now = new Date();
+
+        try {
+            sql = "UPDATE " +CENTROTABLE + " "
+                    + "SET " 
+                    + CENTROTABLE_BAJA + " = '" + df.format(now) + "' "
+                    + "WHERE " + CENTROTABLE_ID + " = " + id;
+
+            statement = getConnection().createStatement();
+            statement.execute(sql);
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
 }

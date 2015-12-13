@@ -606,7 +606,7 @@ public class GestorUsuario extends GestorDisco {
             ResultSet rs = objStt.executeQuery(sql);
             while (rs.next()) {
                 AuxiliarCombo pais = new AuxiliarCombo();
-                pais.setId(rs.getInt("codi_pais"));
+                pais.setId(rs.getInt("pais_id"));
                 pais.setNombre(rs.getString("nom"));
                 paises.add(pais);
             }

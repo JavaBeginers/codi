@@ -413,11 +413,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    @Override
-    public ArrayList<Centro> getCentros() throws SQLException, Exception {
-        GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
-        return gc.getCentros();
-    }
+
 
     @Override
     public int getInscritosByActividadId(int actividadId) throws SQLException, Exception {
@@ -461,4 +457,44 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         gm.setAsistencia(actividadId, usuarioid, haAsistit);
     }
     
+    //***********************************************************************
+//********************************CENTROS********************************
+    @Override
+    public ArrayList<Centro> getCentros() throws SQLException, Exception {
+        GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+        return gc.getCentros();
+    }
+    @Override
+    public ArrayList<Centro> getCentrosInactivos() throws SQLException, Exception {
+             GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+        return gc.getCentrosInactivos();
+    }
+
+
+    @Override
+    public boolean addCentro(Centro centro) throws SQLException, Exception {
+        GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+        gc.add(centro);
+        return true;
+    }
+
+    public Centro getCentro(int id) throws SQLException, Exception {
+        GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+       return gc.get(id);
+    }
+    @Override
+    public boolean updateCentro(Centro centro) throws SQLException, Exception {
+         GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+        gc.update(centro);
+        return true;
+    }
+
+    @Override
+    public boolean deleteCentro(int id) throws SQLException, Exception {
+         GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
+        gc.delete(id);
+
+        return true;
+    }
+
 }

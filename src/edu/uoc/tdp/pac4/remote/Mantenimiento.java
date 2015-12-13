@@ -127,37 +127,7 @@ public interface Mantenimiento extends Remote {
      */
     public Actividad getActividad(int id) throws SQLException, Exception;
 
-    /**
-     * Obtiene todos los centros
-     *
-     * @return Una instancia de {@link Actividad} que representa el Actividad
-     * solicitado.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Centro> getCentros() throws SQLException, Exception;
 
-    /**
-     * Obtiene las aulas de un centro
-     *
-     * @param id
-     * @return
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception;
-
-    /**
-     * Agrega un nuevo Actividad al centro.
-     *
-     * @param actividad Una instancia de {@link Actividad} que contiene los
-     * datos del Actividad.
-     * @return
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     public boolean addActividad(Actividad actividad) throws SQLException, Exception;
 
     /**
@@ -270,7 +240,26 @@ public interface Mantenimiento extends Remote {
     
     //***********************************************************************
 
- 
+ //***********************************************************************
+
+    //*********************************CENTRO********************************
+
+    public ArrayList<Centro> getCentros() throws SQLException, Exception;
+
+    public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception;
+
+    public ArrayList<Centro> getCentrosInactivos() throws SQLException, Exception;
+
+    public Centro getCentro(int id) throws SQLException, Exception;
+    
+    public boolean addCentro(Centro centro) throws SQLException, Exception;
+
+    public boolean updateCentro(Centro centro) throws SQLException, Exception;
+
+    public boolean deleteCentro(int id) throws SQLException, Exception;
+
+
+//***********************************************************************
 
     
 }
