@@ -433,7 +433,11 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 gridData[i][1] = getDescTipus(actividad.getTipus());
                 gridData[i][2] = actividad.getTitol();
                 gridData[i][3] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataInici());
-                gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
+                if(actividad.getDataFi()!=null) {
+                    gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
+                } else {
+                    gridData[i][4] = "Sin definir";
+                }
                 i++;
             }
         } else {
@@ -487,7 +491,11 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 gridData[i][1] = getDescTipus(actividad.getTipus());
                 gridData[i][2] = actividad.getTitol();
                 gridData[i][3] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataInici());
-                gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
+                if(actividad.getDataFi()!=null) {
+                    gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
+                } else {
+                    gridData[i][4] = language.getProperty("field.without.value");
+                }
                 i++;
             }
             filtrar = false;
