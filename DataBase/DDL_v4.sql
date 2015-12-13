@@ -5,14 +5,29 @@ nom varchar(255),
 CONSTRAINT pais_idioma PRIMARY KEY (codi_pais, codi_idioma)
 );
 
+DROP SEQUENCE IF EXISTS idioma_id_seq CASCADE;
+CREATE SEQUENCE idioma_id_seq ;
+
 CREATE TABLE IDIOMA (
-idioma_id integer,
+idioma_id integer default nextval('idioma_id_seq') not null,
 idioma_nom varchar(2),
 CONSTRAINT PK_IDIOMA PRIMARY KEY(idioma_id)
 );
 
+DROP SEQUENCE IF EXISTS rol_id_seq CASCADE;
+CREATE SEQUENCE rol_id_seq ;
+
+CREATE TABLE ROL (
+id integer default nextval('rol_id_seq') not null,
+descripcio varchar(30),
+CONSTRAINT PK_ROL PRIMARY KEY(id)
+);
+
+DROP SEQUENCE IF EXISTS usuari_id_seq CASCADE;
+CREATE SEQUENCE usuari_id_seq ;
+
 CREATE TABLE USUARI (
-usuari_id integer,
+usuari_id integer default nextval('usuari_id_seq') not null,
 nom_usuari varchar(64) NOT NULL,
 contrasenya text NOT NULL,
 noms varchar(128) NOT NULL,
@@ -27,15 +42,20 @@ telefono varchar(16),
 email varchar(128) NOT NULL,
 data_alta date NOT NULL,
 data_baixa date,
-rol varchar(8),
+rol integer,
 idioma_id integer,
 actiu boolean,
+universitat_id integer,
 CONSTRAINT PK_USUARI PRIMARY KEY(usuari_id),
-CONSTRAINT FK_IDIOMA FOREIGN KEY(idioma_id) REFERENCES IDIOMA (idioma_id)
+CONSTRAINT FK_IDIOMA FOREIGN KEY(idioma_id) REFERENCES IDIOMA (idioma_id),
+CONSTRAINT FK_ROL FOREIGN KEY(rol) REFERENCES ROL(id)
 );
 
+DROP SEQUENCE IF EXISTS universitat_id_seq CASCADE;
+CREATE SEQUENCE universitat_id_seq ;
+
 CREATE TABLE UNIVERSITAT (
-universitat_id integer,
+universitat_id integer default nextval('universitat_id_seq') not null,
 acronim varchar(10) NOT NULL,
 nom varchar(255) NOT NULL,
 adreca varchar(255) NOT NULL,
@@ -50,8 +70,11 @@ data_baixa date,
 CONSTRAINT PK_UNIVERSITAT PRIMARY KEY(universitat_id)
 );
 
+DROP SEQUENCE IF EXISTS nom_universitat_id_seq CASCADE;
+CREATE SEQUENCE nom_universitat_id_seq ;
+
 CREATE TABLE NOM_UNIVERSITAT (
-nom_universitat_id integer NOT NULL,
+nom_universitat_id integer default nextval('nom_universitat_id_seq') NOT NULL,
 universitat_id integer NOT NULL,
 codi_idioma varchar(2) NOT NULL,
 nom varchar(255) NOT NULL,
@@ -59,28 +82,11 @@ CONSTRAINT PK_NOM_UNIVERSITAT PRIMARY KEY(nom_universitat_id),
 CONSTRAINT FK_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id)
 );
 
-CREATE TABLE USUARI_UNIVERSITAT_GESTOR (
-usuari_universitat_gestor_id integer NOT NULL, 
-universitat_id integer NOT NULL,
-usuari_id integer NOT NULL,
-CONSTRAINT PK_USUARI_UNIVERSITAT_GESTOR PRIMARY
-KEY(usuari_universitat_gestor_id),
-CONSTRAINT FK_UUG_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id),
-CONSTRAINT FK_UUG_USUARI FOREIGN KEY (usuari_id) REFERENCES USUARI(usuari_id)
-);
-
-CREATE TABLE USUARI_UNIVERSITAT_ROL (
-usuari_universitat_rol_id integer NOT NULL,
-universitat_id integer NOT NULL,
-usuari_id integer NOT NULL,
-rol varchar(16) NOT NULL,
-CONSTRAINT PK_USUARI_UNIVERSITAT_ROL PRIMARY KEY(usuari_universitat_rol_id ),
-CONSTRAINT FK_UUR_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id),
-CONSTRAINT FK_UUR_USUARI FOREIGN KEY (usuari_id) REFERENCES USUARI(usuari_id)
-);
+DROP SEQUENCE IF EXISTS centre_id_seq CASCADE;
+CREATE SEQUENCE centre_id_seq ;
 
 CREATE TABLE CENTRE (
-centre_id integer,
+centre_id integer default nextval('centre_id_seq') not null,
 universitat_id integer NOT NULL,
 nom_centre varchar(255) NOT NULL,
 adreca varchar(255) NOT NULL,
@@ -96,8 +102,11 @@ CONSTRAINT PK_CENTRE PRIMARY KEY(centre_id),
 CONSTRAINT FK_CENTRE_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id)
 );
 
+DROP SEQUENCE IF EXISTS aula_id_seq CASCADE;
+CREATE SEQUENCE aula_id_seq ;
+
 CREATE TABLE AULA (
-aula_id integer,
+aula_id integer default nextval('aula_id_seq') not null,
 centre_id integer NOT NULL,
 codi_aula varchar(128) NOT NULL,
 nom varchar(255) NOT NULL,
@@ -109,8 +118,11 @@ CONSTRAINT PK_AULA PRIMARY KEY(aula_id),
 CONSTRAINT FK_AULA_CENTRE FOREIGN KEY (centre_id) REFERENCES CENTRE(centre_id)
 );
 
+DROP SEQUENCE IF EXISTS recurs_id_seq CASCADE;
+CREATE SEQUENCE recurs_id_seq ;
+
 CREATE TABLE RECURS (
-recurs_id integer,
+recurs_id integer default nextval('recurs_id_seq') not null,
 aula_id integer NOT NULL,
 codi_recurs varchar(128) NOT NULL,
 nom varchar(255) NOT NULL,
@@ -121,9 +133,12 @@ CONSTRAINT PK_RECURS PRIMARY KEY(recurs_id),
 CONSTRAINT FK_RECURS_AULA FOREIGN KEY (aula_id) REFERENCES AULA(aula_id)
 );
 
+DROP SEQUENCE IF EXISTS activitat_id_seq CASCADE;
+CREATE SEQUENCE activitat_id_seq ;
+
 CREATE TABLE ACTIVIDAD
 (
- id bigint NOT NULL,
+ id integer default nextval('activitat_id_seq') NOT NULL,
  universitat_id bigint NOT NULL,
  centre_id bigint NOT NULL,
  aula_id bigint NOT NULL,
@@ -145,14 +160,17 @@ WITH (
  OIDS=FALSE
 );
 
+DROP SEQUENCE IF EXISTS assistencia_id_seq CASCADE;
+CREATE SEQUENCE assistencia_id_seq ;
+
 CREATE TABLE ASSISTENCIA
 (
- id bigint NOT NULL, -- Identificador
+ id integer default nextval('assistencia_id_seq') NOT NULL, -- Identificador
  activitat_id bigint NOT NULL, -- Identificador de la activitat.
  usuari_id bigint NOT NULL, -- Identificador del usuari.
- data_assistencia date NOT NULL, -- Data de lÂ´assistencia
+ assistencia boolean NOT NULL,
  CONSTRAINT ASSISTANCE_PK PRIMARY KEY (id),
- CONSTRAINT ASSISTANCE_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVITATS
+ CONSTRAINT ASSISTANCE_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVIDAD
 (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
  CONSTRAINT ASSISTENCE_FK2 FOREIGN KEY (usuari_id) REFERENCES USUARI(usuari_id) MATCH
 SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
@@ -161,9 +179,12 @@ WITH (
  OIDS=FALSE
 );
 
+DROP SEQUENCE IF EXISTS matricula_id_seq CASCADE;
+CREATE SEQUENCE matricula_id_seq ;
+
 CREATE TABLE MATRICULA
 (
- id bigint NOT NULL, -- Identificador
+ id integer default nextval('matricula_id_seq') NOT NULL, -- Identificador
  usuari_id bigint NOT NULL, -- Identificador de l'usuari
  activitat_id bigint NOT NULL, -- Identificador de l'activitat
  data date NOT NULL, -- Data de la matricula
@@ -171,7 +192,7 @@ CREATE TABLE MATRICULA
  beca bit NOT NULL, -- Flag per si hi ha beca
  numero_Compte bigint NOT NULL, -- Numero de compte de pagament
  CONSTRAINT MATRICULA_PK PRIMARY KEY (id),
- CONSTRAINT MATRICULA_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVITATS
+ CONSTRAINT MATRICULA_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVIDAD
 (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
  CONSTRAINT MATRICULA_FK2 FOREIGN KEY (usuari_id) REFERENCES USUARI (usuari_id) MATCH
 SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
