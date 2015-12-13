@@ -28,8 +28,8 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     private static final int ROL_ALUMNO = 3;
     private List<ComboItem> tiposActividad;
 
-    private Mantenimiento manager;
-    private LanguageUtils language;
+    private final Mantenimiento manager;
+    private final LanguageUtils language;
     private ArrayList<Actividad> actividades;
     private Usuario usuario;
 
@@ -37,6 +37,11 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
     /**
      * Creates new form PnlGroupGestor
+     * @param parent
+     * @param modal
+     * @param manager
+     * @param language
+     * @param usuario
      */
     public PnlMantenimientoActividades(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language, Usuario usuario) {
 
@@ -277,7 +282,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         this.btnEdit.setText(language.getProperty("mantenimiento.usermain.modUser"));
         this.btnDelete.setText(language.getProperty("mantenimiento.usermain.delUser"));
         this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
-        
+
         this.lblFiltroTipoActividad.setText(language.getProperty("mantenimiento.actividad.tipo.actividad"));
         this.lblFiltroDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
         this.lblFiltroDateEnd.setText(language.getProperty("mantenimiento.actividad.fechaend"));
@@ -359,7 +364,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
-        if (this.cboFiltroTipoActividad.getSelectedIndex()>0) {
+        if (this.cboFiltroTipoActividad.getSelectedIndex() > 0) {
             this.dofilter = true;
             listData();
         }
@@ -371,7 +376,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             this.dofilter = true;
             listData();
         }
-        
+
     }//GEN-LAST:event_cmdFilterActionPerformed
 
     private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
@@ -384,22 +389,22 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     }//GEN-LAST:event_cmdClearFilterActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
-       if (tblData.getSelectedRow() < 0) {
-           JOptionPane.showMessageDialog(null,
-                   language.getProperty("mantenimiento.msg.sele.actividad"),
-                   language.getProperty("app.title"),
-                   JOptionPane.WARNING_MESSAGE);
-           return;
-       }
+        if (tblData.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null,
+                    language.getProperty("mantenimiento.msg.sele.actividad"),
+                    language.getProperty("app.title"),
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-       // Obtiene el ID de la actividad
-       Actividad actividad = actividades.get(tblData.getSelectedRow());
+        // Obtiene el ID de la actividad
+        Actividad actividad = actividades.get(tblData.getSelectedRow());
 
-       PnlMantenimientoAsistenciaActividadGestor form = new PnlMantenimientoAsistenciaActividadGestor(null, true, manager, language, "Edit", actividad.getId(), usuario);
-       form.setLocationRelativeTo(null);
-       form.setVisible(true);
+        PnlMantenimientoAsistenciaActividadGestor form = new PnlMantenimientoAsistenciaActividadGestor(null, true, manager, language, "Edit", actividad.getId(), usuario);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
 
-       listData();
+        listData();
     }//GEN-LAST:event_btnAsistenciaActionPerformed
 
     private void cboFiltroTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltroTipoActividadActionPerformed
@@ -414,12 +419,12 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
         header.add(language.getProperty("mantenimiento.usermain.universidad"));
         header.add(language.getProperty("mantenimiento.usermain.tipo"));
-        header.add(language.getProperty("mantenimiento.usermain.name"));        
-        header.add(language.getProperty("mantenimiento.actividad.fechaini"));        
+        header.add(language.getProperty("mantenimiento.usermain.name"));
+        header.add(language.getProperty("mantenimiento.actividad.fechaini"));
         header.add(language.getProperty("mantenimiento.actividad.fechaend"));
 
         String[][] gridData;
-        if(usuario.getIdRol() == ROL_SECRETARIA) {
+        if (usuario.getIdRol() == ROL_SECRETARIA) {
             actividades = manager.getActividadesByUniversidadId(usuario.getUniversidadId());
             gridData = new String[actividades.size()][5];
             int i = 0;
@@ -434,7 +439,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         } else {
             gridData = new String[0][5];
         }
-        
+
         //Modificamos la tabla para que no sea editable
         this.tblData.setModel(new DefaultTableModel(gridData, header.toArray()) {
             @Override
@@ -449,8 +454,8 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
 
         header.add(language.getProperty("mantenimiento.usermain.universidad"));
         header.add(language.getProperty("mantenimiento.usermain.tipo"));
-        header.add(language.getProperty("mantenimiento.usermain.name"));        
-        header.add(language.getProperty("mantenimiento.actividad.fechaini"));        
+        header.add(language.getProperty("mantenimiento.usermain.name"));
+        header.add(language.getProperty("mantenimiento.actividad.fechaini"));
         header.add(language.getProperty("mantenimiento.actividad.fechaend"));
 
         String[][] gridData;
@@ -459,21 +464,23 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         gridData = new String[actividades.size()][5];
 
         int i = 0;
-        boolean filtrar=false;
+        boolean filtrar = false;
         for (Actividad actividad : actividades) {
-            if(this.cboFiltroTipoActividad.getSelectedIndex()>0) {
+            if (this.cboFiltroTipoActividad.getSelectedIndex() > 0) {
                 int tipusActivitat = ((ComboItem) cboFiltroTipoActividad.getSelectedItem()).getId();
-                if(actividad.getTipus()!=tipusActivitat) {
-                    filtrar=true;
+                if (actividad.getTipus() != tipusActivitat) {
+                    filtrar = true;
                 }
             }
-            if(!fldFiltroDateIni.getText().equals("")) {
-                if (actividad.getDataFi().getTime() < DateTimeUtils.strToDate(this.fldFiltroDateIni.getText()).getTime())
-                    filtrar=true;
+            if (!fldFiltroDateIni.getText().equals("")) {
+                if (actividad.getDataFi().getTime() < DateTimeUtils.strToDate(this.fldFiltroDateIni.getText()).getTime()) {
+                    filtrar = true;
+                }
             }
-            if(!fldFiltroDateFin.getText().equals("")) {
-                if (actividad.getDataInici().getTime() > DateTimeUtils.strToDate(this.fldFiltroDateFin.getText()).getTime())
-                    filtrar=true;   
+            if (!fldFiltroDateFin.getText().equals("")) {
+                if (actividad.getDataInici().getTime() > DateTimeUtils.strToDate(this.fldFiltroDateFin.getText()).getTime()) {
+                    filtrar = true;
+                }
             }
             if (!filtrar) {
                 gridData[i][0] = getDescUniversidad(Math.toIntExact(actividad.getUniversitatId()));
@@ -483,14 +490,14 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 gridData[i][4] = new SimpleDateFormat("dd/MM/YYYY").format(actividad.getDataFi());
                 i++;
             }
-            filtrar=false;
+            filtrar = false;
         }
 
         this.tblData.setModel(new javax.swing.table.DefaultTableModel(gridData, header.toArray()));
     }
-    
+
     private String getDescTipus(int tipusId) {
-    
+
         switch (tipusId) {
             case Actividad.ACTIVIDAD_TIPO_CONGRESO_ID:
                 return Actividad.getTipoActividadName(Actividad.ACTIVIDAD_TIPO_CONGRESO_ID, language);
@@ -503,11 +510,11 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             default:
                 return "(-)";
         }
-        
+
     }
-    
+
     private String getDescUniversidad(int universidadId) {
-        
+
         switch (universidadId) {
             case Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID:
                 return Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language);
@@ -520,7 +527,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             default:
                 return "(-)";
         }
-        
+
     }
 
     private void listData() {
@@ -589,7 +596,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
     private void setTipoActividades() {
 
         if (tiposActividad == null) {

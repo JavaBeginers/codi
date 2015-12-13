@@ -57,9 +57,9 @@ public class GestorAsistencia extends GestorDisco {
 
         try {
             // Agrega la petición
-            sql = "UPDATE asistencia "
-                    + "SET    asistencia    = '" + asistencia.isAsistencia()
-                    + " WHERE  asistencia.id = " + asistencia.getId();
+            sql = "UPDATE assistencia "
+                    + "SET assistencia    = " + asistencia.isAsistencia()
+                    + " WHERE id = " + asistencia.getId();
 
             execute(sql);
         } catch (SQLException ex) {
@@ -86,19 +86,19 @@ public class GestorAsistencia extends GestorDisco {
         try {
             // Comprueba que no exista otro registro de asistencia para dicha asistencia
             sql = "SELECT Count(*) As nItems "
-                    + "FROM asistencia "
-                    + "WHERE actividad_id =  " + actividadId + " And "
+                    + "FROM assistencia "
+                    + "WHERE activitat_id =  " + actividadId + " And "
                     + "      usuari_id = " + usuarioid;
             if (executeScalar(sql) > 0) {
                 throw new StudentAssistanceAlreadyCountedException();
             }
 
             // Agrega el registro de asistencia
-            sql = "INSERT INTO asistencia (activitat_id, usuari_id, asistencia) "
+            sql = "INSERT INTO assistencia (activitat_id, usuari_id, assistencia) "
                     + "VALUES "
                     + "(" + actividadId + ","
                     + "  " + usuarioid 
-                    + "asistencia = " + haAsistit +")";
+                    + ", " + haAsistit +")";
             execute(sql);
         } catch (SQLException ex) {
             throw ex;
@@ -109,6 +109,45 @@ public class GestorAsistencia extends GestorDisco {
         }
     }
 
+    /**
+     * Agrega una nueva entrada en AsistenciaAlumno
+     *
+     * @param actividadId
+     * @param usuarioid
+     * @param haAsistit
+     *
+     * @throws SQLException
+     * @throws edu.uoc.tdp.pac4.exceptions.StudentAssistanceAlreadyCountedException
+     * @throws GroupAlreadyCountedException
+     * @throws Exception
+     */
+    public void setAsistencia(int actividadId, int usuarioid, boolean haAsistit) throws SQLException, StudentAssistanceAlreadyCountedException, Exception {
+        String sql;
+        Asistencia asistencia;
+        try {
+            // Comprueba que no exista otro registro de asistencia para dicha asistencia
+            sql = "SELECT * "
+                    + "FROM assistencia "
+                    + "WHERE activitat_id =  " + actividadId + " And "
+                    + "      usuari_id = " + usuarioid;
+            ResultSet rs = executeSql(sql);
+            if (rs.next()) {
+                asistencia = new Asistencia();
+                readAsistencia(asistencia, rs);
+                asistencia.setAsistencia(haAsistit);
+                update(asistencia);
+            } else {
+                addAsistencia(actividadId, usuarioid, haAsistit);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (StudentAssistanceAlreadyCountedException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+    
     public ArrayList<Asistencia> getAsistenciasByActividadId(int idActivitat) throws SQLException, Exception {
         Asistencia asistencia;
         String sql;
@@ -116,7 +155,7 @@ public class GestorAsistencia extends GestorDisco {
 
         sql = "SELECT m.*, a.* FROM MATRICULA M " +
                 "LEFT JOIN ASSISTENCIA A ON A.ACTIVITAT_ID = M.ACTIVITAT_ID AND A.USUARI_ID=M.USUARI_ID " +
-                "WHERE M.ACTIVITAT_ID="+idActivitat;
+                "WHERE M.ACTIVITAT_ID="+idActivitat +" ORDER BY M.USUARI_ID";
 
         try {
             ResultSet rs = executeSql(sql);

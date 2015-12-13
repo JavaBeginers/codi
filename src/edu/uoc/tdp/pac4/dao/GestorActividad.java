@@ -334,12 +334,12 @@ public class GestorActividad extends GestorDisco {
             sql.append(actividad.getUniversitatId()).append(", ");
             sql.append(actividad.getCentreId()).append(", ");
             sql.append(actividad.getAulaId()).append(", ");
-            sql.append(actividad.getTipus()).append(", ");
-            sql.append(actividad.getTitol()).append(", ");
-            sql.append(actividad.getArea()).append(", ");
-            sql.append(actividad.getEspecialitat()).append(", ");
-            sql.append(actividad.getDecanatura()).append(", ");
-            sql.append(actividad.getInvestigator()).append(", ");
+            sql.append(actividad.getTipus()).append(", '");
+            sql.append(actividad.getTitol()).append("', '");
+            sql.append(actividad.getArea()).append("', '");
+            sql.append(actividad.getEspecialitat()).append("', '");
+            sql.append(actividad.getDecanatura()).append("', '");
+            sql.append(actividad.getInvestigator()).append("', ");
             sql.append("'").append(df.format(actividad.getDataInici())).append("', ");
             sql.append("'").append(df.format(actividad.getDataFi())).append("', ");
             if (actividad.getDataMaxInscripcio() != null) {

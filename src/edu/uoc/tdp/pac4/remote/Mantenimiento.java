@@ -67,6 +67,8 @@ public interface Mantenimiento extends Remote {
 
     //public int checkGruposUsuario(int id) throws SQLException, Exception;
 
+    public int existeUsuario(String username) throws SQLException, Exception;
+    
     public boolean liberarMatriculasUsuario(int id) throws SQLException, Exception;
     
     public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception;
@@ -234,7 +236,9 @@ public interface Mantenimiento extends Remote {
     public boolean canUpdateActivity(int activitatId, int tipusActivitat, int centreId, Date iniActividad, Date endActividad) throws SQLException, Exception;
             
     public ArrayList<Asistencia> getAsistenciasByActividadId(int activitatId) throws SQLException, Exception;
-        
+    
+    public void setAsistencia(int idActivitat, int idUsuari, boolean asistencia) throws SQLException, Exception;
+    
     //*********************************RECURSO********************************
     public ArrayList<Recurso> getRecursos() throws SQLException, Exception;
 

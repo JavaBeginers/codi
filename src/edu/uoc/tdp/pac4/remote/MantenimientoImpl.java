@@ -78,7 +78,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
     }
 
 //***********************************************************************
-    
 //********************************USUARIOS********************************
     @Override
     public ArrayList<Usuario> getUsuarios() throws RemoteException, SQLException, Exception {
@@ -91,20 +90,25 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUsuariosInactivos();
     }
-/*
+
+    /*
     @Override
     public ArrayList<Usuario> getUsuariosByRolDesc(String desc) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUsuariosByRolDesc(desc);
     }
-*/
-    
+     */
+
     @Override
     public Usuario getUsuario(int id) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.get(id);
     }
 
+    public int existeUsuario(String username) throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.existeUsuario(username);
+    }
 
     @Override
     public boolean addUsuario(Usuario usuario) throws SQLException, Exception {
@@ -114,7 +118,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-
     @Override
     public boolean updateUsuario(Usuario usuario) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
@@ -122,7 +125,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
 
         return true;
     }
-
 
     @Override
     public boolean deleteUsuario(int id) throws SQLException, Exception {
@@ -140,17 +142,18 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-       @Override
+    @Override
     public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getPaises();
     }
-           @Override
+
+    @Override
     public ArrayList<AuxiliarCombo> getRoles() throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getRoles();
     }
-    
+
     public ArrayList<AuxiliarCombo> getIdiomas() throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getIdiomas();
@@ -161,6 +164,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gu.getUniversidades();
     }
 //*********************************AULA**********************************
+
     @Override
     public ArrayList<Aula> getAulas() throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
@@ -202,22 +206,20 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
 
         return true;
     }
-    
+
     @Override
     public ArrayList<Aula> getAulasByIdCentro(int id) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getAulasByCentro(id);
     }
-    
-        @Override
+
+    @Override
     public int getCapacidadByAulaId(int aulaId) throws SQLException, Exception {
         GestorAulas ga = new GestorAulas(gestorDisc.getConnection());
         return ga.getCapacidadByAulaId(aulaId);
     }
-    
 
 //***********************************************************************
-    
 //********************************RECURSO********************************
     @Override
     public ArrayList<Recurso> getRecursos() throws SQLException, Exception {
@@ -233,36 +235,32 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
 
     @Override
     public Recurso getRecurso(int id) throws SQLException, Exception {
-          GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
         return gr.get(id);
     }
 
     @Override
     public boolean altaRecurso(Recurso rec) throws SQLException, Exception {
-      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
-      gr.alta(rec);
-      return true;
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        gr.alta(rec);
+        return true;
     }
 
     @Override
     public boolean actualizarRecurso(Recurso rec) throws SQLException, Exception {
-      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
-      gr.actualizar(rec);
-      return true;
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        gr.actualizar(rec);
+        return true;
     }
 
     @Override
     public boolean eliminarRecurso(int id) throws SQLException, Exception {
-      GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
-      gr.eliminar(id);
-      return true;
+        GestorRecursos gr = new GestorRecursos(gestorDisc.getConnection());
+        gr.eliminar(id);
+        return true;
     }
 
-
 //***********************************************************************
-
-
-
     /**
      * Devuelve una lista de Actividades del centro.
      *
@@ -394,13 +392,12 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
      * @return
      * @throws SQLException
      * @throws Exception
-   
-    @Override
-    public int checkGruposUsuario(int id) throws SQLException, Exception {
-        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
-        return gu.checkGruposAssigned(id);
-    }
-  */
+     *
+     * @Override public int checkGruposUsuario(int id) throws SQLException,
+     * Exception { GestorUsuario gu = new
+     * GestorUsuario(gestorDisc.getConnection()); return
+     * gu.checkGruposAssigned(id); }
+     */
     /**
      *
      * @param id
@@ -416,15 +413,11 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
- 
-
     @Override
     public ArrayList<Centro> getCentros() throws SQLException, Exception {
         GestorCentro gc = new GestorCentro(gestorDisc.getConnection());
         return gc.getCentros();
     }
-
-
 
     @Override
     public int getInscritosByActividadId(int actividadId) throws SQLException, Exception {
@@ -458,8 +451,14 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
 
     @Override
     public ArrayList<Universitat> getUniversidadesRaw() throws SQLException, Exception {
-         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUniversidadesRaw();
-   }
-        
+    }
+
+    @Override
+    public void setAsistencia(int actividadId, int usuarioid, boolean haAsistit) throws SQLException, Exception {
+        GestorAsistencia gm = new GestorAsistencia(gestorDisc.getConnection());
+        gm.setAsistencia(actividadId, usuarioid, haAsistit);
+    }
+    
 }

@@ -1,5 +1,8 @@
+DROP SEQUENCE IF EXISTS paisos_id_seq CASCADE;
+CREATE SEQUENCE paisos_id_seq;
+
 CREATE TABLE PAISOS (
-pais_id int,
+pais_id integer default nextval('paisos_id_seq') not null,
 codi_pais char(2),
 codi_idioma char(2),
 nom varchar(255),
@@ -34,11 +37,11 @@ contrasenya text NOT NULL,
 noms varchar(128) NOT NULL,
 cognoms varchar(128) NOT NULL,
 nombre_doc_identif varchar(64) NOT NULL,
-pais_doc_identif varchar(2) NOT NULL,
+pais_doc_identif integer NOT NULL,
 adreca varchar(255) NOT NULL,
 poblacio varchar(255) NOT NULL,
 codi_postal varchar(32) NOT NULL,
-pais_residencia varchar(2) NOT NULL,
+pais_residencia integer NOT NULL,
 telefono varchar(16),
 email varchar(128) NOT NULL,
 data_alta date NOT NULL,

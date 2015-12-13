@@ -43,10 +43,11 @@ public class GestorUsuario extends GestorDisco {
     private static final String USERTABLE_PAIS = "pais_residencia";
 
     //Tabla Rol
-    private static final String ROLTABLE = "rol";
-    private static final String ROLTABLE_ID = "id";
-    private static final String ROLTABLE_DESCRIPTION = "descripcion";
-
+    private static final String ROLTABLE               = "rol";
+    private static final String ROLTABLE_ID            = "id";
+    private static final String ROLTABLE_DESCRIPTION   = "descripcio";
+    
+    
     //Tabla Matricula
     private static final String MATRICTABLE = "matriculas";
     private static final String MATRICTABLE_USER = "usuarioid";
@@ -75,27 +76,29 @@ public class GestorUsuario extends GestorDisco {
     //Construir un Usuario
     private Usuario buildUsuario(ResultSet rs) throws SQLException, Exception {
         Usuario usuario = new Usuario();
-
-        usuario.setId(rs.getInt(USERTABLE_ID));
-        usuario.setLogin(rs.getString(USERTABLE_LOGIN));
-        usuario.setPwd(rs.getString(USERTABLE_PASSWORD));
-        usuario.setFechaAlta(rs.getDate(USERTABLE_DATE));
-        usuario.setEmail(rs.getString(USERTABLE_MAIL));
-        usuario.setTelf(rs.getString(USERTABLE_PHONE));
-        usuario.setNombre(rs.getString(USERTABLE_NAME));
-        usuario.setApellidos(rs.getString(USERTABLE_SURNAME));
-        usuario.setActivo(rs.getBoolean(USERTABLE_ACTIVE));
-        usuario.setFechaInactividad(rs.getDate(USERTABLE_INACTIVEDATE));
-        usuario.setNif(rs.getString(USERTABLE_NIF));
-        usuario.setIdRol(rs.getInt(USERTABLE_ROLID));
-        usuario.setPais(rs.getInt(USERTABLE_PAIS));
-        usuario.setPaisNIF(rs.getInt(USERTABLE_PAISNIF));
-        usuario.setUniversidadId(rs.getInt(USERTABLE_UNI));
-        usuario.setAdreca(rs.getString(USERTABLE_ADRESS));
-        usuario.setPoblacio(rs.getString(USERTABLE_TOWN));
-        usuario.setIdioma(rs.getInt(USERTABLE_IDIOMA));
-        usuario.setCP(rs.getString(USERTABLE_CP));
-
+        
+        usuario.setId               (rs.getInt     (USERTABLE_ID));
+        usuario.setLogin            (rs.getString  (USERTABLE_LOGIN));
+        usuario.setPwd              (rs.getString  (USERTABLE_PASSWORD));
+        usuario.setFechaAlta        (rs.getDate    (USERTABLE_DATE));
+        usuario.setEmail            (rs.getString  (USERTABLE_MAIL));
+        usuario.setTelf             (rs.getString  (USERTABLE_PHONE));
+        usuario.setNombre           (rs.getString  (USERTABLE_NAME));
+        usuario.setApellidos        (rs.getString  (USERTABLE_SURNAME));
+        usuario.setActivo           (rs.getBoolean (USERTABLE_ACTIVE));
+        usuario.setFechaInactividad (rs.getDate    (USERTABLE_INACTIVEDATE));
+        usuario.setNif              (rs.getString  (USERTABLE_NIF));
+        usuario.setIdRol            (rs.getInt     (USERTABLE_ROLID));
+        usuario.setPais             (rs.getInt     (USERTABLE_PAIS));
+        usuario.setPaisNIF          (rs.getInt     (USERTABLE_PAISNIF));
+        usuario.setUniversidadId    (rs.getInt     (USERTABLE_UNI));
+        usuario.setAdreca           (rs.getString    (USERTABLE_ADRESS));
+        usuario.setPoblacio         (rs.getString     (USERTABLE_TOWN));
+        usuario.setIdioma           (rs.getInt     (USERTABLE_IDIOMA));
+        usuario.setCP               (rs.getString     (USERTABLE_CP));
+        
+        usuario.setDescrol(getNombreRol(usuario.getIdRol()));
+        
         return usuario;
     }
 
@@ -120,6 +123,27 @@ public class GestorUsuario extends GestorDisco {
         }
 
         return usuario;
+    }
+   
+        //Obtener Usuario por nombre
+    public int existeUsuario(String username) throws SQLException, Exception {
+        String sql;
+        int i =0;
+      
+        sql = "SELECT * FROM " + USERTABLE        + " "    +
+              "WHERE "         + USERTABLE_LOGIN    + " = '"  + username+"'";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                i++;
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+
+        return i;
     }
 
     /*
@@ -211,10 +235,10 @@ public class GestorUsuario extends GestorDisco {
         String sql;
         Usuario usuario;
         ArrayList<Usuario> users = new ArrayList<Usuario>();
-
-        sql = "SELECT * FROM " + USERTABLE + " "
-                + "WHERE " + USERTABLE_ACTIVE + " = '" + 0 + "' "
-                + "ORDER BY " + USERTABLE_SURNAME + "," + USERTABLE_NAME;
+      
+        sql = "SELECT * FROM " + USERTABLE         + " "    +
+              "WHERE "         + USERTABLE_INACTIVEDATE + " IS NOT NULL " +
+              "ORDER BY "      + USERTABLE_SURNAME + ","    + USERTABLE_NAME;
 
         try {
             Statement objStt = (Statement) getConnection().createStatement();
@@ -693,5 +717,24 @@ public class GestorUsuario extends GestorDisco {
         }
 
         return idiomas;
+    }
+       public String getNombreRol(int idrol) throws SQLException, Exception {
+        String sql;
+        String nombrerol="";
+      
+        sql = "SELECT descripcio FROM rol where id= " + idrol;
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+
+                        nombrerol=         (rs.getString  ("descripcio"));
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return nombrerol;
     }
 }

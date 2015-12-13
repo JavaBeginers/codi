@@ -1,13 +1,18 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
+import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.exceptions.NoRolesException;
+import edu.uoc.tdp.pac4.util.ComboItem;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**********************************************************************
@@ -61,11 +66,13 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         fldNombre = new javax.swing.JTextField();
         lblNombre = new javax.swing.JLabel();
         lblRol = new javax.swing.JLabel();
-        fldApellidos = new javax.swing.JTextField();
-        lblApellidos = new javax.swing.JLabel();
         cmdFilter = new javax.swing.JButton();
         cmdClearFilter = new javax.swing.JButton();
         btnExplore = new javax.swing.JButton();
+        comboUni = new javax.swing.JComboBox();
+        lblUni = new javax.swing.JLabel();
+        lblActivos = new javax.swing.JLabel();
+        comboActivos = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -123,9 +130,8 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
 
         lblNombre.setText("Nombre");
 
+        lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblRol.setText("rol");
-
-        lblApellidos.setText("Apellidos");
 
         cmdFilter.setText("Filtrar");
         cmdFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +157,11 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
+        lblUni.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblUni.setText("Universidad");
+
+        lblActivos.setText("Activos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,30 +181,33 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(cmdClose))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(5, 5, 5)
+                                        .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblUni))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblNombre))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboUni, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblActivos)))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                    .addComponent(comboActivos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmdClearFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                    .addComponent(cmdClose, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cmdFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmdFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,21 +221,23 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                         .addComponent(btnExplore)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombre)
                     .addComponent(lblRol)
-                    .addComponent(fldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblApellidos))
+                    .addComponent(cmdClearFilter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdFilter)
-                    .addComponent(cmdClearFilter))
+                    .addComponent(lblUni)
+                    .addComponent(comboUni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboActivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblActivos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmdClose)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,28 +247,48 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
    private void prepararTextos() {
        
        this.setTitle(language.getProperty("mantenimiento.usermain.title"));
-       this.btnAdd.setText         (language.getProperty("mantenimiento.Nueva"));
+       this.btnAdd.setText         (language.getProperty("mantenimiento.Nuevo"));
        this.btnEdit.setText        (language.getProperty("mantenimiento.Editar"));
        this.btnDelete.setText      (language.getProperty("mantenimiento.Eliminar"));
        this.btnExplore.setText     (language.getProperty("mantenimiento.Ver"));
        this.cmdClose.setText       (language.getProperty("mantenimiento.usermain.back"));
-       this.lblRol.setText         (language.getProperty("mantenimiento.usermain.tipo"));
+       this.lblRol.setText         (language.getProperty("mantenimiento.usermain.rol"));
        this.lblNombre.setText        (language.getProperty("mantenimiento.usermain.name"));
-       this.lblApellidos.setText     (language.getProperty("mantenimiento.usermain.surname"));
        this.cmdFilter.setText      (language.getProperty("mantenimiento.usermain.dofilter"));
        this.cmdClearFilter.setText (language.getProperty("mantenimiento.usermain.clearfilter"));
+       this.lblUni.setText     (language.getProperty("mantenimiento.usermain.universidad"));
+       this.lblActivos.setText     (language.getProperty("mantenimiento.usermain.activos"));
        this.fldNombre.setText("");
-       this.fldApellidos.setText("");
    }
 
 //Carga los combos de la pantalla 
    private void setCombos() {
-        /*
-         * Intentamos capturar los posibles roles definidos por la base de datos para añadirlos
-         * al combobox. Si no se puede, no podremos abrir este panel, pues algo pasa con la connexión
-         * a la DB o al rmi.
-         */
+        comboRol.removeAll();
+        List<AuxiliarCombo> roles = new ArrayList<AuxiliarCombo>();
+        try {
+           roles = manager.getRoles();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        comboRol.addItem(new ComboItem("Todos",0));
+        for(AuxiliarCombo rol: roles) {
+        comboRol.addItem(new ComboItem(rol.getNombre(),rol.getId()));
+        } 
         
+        comboUni.removeAll();
+        List<AuxiliarCombo> universidades = new ArrayList<AuxiliarCombo>();
+        try {
+           universidades= manager.getUniversidades();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        comboUni.addItem(new ComboItem("Todas",0));
+        for(AuxiliarCombo universidad: universidades) {
+        comboUni.addItem(new ComboItem(universidad.getNombre(),universidad.getId()));
+        } 
+        
+        comboActivos.addItem(new ComboItem(language.getProperty("mantenimiento.Si"), 0));
+        comboActivos.addItem(new ComboItem(language.getProperty("mantenimiento.No"), 1));
 
     }
    
@@ -344,20 +380,20 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
 //Botón Filtrar  
     private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
         // TODO add your handling code here:
-        if (!this.comboRol.getSelectedItem().toString().equals(language.getProperty("rol.all")) ||
-            !this.fldNombre.getText().equals("") || !this.fldApellidos.getText().equals("")) {
             this.dofilter = true;
             listarUsuarios();
-        }
     }//GEN-LAST:event_cmdFilterActionPerformed
 
 //Botón Limpiar Filtro
     private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
         // TODO add your handling code here:
         this.comboRol.setSelectedIndex(0);
+        this.comboUni.setSelectedIndex(0);
+        this.comboActivos.setSelectedIndex(0);
         this.fldNombre.setText("");
-        this.fldApellidos.setText("");
         this.dofilter = false;
+        this.btnDelete.setEnabled(true);
+            this.btnEdit.setEnabled(true);
         listarUsuarios();
     }//GEN-LAST:event_cmdClearFilterActionPerformed
 
@@ -379,7 +415,7 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
       form.setVisible(true);
     }//GEN-LAST:event_btnExploreActionPerformed
 
-//Cargar todas las Aulas
+//Cargar todos los usuarios
     private void todosUsuarios() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
@@ -400,7 +436,7 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             gridData[i][1] = usuario.getNif();
             gridData[i][2] = usuario.getNombre();
             gridData[i][3] = usuario.getApellidos();
-            gridData[i][4] = "" + usuario.getIdRol();
+            gridData[i][4] = usuario.getDescrol();
             i++;
         }
         
@@ -409,7 +445,8 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                 { return false; } 
             });
     }
-    
+
+//Filtrar usuarios
     private void filtrarUsuarios() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
@@ -420,39 +457,66 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         header.add(language.getProperty("mantenimiento.usermain.rol"));
       
         String[][] gridData;
-        /*
-        String rolDescriptor = "";
-        if (!this.comboRol.getSelectedItem().toString().equals(language.getProperty("rol.all"))) {
-            System.err.print(VariableDescriptors.get(this.comboRol.getSelectedItem().toString()).toString());
-            usuarios = manager.getUsuariosByRolDesc(VariableDescriptors.get(this.comboRol.getSelectedItem().toString()).toString());
-        }
-        else {
-            usuarios = manager.getUsuarios();
+       if (comboActivos.getSelectedIndex()==0){
+        usuarios = manager.getUsuarios();
+                    this.btnDelete.setEnabled(true);
+            this.btnEdit.setEnabled(true);
+        }else{
+            usuarios=manager.getUsuariosInactivos();
+            this.btnDelete.setEnabled(false);
+            this.btnEdit.setEnabled(false);
         }
         gridData = new String[usuarios.size()][5];
-        
         int i = 0;
-        for (Usuario usuario : usuarios) {
-            System.err.print(this.fldApellidos.getText() + "\n");
-            System.err.print(usuario.getPrimerApellido() + "\n");
-            if ((this.fldNombre.getText().equals("")    || this.fldNombre.getText().equalsIgnoreCase(usuario.getNombre())) &&
-                (this.fldApellidos.getText().equals("") || this.fldApellidos.getText().equalsIgnoreCase(usuario.getPrimerApellido())
-                                                      || this.fldApellidos.getText().equalsIgnoreCase(usuario.getSegundoApellido()))) {
-                gridData[i][0] = usuario.getLogin();
-                gridData[i][1] = usuario.getNif();
-                gridData[i][2] = usuario.getNombre();
-                gridData[i][3] = usuario.getApellidos();
-                gridData[i][4] = language.getProperty(this.RolesID.get(usuario.getIdRol()).toString());
-                i++;
+        for (Usuario usuario: usuarios) {
+            if ( usuario.getNombre().contains(this.fldNombre.getText())) {
+                if(comboUni.getSelectedIndex()==0 && comboRol.getSelectedIndex()==0){
+                    gridData[i][0] = usuario.getLogin();
+                    gridData[i][1] = usuario.getNif();
+                    gridData[i][2] = usuario.getNombre();
+                    gridData[i][3] = usuario.getApellidos();
+                    gridData[i][4] = usuario.getDescrol();
+                    i++;
+                } 
+                if(comboUni.getSelectedIndex()>0 && comboRol.getSelectedIndex()==0){
+                  if(usuario.getUniversidadId()==((ComboItem)comboUni.getSelectedItem()).getId()){
+                    gridData[i][0] = usuario.getLogin();
+                    gridData[i][1] = usuario.getNif();
+                    gridData[i][2] = usuario.getNombre();
+                    gridData[i][3] = usuario.getApellidos();
+                    gridData[i][4] = usuario.getDescrol();
+                    i++;
+                  }
+                } 
+                 if(comboUni.getSelectedIndex()==0 && comboRol.getSelectedIndex()>0){
+                  if(usuario.getIdRol()==((ComboItem)comboRol.getSelectedItem()).getId()){
+                    gridData[i][0] = usuario.getLogin();
+                    gridData[i][1] = usuario.getNif();
+                    gridData[i][2] = usuario.getNombre();
+                    gridData[i][3] = usuario.getApellidos();
+                    gridData[i][4] = usuario.getDescrol();
+                    i++;
+                  }
+                } 
+                 if(comboUni.getSelectedIndex()>0 && comboRol.getSelectedIndex()>0){
+                  if(usuario.getIdRol()==((ComboItem)comboRol.getSelectedItem()).getId() && usuario.getUniversidadId()==((ComboItem)comboUni.getSelectedItem()).getId()){
+                    gridData[i][0] = usuario.getLogin();
+                    gridData[i][1] = usuario.getNif();
+                    gridData[i][2] = usuario.getNombre();
+                    gridData[i][3] = usuario.getApellidos();
+                    gridData[i][4] = usuario.getDescrol();
+                    i++;
+                } 
+                }
             }
         }
-        
         this.tblData.setModel(new javax.swing.table.DefaultTableModel(gridData, header.toArray())
             {@Override public boolean isCellEditable(int row, int column)
                 { return false; } 
-            });*/
+            });
     }
-    
+   
+//Escoger entre listar todos los usuarios o los usuarios filtrados
    private void listarUsuarios()
    {
       try {
@@ -495,14 +559,16 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
     private javax.swing.JButton cmdClearFilter;
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdFilter;
+    private javax.swing.JComboBox comboActivos;
     private javax.swing.JComboBox comboRol;
-    private javax.swing.JTextField fldApellidos;
+    private javax.swing.JComboBox comboUni;
     private javax.swing.JTextField fldNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblActivos;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRol;
+    private javax.swing.JLabel lblUni;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 }
