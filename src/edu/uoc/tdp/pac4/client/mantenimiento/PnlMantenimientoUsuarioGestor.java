@@ -1,7 +1,9 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
+import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
+import edu.uoc.tdp.pac4.util.ComboItem;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.util.FieldLimit;
 
@@ -11,11 +13,13 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author eSupport Netbeans
- */
+/**********************************************************************
+ ******************** @author JavaBeginers - Cristian******************
+ *********************************************************************/
 public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog 
 {
     private Mantenimiento manager;
@@ -23,12 +27,9 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
     private String ActionType;
     private Boolean reactivate = false;
-    private java.util.HashMap RolesDesc;
-    private java.util.HashMap doubleDescription = new java.util.HashMap();
    
     private Date now                    = new Date();
     private Usuario user                = null;
-    private ArrayList<Usuario> oldusers = null;
     SimpleDateFormat df                 = new SimpleDateFormat("dd/MM/yyyy");
     private int userID;
    
@@ -41,9 +42,9 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
     private int SURN_LENGTH    = 29;
     
    
-    /**
-      * Creates new form PnlGroupGestor
-      */
+    /*************************Formulario Gestor Usuario*******************
+    *********************Consulta, alta i mofificación de usuarios********
+    *********************************************************************/
     public PnlMantenimientoUsuarioGestor(java.awt.Frame parent, boolean modal, Mantenimiento manager, LanguageUtils language, String ActionType, int userID) 
     {
         super(parent, modal);
@@ -56,7 +57,16 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         this.ActionType = ActionType;
         this.userID     = userID;
       
-        addaptToPreferences();
+        prepararEtiquetas();
+        
+                //Adaptar el formulario a la opción de Alta, edicion o consulta
+        if (this.ActionType.equalsIgnoreCase("Add")) {
+            this.adaptarAlta();
+        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+            this.adaptarEdicion();
+        } else if (this.ActionType.equalsIgnoreCase("Explore")) {
+            this.adaptarConsulta();
+        }
 
    }
 
@@ -81,7 +91,7 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         lblSn2 = new javax.swing.JLabel();
         lblTlf = new javax.swing.JLabel();
         lblMail = new javax.swing.JLabel();
-        lblType = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
         fldPwd = new javax.swing.JTextField();
         fldDate = new javax.swing.JTextField();
         fldDNI = new javax.swing.JTextField();
@@ -90,10 +100,24 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         fldSn2 = new javax.swing.JTextField();
         fldTlf = new javax.swing.JTextField();
         fldMail = new javax.swing.JTextField();
-        cbxType = new javax.swing.JComboBox();
         cmdAccept = new javax.swing.JButton();
-        cmdNIFsearch = new javax.swing.JButton();
-        cmdNIFclear = new javax.swing.JButton();
+        comboPais = new javax.swing.JComboBox();
+        lblPaisNIF = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        fldDireccion = new javax.swing.JTextField();
+        fldPoblacion = new javax.swing.JTextField();
+        lblPoblacion = new javax.swing.JLabel();
+        fldCP = new javax.swing.JTextField();
+        lblCP = new javax.swing.JLabel();
+        comboPaisNIF = new javax.swing.JComboBox();
+        lblPais = new javax.swing.JLabel();
+        comboRol = new javax.swing.JComboBox();
+        comboUni = new javax.swing.JComboBox();
+        lblUni = new javax.swing.JLabel();
+        comboIdioma = new javax.swing.JComboBox();
+        lblIdioma = new javax.swing.JLabel();
+        lblBaja = new javax.swing.JLabel();
+        fldBaja = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,7 +149,7 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
         lblMail.setText("e-mail");
 
-        lblType.setText("tipologia");
+        lblRol.setText("Rol");
 
         cmdAccept.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ok_st_obj.gif"))); // NOI18N
         cmdAccept.setText("Acceptar");
@@ -135,19 +159,21 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             }
         });
 
-        cmdNIFsearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/refresh_002_16.gif"))); // NOI18N
-        cmdNIFsearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNIFsearchActionPerformed(evt);
-            }
-        });
+        lblPaisNIF.setText("PaisNIF");
 
-        cmdNIFclear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/eraser.png"))); // NOI18N
-        cmdNIFclear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNIFclearActionPerformed(evt);
-            }
-        });
+        lblDireccion.setText("Direccion");
+
+        lblPoblacion.setText("Poblacion");
+
+        lblCP.setText("CP");
+
+        lblPais.setText("Pais");
+
+        lblUni.setText("Universidad");
+
+        lblIdioma.setText("Idioma");
+
+        lblBaja.setText("fechaBaja");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,42 +181,64 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLogin)
-                            .addComponent(lblDate)
-                            .addComponent(lblPwd)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDNI)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmdNIFsearch)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmdNIFclear))
-                            .addComponent(lblName)
-                            .addComponent(lblSn1)
-                            .addComponent(lblSn2)
-                            .addComponent(lblTlf)
-                            .addComponent(lblMail)
-                            .addComponent(lblType))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(fldLogin)
-                            .addComponent(fldPwd)
-                            .addComponent(fldDate)
-                            .addComponent(fldDNI)
-                            .addComponent(fldName)
-                            .addComponent(fldSn1)
-                            .addComponent(fldSn2)
-                            .addComponent(fldTlf)
-                            .addComponent(fldMail)
-                            .addComponent(cbxType, 0, 166, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(100, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(105, Short.MAX_VALUE)
                         .addComponent(cmdAccept)
                         .addGap(45, 45, 45)
-                        .addComponent(cmdClose)))
+                        .addComponent(cmdClose))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblUni)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboUni, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPais)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLogin)
+                                    .addComponent(lblPwd)
+                                    .addComponent(lblName)
+                                    .addComponent(lblSn1)
+                                    .addComponent(lblTlf)
+                                    .addComponent(lblDNI)
+                                    .addComponent(lblPaisNIF)
+                                    .addComponent(lblDireccion)
+                                    .addComponent(lblPoblacion)
+                                    .addComponent(lblSn2)
+                                    .addComponent(lblCP)
+                                    .addComponent(lblMail)
+                                    .addComponent(lblRol))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(fldCP)
+                                        .addComponent(fldLogin)
+                                        .addComponent(fldPwd)
+                                        .addComponent(fldName)
+                                        .addComponent(fldSn1)
+                                        .addComponent(fldSn2)
+                                        .addComponent(fldTlf)
+                                        .addComponent(fldDNI)
+                                        .addComponent(fldDireccion)
+                                        .addComponent(fldPoblacion)
+                                        .addComponent(comboPaisNIF, 0, 166, Short.MAX_VALUE)
+                                        .addComponent(fldMail))
+                                    .addComponent(comboRol, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblIdioma)
+                                    .addComponent(lblDate)
+                                    .addComponent(lblBaja))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboIdioma, 0, 166, Short.MAX_VALUE)
+                                    .addComponent(fldDate)
+                                    .addComponent(fldBaja))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -206,48 +254,73 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
                     .addComponent(lblPwd)
                     .addComponent(fldPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblName)
+                    .addComponent(fldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSn1)
+                    .addComponent(fldSn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSn2)
+                    .addComponent(fldSn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDNI))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPaisNIF)
+                    .addComponent(comboPaisNIF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDireccion)
+                    .addComponent(fldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fldPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPoblacion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fldCP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCP))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPais)
+                    .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fldTlf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTlf))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRol))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboUni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUni))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIdioma))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDate)
                     .addComponent(fldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblDNI)
-                                .addComponent(fldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmdNIFclear))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblName)
-                            .addComponent(fldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSn1)
-                            .addComponent(fldSn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSn2)
-                            .addComponent(fldSn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTlf)
-                            .addComponent(fldTlf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblMail)
-                            .addComponent(fldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblType)
-                            .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmdClose)
-                            .addComponent(cmdAccept)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cmdNIFsearch)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fldBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBaja))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmdClose)
+                    .addComponent(cmdAccept))
                 .addContainerGap())
         );
 
@@ -258,97 +331,32 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
     * Captura los roles directamente desde la base de datos. Si no pudiera significa que algo no está
     * bien en las conexiones. Si es así emite eror y cierra el dialogo
     */
-    private void initComboBox() {
-        /*
-         * Intentamos capturar los posibles roles definidos por la base de datos para añadirlos
-         * al combobox. Si no se puede, no podremos abrir este panel, pues algo pasa con la connexión
-         * a la DB o al rmi.
-         */
-        try {
-            this.RolesDesc      = manager.getRolesByDesc();
-            java.util.Set roles = this.RolesDesc.entrySet(); //Creamos diccionario de roles
 
-            String[] possibleRoles  = new String[roles.size()];
-            java.util.Iterator iter = roles.iterator();
-            
-            while (iter.hasNext()) {
-                java.util.Map.Entry role = (java.util.Map.Entry)iter.next();
-                
-                doubleDescription.put(language.getProperty(role.getKey().toString()),
-                                        role.getKey().toString());
-                
-                Integer rolID            = new Integer(role.getValue().toString());
-                possibleRoles[rolID -1] = language.getProperty(role.getKey().toString());
-            }
-            cbxType.setModel(new javax.swing.DefaultComboBoxModel(possibleRoles));
-        }
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }
-        catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }
-    }
-   
-    private boolean allDataFilled() {
-        /*
-         * Tanto para añadir  un usuario deberemos tener toda la información.
-         * Para modificarlo, toda excepto el password, que es opcional
-         * Esta función se encarga de asegurarse de que así sea.
-         */
-        if (fldLogin.getText().isEmpty() || fldLogin.getText().equals("")) {return false;}
-        if (fldDNI.getText().isEmpty()   || fldDNI.getText().equals(""))   {return false;}
-        if (fldName.getText().isEmpty()  || fldName.getText().equals(""))  {return false;}
-        if (fldSn1.getText().isEmpty()   || fldSn1.getText().equals(""))   {return false;}
-        if (fldSn2.getText().isEmpty()   || fldSn2.getText().equals(""))   {return false;}
-        
-        if (this.ActionType.equalsIgnoreCase("Add") && !this.reactivate) {
-            if (fldPwd.getText().isEmpty() || fldPwd.getText().equals("")) {return false;}
-        }
-        
-        return true;
-    }
-    private void setLabelsLanguage() {
+//Define el texto de las etiquetas en función del idioma seleccionado
+    private void prepararEtiquetas() {
         /*
          * Definimos el texto de las labels del panel en función del idioma seleccionado
          */
         lblLogin.setText(language.getProperty("mantenimiento.usermain.login"));
         lblPwd.setText  (language.getProperty("mantenimiento.usermain.pswd"));
-        lblDate.setText (language.getProperty("mantenimiento.usermain.date"));
-        lblDNI.setText  (language.getProperty("mantenimiento.usermain.DNI"));
         lblName.setText (language.getProperty("mantenimiento.usermain.name"));
         lblSn1.setText  (language.getProperty("mantenimiento.usermain.surname1"));
         lblSn2.setText  (language.getProperty("mantenimiento.usermain.surname2"));
+        lblDNI.setText  (language.getProperty("mantenimiento.usermain.DNI"));
+        lblPaisNIF.setText(language.getProperty("mantenimiento.usermain.PaisNIF"));
+        lblDireccion.setText(language.getProperty("mantenimiento.usermain.Direccion"));
+        lblPoblacion.setText(language.getProperty("mantenimiento.usermain.Poblacion"));
+        lblCP.setText(language.getProperty("mantenimiento.usermain.CP"));
+        lblPais.setText(language.getProperty("mantenimiento.usermain.Pais"));
         lblTlf.setText  (language.getProperty("mantenimiento.usermain.telf"));
-        lblMail.setText ("e-mail");
-        lblType.setText (language.getProperty("mantenimiento.usermain.tipo"));
-       
-        if (this.ActionType.equalsIgnoreCase("Add")) {
-            this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
-        }
-        else if (this.ActionType.equalsIgnoreCase("Edit")){
-            this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));
-        }
-        this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
-    }
-   
-    private void addaptToPreferences() {
-        /*
-         * El mismo panel se usa para añadir/modificar usuarios, hay que adaptar ciertas características
-         * en función de qué se solicite
-         */
-        this.initComboBox();
-        this.setLabelsLanguage();
-       
-        // Set longitud campos
+        lblMail.setText (language.getProperty("mantenimiento.usermain.mail"));
+        lblRol.setText (language.getProperty("mantenimiento.usermain.rol"));
+        lblUni.setText(language.getProperty("mantenimiento.usermain.universidad"));
+        lblIdioma.setText(language.getProperty("mantenimiento.usermain.idioma"));
+        lblDate.setText (language.getProperty("mantenimiento.usermain.date"));
+        lblBaja.setText(language.getProperty("mantenimiento.usermain.baja"));
+        
+                // Set longitud campos
         this.fldLogin.setDocument(new FieldLimit(LOGIN_LENGTH));
         this.fldDNI.setDocument  (new FieldLimit(NIF_LENGTH));
         this.fldName.setDocument (new FieldLimit(NAME_LENGTH));
@@ -356,92 +364,90 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         this.fldSn2.setDocument  (new FieldLimit(SURN_LENGTH));
         this.fldTlf.setDocument  (new FieldLimit(TELF_LENGTH));
         this.fldMail.setDocument (new FieldLimit(MAIL_LENGTH));
-        
-        
-        // Cambios Vinculados al tipo de llamada
-        if (this.ActionType.equalsIgnoreCase("Add")) {
-            this.addaptToAddUser();
-        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
-            this.addaptToEditUser();
-        } else if (this.ActionType.equalsIgnoreCase("Explore")) {
-            this.addaptToExploreUser();
-        }
-        
+
+        setCombos();
+
     }
-   
-    private void addaptToAddUser(){
+
+//Prepara el formulario para Alta de Usuario    
+    private void adaptarAlta(){
         
-        this.setTitle(language.getProperty("mantenimiento.main.title") + ". " + 
-                      language.getProperty("mantenimiento.main.user")   + ". " +
-                      language.getProperty("mantenimiento.usermain.newUser"));
+        this.setTitle(language.getProperty("mantenimiento.Nuevo") + " - " + 
+                      language.getProperty("mantenimiento.main.user"));
        
-       /*
-        * Cuando vamos a añadir un nuevo usuario los parametros (excepto Fecha de Registro)
-        * se inicializan en blanco
-        * 
-        * El usuario de creación por defecto es Alumno, que debería ser el más abundante
-        */
+ 
        fldLogin.setText    ("");
        fldPwd.setText      ("");
-       fldDate.setText     (df.format(this.now));
-       fldDate.setEditable (false);
-       fldDNI.setText      ("");
        fldName.setText     ("");
        fldSn1.setText      ("");
        fldSn2.setText      ("");
+       fldDNI.setText      ("");
+       fldDireccion.setText      ("");
+       fldPoblacion.setText      ("");
+       fldCP.setText      ("");
        fldTlf.setText      ("");
        fldMail.setText     ("");
-            
-       cbxType.setSelectedIndex(new Integer(this.RolesDesc.get(this.ALUMNO_CODE).toString()) - 1);
+       fldDate.setText     (df.format(this.now));
+       fldDate.setEditable (false);
+       fldBaja.setVisible(false);
             
        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
        
-       try {
-            this.oldusers = manager.getUsuariosInactivos();
-       }
-       catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, 
-                                       language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                       language.getProperty("app.title"), 
-                                       JOptionPane.ERROR_MESSAGE);
-         
-        } 
-        catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, 
-                                       language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                       language.getProperty("app.title"), 
-                                       JOptionPane.ERROR_MESSAGE);
-
-        }
     }
    
-    private void addaptToEditUser(){
+//Prepara el formulario para Edición de Usuario 
+    private void adaptarEdicion(){
         
-        this.setTitle(language.getProperty("mantenimiento.main.title") + ". " + 
-                      language.getProperty("mantenimiento.main.user")   + ". " +
-                      language.getProperty("mantenimiento.usermain.modUser"));
+            this.setTitle(language.getProperty("mantenimiento.Editar") + " - " + 
+                      language.getProperty("mantenimiento.main.user"));
        
-       /*
-        * Cuando vamos a modificar un usuario, inicializamos los formularios con los valores
-        * que tiene el usuario
-        */
         try {
             this.user = manager.getUsuario(this.userID);
-            // NO mostramos el password
-            this.user.setPwd("");
+   
+       fldLogin.setText    (user.getLogin());
+       fldPwd.setText      (user.getPwd());
+       fldName.setText     (user.getNombre());
+       fldSn1.setText      (user.getPrimerApellido());
+       fldSn2.setText      (user.getSegundoApellido());
+       fldDNI.setText      (user.getNif());
+       fldDireccion.setText      (user.getAdreca());
+       fldPoblacion.setText      (user.getPoblacio());
+       fldCP.setText      (user.getCP());
+       fldTlf.setText      (user.getTelf());
+       fldMail.setText     (user.getEmail());
+       fldDate.setText     (user.getFechaAlta().toString());
+       fldDate.setEditable (false);
+       fldBaja.setVisible(false);
+       
+            for (int i=0;i<comboIdioma.getItemCount();i++){
+              if (user.getIdioma()==((ComboItem)comboIdioma.getItemAt(i)).getId())  {
+                comboIdioma.setSelectedIndex(i);
+              }
+            } 
             
-            fldLogin.setText    (user.getLogin());
-            fldPwd.setText      (user.getPwd());
-            fldDate.setText     (df.format(user.getFechaAlta()));
-            fldDate.setEditable (false);
-            fldDNI.setText      (user.getNif());
-            fldName.setText     (user.getNombre());
-            fldSn1.setText      (user.getPrimerApellido());
-            fldSn2.setText      (user.getSegundoApellido());
-            fldTlf.setText      (user.getTelf());
-            fldMail.setText     (user.getEmail());
-            
-            cbxType.setSelectedIndex(user.getIdRol() - 1);
+             for (int i=0;i<comboPais.getItemCount();i++){
+              if (user.getPais()==((ComboItem)comboPais.getItemAt(i)).getId())  {
+                comboPais.setSelectedIndex(i);
+              }
+            } 
+
+             for (int i=0;i<comboPaisNIF.getItemCount();i++){
+              if (user.getPaisNIF()==((ComboItem)comboPaisNIF.getItemAt(i)).getId())  {
+                comboPaisNIF.setSelectedIndex(i);
+              }
+            }
+              for (int i=0;i<comboRol.getItemCount();i++){
+              if (user.getIdRol()==((ComboItem)comboRol.getItemAt(i)).getId())  {
+                comboRol.setSelectedIndex(i);
+              }
+            }
+              
+              for (int i=0;i<comboUni.getItemCount();i++){
+              if (user.getUniversidadId()==((ComboItem)comboUni.getItemAt(i)).getId())  {
+                comboUni.setSelectedIndex(i);
+              }
+            }
+    
         }
         catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, 
@@ -458,14 +464,12 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
         }
            
-        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser")); 
-        
-        this.cmdNIFsearch.setVisible(false);
-        this.cmdNIFclear.setVisible(false);
+        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.modUser"));       
     }
-    
-    private void addaptToExploreUser() {
-        this.addaptToEditUser();
+
+//Prepara el formulario para Consulta de Usuario  
+    private void adaptarConsulta() {
+        this.adaptarEdicion();
         fldLogin.setEditable(false);
         fldPwd.setEditable  (false);
         fldDate.setEditable (false);
@@ -474,27 +478,23 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         fldSn1.setEditable  (false);
         fldSn2.setEditable  (false);
         fldTlf.setEditable  (false);
-        fldTlf.setEditable  (false);
+        fldMail.setEditable  (false);
+        fldCP.setEditable(false);
+        fldPoblacion.setEditable(false);
+        fldDireccion.setEditable(false);
         this.cmdAccept.setVisible(false);
+        
     }
-   
+
+//Cerrar Formulario
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
 
-    /*
-     * Cerramos el formulario
-     */
     this.dispose();
 
    }//GEN-LAST:event_cmdCloseActionPerformed
 
-    private void cmdAddUserAction() {
-        /*
-         * Gestión de Añadir Nuevo Usuario
-         * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
-         * para que la incluya en la BD
-         * 
-         * Si añadimos correctamente se cierra el panel
-         */
+//Guardar el nuevo usuario
+    private void guardarNuevoUsuario() {
         try {
             if (this.reactivate) {
 
@@ -508,28 +508,20 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             
             usuario.setLogin     (this.fldLogin.getText());
             usuario.setPwd       (this.fldPwd.getText());
-            usuario.setFechaAlta (this.now);
-            usuario.setNif       (this.fldDNI.getText());
             usuario.setNombre    (this.fldName.getText());
             usuario.setApellidos (this.fldSn1.getText(), this.fldSn2.getText());
+            usuario.setNif       (this.fldDNI.getText());
+            usuario.setPaisNIF(((ComboItem)comboPaisNIF.getSelectedItem()).getId());
+            usuario.setAdreca(this.fldDireccion.getText());
+            usuario.setPoblacio(this.fldPoblacion.getText());
+            usuario.setCP(this.fldCP.getText());
+            usuario.setPais(((ComboItem)comboPais.getSelectedItem()).getId());
             usuario.setTelf      (this.fldTlf.getText());
             usuario.setEmail     (this.fldMail.getText());
-            usuario.setIdRol     (new Integer(this.RolesDesc.get(this.doubleDescription.get(this.cbxType.getSelectedItem().toString()).toString()).toString()));
-            
-            Boolean reallyNotUpdate = true;
-            for (Usuario oldusuario : this.oldusers) {
-                if (oldusuario.getNif().equalsIgnoreCase(usuario.getNif())) {
-                    reallyNotUpdate = false;
-                    break;
-                }
-            }
-            if (!reallyNotUpdate) {
-                this.cmdNIFsearchActionPerformed(null);
-                JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.ask.add.olduser"),
-                                              language.getProperty("app.title"), JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
+            usuario.setIdRol(((ComboItem)comboRol.getSelectedItem()).getId());
+            usuario.setUniversidadId(((ComboItem)comboUni.getSelectedItem()).getId());
+            usuario.setIdioma(((ComboItem)comboIdioma.getSelectedItem()).getId());
+            usuario.setFechaAlta (this.now);
                     
             if (manager.addUsuario(usuario)) {
                 JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.user"),
@@ -550,17 +542,10 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
                                                JOptionPane.ERROR_MESSAGE);
         }
     }
+
+//Guardar los cambios del usuario
+    private void modificarUsuario() {
     
-    private void cmdModUserAction() {
-        /*
-         * Gestión de odificar Usuario
-         * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
-         * para que la actualize la BD (no se accede al UserID)
-         * 
-         * Para la modificacion solicitaremos confirmación
-         * 
-         * Si modificamos correctamente se cierra el panel
-         */
         try {
             
             Usuario usuario = new Usuario();
@@ -568,34 +553,29 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             usuario.setId        (this.userID);
             usuario.setLogin     (this.fldLogin.getText());
             usuario.setPwd       (this.fldPwd.getText());
-            usuario.setFechaAlta (this.user.getFechaAlta());
-            usuario.setNif       (this.fldDNI.getText());
             usuario.setNombre    (this.fldName.getText());
             usuario.setApellidos (this.fldSn1.getText(), this.fldSn2.getText());
+            usuario.setNif       (this.fldDNI.getText());
+            usuario.setPaisNIF(((ComboItem)comboPaisNIF.getSelectedItem()).getId());
+            usuario.setAdreca(this.fldDireccion.getText());
+            usuario.setPoblacio(this.fldPoblacion.getText());
+            usuario.setCP(this.fldCP.getText());
+            usuario.setPais(((ComboItem)comboPais.getSelectedItem()).getId());
             usuario.setTelf      (this.fldTlf.getText());
             usuario.setEmail     (this.fldMail.getText());
-            usuario.setIdRol     (new Integer(this.RolesDesc.get(this.doubleDescription.get(this.cbxType.getSelectedItem().toString()).toString()).toString()));
-            
+            usuario.setIdRol(((ComboItem)comboRol.getSelectedItem()).getId());
+            usuario.setUniversidadId(((ComboItem)comboUni.getSelectedItem()).getId());
+            usuario.setIdioma(((ComboItem)comboIdioma.getSelectedItem()).getId());
             usuario.setActivo    (this.user.isActivo());
+            usuario.setFechaAlta(user.getFechaAlta());
             
-            if (this.user.getFechaInactividad() != null) {
-                usuario.setFechaInactividad (this.user.getFechaInactividad());
-            }
-            else {
-                usuario.setFechaInactividad (this.user.getFechaAlta());
-            }
-            
-            
-            Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};//NOi18
-            int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), 
-                                                     language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, 
-                                                     JOptionPane.QUESTION_MESSAGE, null, options, now);
-            if (reply == 0) {
+         
+        
                 if (manager.updateUsuario(usuario)) {
                     JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.modif"),
                                                   language.getProperty("app.title"), JOptionPane.INFORMATION_MESSAGE);
                 }
-            }
+            
             this.dispose();
         }
         catch (SQLException ex) {
@@ -616,110 +596,140 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         /*
          * Las acciones sólo se llevaran a cabo si tenemos TODOS los campos llenos
          */
-        if (!this.allDataFilled()) {
+        if (!this.CompruebaCampos()) {
             JOptionPane.showMessageDialog(null, 
                                           language.getProperty("mantenimiento.err.fields"), 
                                           language.getProperty("app.title"), 
                                           JOptionPane.ERROR_MESSAGE);
         } else {
             if (this.ActionType.equalsIgnoreCase("Add")) {
-                this.cmdAddUserAction();
+                this.guardarNuevoUsuario();
             }
             else if (this.ActionType.equalsIgnoreCase("Edit")) {
-                this.cmdModUserAction();
+                this.modificarUsuario();
             }
         }
     }//GEN-LAST:event_cmdAcceptActionPerformed
-
-    private void cmdNIFsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNIFsearchActionPerformed
-        // TODO add your handling code here:
-        if (!this.fldDNI.getText().equals("")) {
-            for (Usuario usuario : this.oldusers) {
-                if (usuario.getNif().equalsIgnoreCase(this.fldDNI.getText())) {
-                    fldLogin.setText    (usuario.getLogin());
-                    fldLogin.setEditable(false);
-                    fldPwd.setText      ("");
-                    fldPwd.setEditable  (false);
-                    fldDate.setText     (df.format(usuario.getFechaAlta()));
-                    fldDate.setEditable (false);
-                    fldDNI.setText      (usuario.getNif());
-                    fldDNI.setEditable  (false);
-                    fldName.setText     (usuario.getNombre());
-                    fldName.setEditable (false);
-                    fldSn1.setText      (usuario.getPrimerApellido());
-                    fldSn1.setEditable  (false);
-                    fldSn2.setText      (usuario.getSegundoApellido());
-                    fldSn2.setEditable  (false);
-                    fldTlf.setText      (usuario.getTelf());
-                    fldTlf.setEditable  (false);
-                    fldMail.setText     (usuario.getEmail());
-                    fldTlf.setEditable  (false);
-            
-                    cbxType.setSelectedIndex(usuario.getIdRol() - 1);
-                    
-                    this.userID = usuario.getId();
-                    
-                    this.reactivate = true;
-                    break;
-                }
-            }
-        }
-    }//GEN-LAST:event_cmdNIFsearchActionPerformed
-
-    private void cmdNIFclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNIFclearActionPerformed
-       
-       fldLogin.setText    ("");
-       fldLogin.setEditable(true);
-       fldPwd.setText      ("");
-       fldPwd.setEditable  (true);
-       fldDate.setText     (df.format(this.now));
-       fldDate.setEditable (false);
-       fldDNI.setText      ("");
-       fldDNI.setEditable  (true);
-       fldName.setText     ("");
-       fldName.setEditable (true);
-       fldSn1.setText      ("");
-       fldSn1.setEditable  (true);
-       fldSn2.setText      ("");
-       fldSn2.setEditable  (true);
-       fldTlf.setText      ("");
-       fldTlf.setEditable  (true);
-       fldMail.setText     ("");
-       fldTlf.setEditable  (true);
-            
-       cbxType.setSelectedIndex(new Integer(this.RolesDesc.get(this.ALUMNO_CODE).toString()) - 1);
-       
-       this.userID = 0;
-       this.reactivate = false;
-        
-    }//GEN-LAST:event_cmdNIFclearActionPerformed
    
+    
+        //Carga los distintos Combos
+    private void setCombos() {
+        comboPaisNIF.removeAll();
+        List<AuxiliarCombo> paisesNIF = new ArrayList<AuxiliarCombo>();
+        try {
+            paisesNIF = manager.getPaises();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(AuxiliarCombo paisNIF: paisesNIF) {
+        comboPaisNIF.addItem(new ComboItem(paisNIF.getNombre(),paisNIF.getId()));
+        }  
+        
+        comboPais.removeAll();
+        List<AuxiliarCombo> paises = new ArrayList<AuxiliarCombo>();
+        try {
+            paises = manager.getPaises();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(AuxiliarCombo pais: paises) {
+        comboPais.addItem(new ComboItem(pais.getNombre(),pais.getId()));
+        } 
+        
+        comboRol.removeAll();
+        List<AuxiliarCombo> roles = new ArrayList<AuxiliarCombo>();
+        try {
+           roles = manager.getRoles();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(AuxiliarCombo rol: roles) {
+        comboRol.addItem(new ComboItem(rol.getNombre(),rol.getId()));
+        } 
+        
+        comboUni.removeAll();
+        List<AuxiliarCombo> universidades = new ArrayList<AuxiliarCombo>();
+        try {
+           universidades= manager.getUniversidades();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(AuxiliarCombo universidad: universidades) {
+        comboUni.addItem(new ComboItem(universidad.getNombre(),universidad.getId()));
+        } 
+        
+        comboIdioma.removeAll();
+        List<AuxiliarCombo> idiomas = new ArrayList<AuxiliarCombo>();
+        try {
+           idiomas= manager.getIdiomas();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(AuxiliarCombo idioma: idiomas) {
+        comboIdioma.addItem(new ComboItem(idioma.getNombre(),idioma.getId()));
+        } 
+    }
+
+//Comprueba que los campos se han escrito correctamente
+    private boolean CompruebaCampos() {
+        /*
+         * Tanto para añadir  un usuario deberemos tener toda la información.
+         * Para modificarlo, toda excepto el password, que es opcional
+         * Esta función se encarga de asegurarse de que así sea.
+         
+        if (fldLogin.getText().isEmpty() || fldLogin.getText().equals("")) {return false;}
+        if (fldDNI.getText().isEmpty()   || fldDNI.getText().equals(""))   {return false;}
+        if (fldName.getText().isEmpty()  || fldName.getText().equals(""))  {return false;}
+        if (fldSn1.getText().isEmpty()   || fldSn1.getText().equals(""))   {return false;}
+        if (fldSn2.getText().isEmpty()   || fldSn2.getText().equals(""))   {return false;}
+        
+        if (this.ActionType.equalsIgnoreCase("Add") && !this.reactivate) {
+            if (fldPwd.getText().isEmpty() || fldPwd.getText().equals("")) {return false;}
+        }
+        */
+        return true;
+    }
+    
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbxType;
     private javax.swing.JButton cmdAccept;
     private javax.swing.JButton cmdClose;
-    private javax.swing.JButton cmdNIFclear;
-    private javax.swing.JButton cmdNIFsearch;
+    private javax.swing.JComboBox comboIdioma;
+    private javax.swing.JComboBox comboPais;
+    private javax.swing.JComboBox comboPaisNIF;
+    private javax.swing.JComboBox comboRol;
+    private javax.swing.JComboBox comboUni;
+    private javax.swing.JTextField fldBaja;
+    private javax.swing.JTextField fldCP;
     private javax.swing.JTextField fldDNI;
     private javax.swing.JTextField fldDate;
+    private javax.swing.JTextField fldDireccion;
     private javax.swing.JTextField fldLogin;
     private javax.swing.JTextField fldMail;
     private javax.swing.JTextField fldName;
+    private javax.swing.JTextField fldPoblacion;
     private javax.swing.JTextField fldPwd;
     private javax.swing.JTextField fldSn1;
     private javax.swing.JTextField fldSn2;
     private javax.swing.JTextField fldTlf;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblBaja;
+    private javax.swing.JLabel lblCP;
     private javax.swing.JLabel lblDNI;
     private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblIdioma;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblMail;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPais;
+    private javax.swing.JLabel lblPaisNIF;
+    private javax.swing.JLabel lblPoblacion;
     private javax.swing.JLabel lblPwd;
+    private javax.swing.JLabel lblRol;
     private javax.swing.JLabel lblSn1;
     private javax.swing.JLabel lblSn2;
     private javax.swing.JLabel lblTlf;
-    private javax.swing.JLabel lblType;
+    private javax.swing.JLabel lblUni;
     // End of variables declaration//GEN-END:variables
 }

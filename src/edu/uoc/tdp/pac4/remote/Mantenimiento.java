@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Recurso;
 import java.sql.SQLException;
@@ -38,115 +39,42 @@ public interface Mantenimiento extends Remote {
      */
     public java.util.HashMap getRolesById() throws SQLException, Exception;
 
-    /**
-     * Devuelve una lista de Usuarios del centro.
-     *
-     * @return Una lista de instancias {@link Usuario} que representan los
-     * Usuarios del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+    
+     //***********************************************************************
+
+    //*********************************USUARIO********************************
+
     public ArrayList<Usuario> getUsuarios() throws SQLException, Exception;
 
-    /**
-     * Devuelve una lista de Usuarios Inactivos del centro.
-     *
-     * @return Una lista de instancias {@link Usuario} que representan los
-     * Usuarios del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     public ArrayList<Usuario> getUsuariosInactivos() throws SQLException, Exception;
 
-    /**
-     * Devuelve una lista de Usuarios del centro para un rol determinado.
-     *
-     * @param desc String describiendo el rol
-     * @return Una lista de instancias {@link Usuario} que representan los
-     * Usuarios del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public ArrayList<Usuario> getUsuariosByRolDesc(String desc) throws SQLException, Exception;
 
-    /**
-     * Obtiene un determinado Usuario.
-     *
-     * @param id Identificador único del Usuario.
-     * @return Una instancia de {@link Usuario} que representa el Usuario
-     * solicitado.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public Usuario getUsuario(int id) throws SQLException, Exception;
-
-    /**
-     * Agrega un nuevo Usuario al centro.
-     *
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos
-     * del Usuario.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean addUsuario(Usuario usuario) throws SQLException, Exception;
-
-    /**
-     * Actualiza los datos de un Usuario.
-     *
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos
-     * actualizados del Usuario.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean updateUsuario(Usuario usuario) throws SQLException, Exception;
-
-    /**
-     * Elimina un Usuario.
-     *
-     * @param id Identificador del Usuario a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean deleteUsuario(int id) throws SQLException, Exception;
-
-    /**
-     * Recupera un Usuario.
-     *
-     * @param id Identificador del Usuario a recuperar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean undeleteUsuario(int id) throws SQLException, Exception;
-
-    /**
-     * Comprueba si un usuario tiene grupos asignados
-     *
-     * @param id Identificador del Usuario
-     * @return
-     * @throws SQLException
-     * @throws Exception
-     */
-    public int checkGruposUsuario(int id) throws SQLException, Exception;
-
-    /**
-     *
-     * @param id
-     * @return
-     * @throws SQLException
-     * @throws Exception
-     */
-    public boolean liberarMatriculasUsuario(int id) throws SQLException, Exception;
+   // public ArrayList<Usuario> getUsuariosByRolDesc(String desc) throws SQLException, Exception;
 
   
- 
+    public Usuario getUsuario(int id) throws SQLException, Exception;
+
+    public boolean addUsuario(Usuario usuario) throws SQLException, Exception;
+
+    public boolean updateUsuario(Usuario usuario) throws SQLException, Exception;
+
+    public boolean deleteUsuario(int id) throws SQLException, Exception;
+
+
+    public boolean undeleteUsuario(int id) throws SQLException, Exception;
+
+    //public int checkGruposUsuario(int id) throws SQLException, Exception;
+
+    public boolean liberarMatriculasUsuario(int id) throws SQLException, Exception;
+    
+    public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception;
+
+    public ArrayList<AuxiliarCombo> getRoles() throws SQLException, Exception;
+    
+    public ArrayList<AuxiliarCombo> getUniversidades() throws SQLException, Exception;
+    
+    public ArrayList<AuxiliarCombo> getIdiomas() throws SQLException, Exception;
+//***********************************************************************
 
     
 

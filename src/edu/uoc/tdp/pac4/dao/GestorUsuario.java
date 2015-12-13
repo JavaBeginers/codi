@@ -1,5 +1,6 @@
 package edu.uoc.tdp.pac4.dao;
 
+import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 import edu.uoc.tdp.pac4.exceptions.NoRolesException;
@@ -18,14 +19,15 @@ import java.util.Date;
  */
 public class GestorUsuario extends GestorDisco
 {
-    
-    /*
-     * Definimos los campos de la tabla usuario
-     */
+    //Tabla usuario
     private static final String USERTABLE              = "USUARI";
     private static final String USERTABLE_ID           = "usuari_id";
     private static final String USERTABLE_LOGIN        = "nom_usuari";
     private static final String USERTABLE_PASSWORD     = "contrasenya";
+    private static final String USERTABLE_PAISNIF      = "pais_doc_identif";
+    private static final String USERTABLE_ADRESS       = "adreca";
+    private static final String USERTABLE_TOWN         = "poblacio";
+    private static final String USERTABLE_CP           = "codi_postal";
     private static final String USERTABLE_DATE         = "data_alta";
     private static final String USERTABLE_MAIL         = "email";
     private static final String USERTABLE_PHONE        = "telefono";
@@ -33,47 +35,36 @@ public class GestorUsuario extends GestorDisco
     private static final String USERTABLE_SURNAME      = "cognoms";
     private static final String USERTABLE_ACTIVE       = "actiu";
     private static final String USERTABLE_INACTIVEDATE = "data_baixa";
-    private static final String USERTABLE_NIF          = "nif";
+    private static final String USERTABLE_NIF          = "nombre_doc_identif";
     private static final String USERTABLE_ROLID        = "rol";
+    private static final String USERTABLE_IDIOMA       = "idioma_id";
+    private static final String USERTABLE_UNI          = "universitat_id";
+    private static final String USERTABLE_PAIS          ="pais_residencia";
+     
     
-    /*
-     * Definimos los campos de la tabla rol
-     */
+    //Tabla Rol
     private static final String ROLTABLE               = "rol";
     private static final String ROLTABLE_ID            = "id";
     private static final String ROLTABLE_DESCRIPTION   = "descripcion";
     
-    /*
-     * Definimos los campos de la tabla grupo
-     */
-    private static final String GRUPOTABLE             = "grupo";
-    private static final String GRUPOTABLE_USER        = "idprofesor";
     
-    /*
-     * Definimos los campos de la tabla matricula
-     */
+    //Tabla Matricula
     private static final String MATRICTABLE            = "matriculas";
     private static final String MATRICTABLE_USER       = "usuarioid";
     
-    /*
-     * Declaración de variables
-     */
+    //Variables
     private Connection conn              = null;
     private LanguageUtils txt            = null;
     private java.util.HashMap roleByDesc = null;
     private java.util.HashMap roleById   = null;
     private SimpleDateFormat df          = new SimpleDateFormat("yyyy/MM/dd");
    
-    /**
-     * Constructor de la clase.
-     */
+    //Constructor
     public GestorUsuario(Connection conn) throws SQLException, Exception {
         this.conn = conn;
     }
    
-    //===========================================
-    // Propiedades
-    //===========================================
+  //Properties
    
     /**
      * Devuelve la conexión a base de datos.
@@ -83,21 +74,7 @@ public class GestorUsuario extends GestorDisco
         return conn;
     }
    
-    //===========================================
-    // Métodos
-    //===========================================
-    
-    /**
-     * Construye un objecto usuario de la información extraída de la consulta SQL
-     * 
-     * @param  rs {@link ResulsSet} proviniente de una consulta SQL que recoja
-     *         TODA la info proviniente de un usuario
-     * @return Una instancia de {@link Usuario}
-     * 
-     * @throws SQLException
-     * @throws Exception
-     * 
-     */
+    //Construir un Usuario
     private Usuario buildUsuario(ResultSet rs) throws SQLException, Exception{
         Usuario usuario = new Usuario();
         
@@ -113,19 +90,18 @@ public class GestorUsuario extends GestorDisco
         usuario.setFechaInactividad (rs.getDate    (USERTABLE_INACTIVEDATE));
         usuario.setNif              (rs.getString  (USERTABLE_NIF));
         usuario.setIdRol            (rs.getInt     (USERTABLE_ROLID));
+        usuario.setPais             (rs.getInt     (USERTABLE_PAIS));
+        usuario.setPaisNIF          (rs.getInt     (USERTABLE_PAISNIF));
+        usuario.setUniversidadId    (rs.getInt     (USERTABLE_UNI));
+        usuario.setAdreca           (rs.getString    (USERTABLE_ADRESS));
+        usuario.setPoblacio         (rs.getString     (USERTABLE_TOWN));
+        usuario.setIdioma           (rs.getInt     (USERTABLE_IDIOMA));
+        usuario.setCP               (rs.getString     (USERTABLE_CP));
         
         return usuario;
     }
      
-    /**
-     * Obtiene un determinado usuario activo.
-     * 
-     * @param  id Identificador único del usuario.
-     * @return Una instancia de {@link Usuario} que representa el usuario solicitado.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+    //Obtener Usuario
     public Usuario get(int id) throws SQLException, Exception {
         String sql;
         Usuario usuario = null;
@@ -146,16 +122,7 @@ public class GestorUsuario extends GestorDisco
         return usuario;
     }
    
-    /**
-     * Obtiene un determinado usuario activo de un rol específico.
-     * 
-     * @param  id   Identificador único del usuario.
-     * @param  desc descripción del rol del usuario solicitado
-     * @return Una instancia de {@link Usuario} que representa el usuario solicitado.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+ /*
     public Usuario getByRolDesc(int id, String desc) throws SQLException, NoRolesException, Exception {
         String sql;
         Usuario usuario = null;
@@ -185,16 +152,7 @@ public class GestorUsuario extends GestorDisco
         return usuario;
     }
     
-    /**
-     * Obtiene un determinado usuario activo de un rol específico.
-     * 
-     * @param  id    Identificador único del usuario.
-     * @param  rolid Identificador numérico de un rol.
-     * @return Una instancia de {@link Usuario} que representa el usuario solicitado.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+
     public Usuario getByRolId(int id, int rolid) throws SQLException, NoRolesException, Exception {
         String sql;
         Usuario usuario = null;
@@ -222,15 +180,9 @@ public class GestorUsuario extends GestorDisco
       
         return usuario;
     }
-   
-    /**
-     * Devuelve una lista de usuarios activos del centro.
-     * 
-     * @return Una lista de instancias {@link Usuario} que representan los usuarios del centro.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+  
+*/
+     
     public ArrayList<Usuario> getUsuarios() throws SQLException, Exception {
         String sql;
         Usuario usuario;
@@ -254,14 +206,7 @@ public class GestorUsuario extends GestorDisco
         return users;
     }
     
-    /**
-     * Devuelve una lista de usuarios inactivos del centro.
-     * 
-     * @return Una lista de instancias {@link Usuario} que representan los usuarios del centro.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+
     public ArrayList<Usuario> getUsuariosInactivos() throws SQLException, Exception {
         String sql;
         Usuario usuario;
@@ -293,7 +238,7 @@ public class GestorUsuario extends GestorDisco
      * 
      * @throws SQLException
      * @throws Exception 
-     */
+     
     public ArrayList<Usuario> getUsuariosByRolDesc(String desc) throws SQLException, NoRolesException, Exception {
         String sql;
         Usuario usuario;
@@ -324,15 +269,8 @@ public class GestorUsuario extends GestorDisco
         return users;
     }
     
-    /**
-     * Devuelve una lista de usuarios activos del centro con un rol específico.
-     * 
-     * @param  rolid Identificador de un rol específico
-     * @return Una lista de instancias {@link Usuario} que representan los usuarios del centro.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+  
+    
     public ArrayList<Usuario> getUsuariosByRolId(int rolid) throws SQLException, NoRolesException, Exception {
         String sql;
         Usuario usuario;
@@ -363,18 +301,9 @@ public class GestorUsuario extends GestorDisco
       
         return users;
     }
-   
-    /**
-     * Agrega un nuevo usuario activo al centro.
-     * 
-     * El usuario agregado SIEMPRE es activo.
-     * No se asigna fecha de inactividad.
-     * 
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos del grupo.
-     * 
-     * @throws SQLException
-     * @throws Exception 
-     */
+  */
+    
+//Alta de Usuario
     public void add(Usuario usuario) throws SQLException, Exception {
         String sql;
         Statement statement;
@@ -393,7 +322,14 @@ public class GestorUsuario extends GestorDisco
                   " "            + USERTABLE_SURNAME                        + ","  +
                   " "            + USERTABLE_ACTIVE                         + ","  +
                   " "            + USERTABLE_NIF                            + ","  +
-                  " "            + USERTABLE_ROLID                          + ") " +
+                  " "            + USERTABLE_ROLID                          + ","  +
+                  " "            + USERTABLE_PAIS                           + ","  +
+                  " "            + USERTABLE_PAISNIF                        + ","  +
+                  " "            + USERTABLE_UNI                            + ","  +
+                  " "            + USERTABLE_ADRESS                         + ","  +
+                  " "            + USERTABLE_TOWN                           + ","  +
+                  " "            + USERTABLE_IDIOMA                         + ","  +
+                  " "            + USERTABLE_CP                             + ") " +
                   "VALUES "      +
                   "('"           + usuario.getLogin()                       + "', "  +
                   "md5('"        + usuario.getPwd()                         + "'), " +
@@ -405,7 +341,14 @@ public class GestorUsuario extends GestorDisco
                                    usuario.getSegundoApellido()             + "', "  +
                   " '"           + usuario.isActivoBit()                    + "', "  +
                   " '"           + usuario.getNif()                         + "', "  + 
-                  "  "           + usuario.getIdRol()                       + ")";
+                  "  "           + usuario.getIdRol()                       + ", "  +
+                  "  "           + usuario.getPais()                        + ", "  +
+                  "  "           + usuario.getPaisNIF()                     + ", "  +
+                  "  "           + usuario.getUniversidadId()               + ", "  +
+                  " '"           + usuario.getAdreca()                      + "', "  + 
+                  " '"           + usuario.getPoblacio()                    + "', "  + 
+                  "  "           + usuario.getIdioma()                      + ", "  +
+                  " '"           + usuario.getCP()                          + "')";
 
             statement = getConnection().createStatement();
             statement.execute(sql);
@@ -427,11 +370,11 @@ public class GestorUsuario extends GestorDisco
         Statement statement;
       
         try {
-            //Si hay que hacer update del password
-            if (!usuario.getPwd().equals("")) {
+
+           
             sql = "UPDATE " + USERTABLE              + " "        +
                   "SET "    + USERTABLE_LOGIN        + " = '"     + usuario.getLogin()                          + "', "  +
-                              USERTABLE_PASSWORD     + " = md5('" + usuario.getPwd()                            + "'), " +
+                              USERTABLE_PASSWORD     + " = '" + usuario.getPwd()                                + "', " +
                               USERTABLE_DATE         + " = '"     + df.format(usuario.getFechaAlta())           + "', "  +
                               USERTABLE_MAIL         + " = '"     + usuario.getEmail()                          + "', "  +
                               USERTABLE_PHONE        + " = '"     + usuario.getTelf()                           + "', "  +
@@ -439,23 +382,17 @@ public class GestorUsuario extends GestorDisco
                               USERTABLE_SURNAME      + " = '"     + usuario.getPrimerApellido()                 +"_"     +
                                                                     usuario.getSegundoApellido()                + "', "  +
                               USERTABLE_NIF          + " = '"     + usuario.getNif()                            + "', "  +
-                              USERTABLE_ROLID        + " = "      + usuario.getIdRol()                          + " "    +
-                  "WHERE "  + USERTABLE_ID           + " = "      + usuario.getId();
-            }
-            //Si no hay que hacer update del password
-            else {
-            sql = "UPDATE " + USERTABLE              + " "        +
-                  "SET "    + USERTABLE_LOGIN        + " = '"     + usuario.getLogin()                          + "', "  +
-                              USERTABLE_DATE         + " = '"     + df.format(usuario.getFechaAlta())           + "', "  +
-                              USERTABLE_MAIL         + " = '"     + usuario.getEmail()                          + "', "  +
-                              USERTABLE_PHONE        + " = '"     + usuario.getTelf()                           + "', "  +
-                              USERTABLE_NAME         + " = '"     + usuario.getNombre()                         + "', "  +
-                              USERTABLE_SURNAME      + " = '"     + usuario.getPrimerApellido()                 +"_"     +
-                                                                    usuario.getSegundoApellido()                + "', "  +
-                              USERTABLE_NIF          + " = '"     + usuario.getNif()                            + "', "  +
-                              USERTABLE_ROLID        + " = "      + usuario.getIdRol()                          + " "    +
-                  "WHERE "  + USERTABLE_ID           + " = "      + usuario.getId();
-            }
+                              USERTABLE_ROLID        + " = "      + usuario.getIdRol()                          + ", "    +
+                              USERTABLE_PAIS        + " = "      + usuario.getPais()                            + ", "    +
+                              USERTABLE_PAISNIF     + " = "      + usuario.getPaisNIF()                            + ", "    +
+                              USERTABLE_UNI        + " = "      + usuario.getUniversidadId()                            + ", "    +                    
+                              USERTABLE_IDIOMA       + " = "      + usuario.getIdioma()                            + ", "    +                   
+                              USERTABLE_TOWN        + " = '"      + usuario.getPoblacio()                         + "', "    +                   
+                              USERTABLE_CP        + " = '"      + usuario.getCP()                         + "', "    +                     
+                              USERTABLE_ADRESS       + " = '"      + usuario.getAdreca()                         + "', "    +                     
+                              USERTABLE_ACTIVE       + " = '"      + usuario.isActivoBit()                         + "' "    +
+                    "WHERE "  + USERTABLE_ID           + " = "      + usuario.getId();
+           
 
             statement = getConnection().createStatement();
             statement.execute(sql);
@@ -618,33 +555,6 @@ public class GestorUsuario extends GestorDisco
         return roleMap;
     }
     
-    /**
-     * Devuelve el número de Grupos que un Usuario (Profesor) tiene asignados
-     * 
-     * @param id Identificador del Usuario a checkear
-     * @return
-     * @throws SQLException
-     * @throws Exception 
-     */
-    public int checkGruposAssigned(int id) throws SQLException, Exception {
-        String sql;
-        ResultSet rs;
-        
-        int grupos = 0;
-        try {
-            sql = "SELECT COUNT(*) as total FROM " + GRUPOTABLE      + " "  +
-                  "WHERE "                         + GRUPOTABLE_USER + " = " + id;
-            Statement objStt = (Statement) getConnection().createStatement();
-            rs = objStt.executeQuery(sql);
-            if(rs.next()) {
-                grupos = rs.getInt("total");
-            }
-        }
-        catch (SQLException ex) {throw ex;}
-        catch (Exception ex)    {throw ex;}
-        
-        return grupos;
-    }
     
     /**
      * Elimina las matriculas del usuario (Estudiante)
@@ -670,5 +580,96 @@ public class GestorUsuario extends GestorDisco
         
         return grupos;
     }
+    
+    public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception {
+        String sql;
+        
+        ArrayList<AuxiliarCombo> paises = new ArrayList<AuxiliarCombo>();
+      
+        sql = "SELECT * FROM paisos";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                        AuxiliarCombo pais=new AuxiliarCombo();
+                        pais.setId(rs.getInt     ("codi_pais"));
+                        pais.setNombre           (rs.getString  ("nom"));
+                        paises.add(pais);
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return paises;
+    }
+    
+    public ArrayList<AuxiliarCombo> getRoles() throws SQLException, Exception {
+        String sql;
+       
+        ArrayList<AuxiliarCombo> roles = new ArrayList<AuxiliarCombo>();
+      
+        sql = "SELECT * FROM rol";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                        AuxiliarCombo rol=new AuxiliarCombo();
+                        rol.setId(rs.getInt     ("id"));
+                        rol.setNombre           (rs.getString  ("descripcio"));
+                        roles.add(rol);
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return roles;
+    }
+    
+      public ArrayList<AuxiliarCombo> getUniversidades() throws SQLException, Exception {
+        String sql;
+       
+        ArrayList<AuxiliarCombo> universidades = new ArrayList<AuxiliarCombo>();
+      
+        sql = "SELECT * FROM universitat";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                        AuxiliarCombo universidad=new AuxiliarCombo();
+                        universidad.setId(rs.getInt     ("universitat_id"));
+                        universidad.setNombre           (rs.getString  ("nom"));
+                        universidades.add(universidad);
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return universidades;
+    }
    
+        public ArrayList<AuxiliarCombo> getIdiomas() throws SQLException, Exception {
+        String sql;
+       
+        ArrayList<AuxiliarCombo> idiomas = new ArrayList<AuxiliarCombo>();
+      
+        sql = "SELECT * FROM idioma";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                        AuxiliarCombo idioma=new AuxiliarCombo();
+                        idioma.setId(rs.getInt     ("idioma_id"));
+                        idioma.setNombre           (rs.getString  ("idioma_nom"));
+                        idiomas.add(idioma);
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return idiomas;
+    }
 }

@@ -3,6 +3,7 @@ package edu.uoc.tdp.pac4.remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Recurso;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
@@ -73,67 +74,35 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gu.getRolesOptionsById();
     }
 
-    /**
-     * Devuelve una lista de Usuarios del centro.
-     *
-     * @return Una lista de instancias {@link Usuario} que representan los
-     * Usuarios del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+//***********************************************************************
+    
+//********************************USUARIOS********************************
     @Override
     public ArrayList<Usuario> getUsuarios() throws RemoteException, SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUsuarios();
     }
 
-    /**
-     * Devuelve una lista de Usuarios Inactivos del centro.
-     *
-     * @return Una lista de instancias {@link Usuario} que representan los
-     * Usuarios del centro.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public ArrayList<Usuario> getUsuariosInactivos() throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUsuariosInactivos();
     }
-
+/*
     @Override
     public ArrayList<Usuario> getUsuariosByRolDesc(String desc) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.getUsuariosByRolDesc(desc);
     }
-
-    /**
-     * Obtiene un determinado Usuario.
-     *
-     * @param id Identificador único del Usuario.
-     * @return Una instancia de {@link Usuario} que representa el Usuario
-     * solicitado.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+*/
+    
     @Override
     public Usuario getUsuario(int id) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.get(id);
     }
 
-    /**
-     * Agrega un nuevo Usuario al centro.
-     *
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos
-     * del Usuario.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+
     @Override
     public boolean addUsuario(Usuario usuario) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
@@ -142,15 +111,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Actualiza los datos de un Usuario.
-     *
-     * @param usuario Una instancia de {@link Usuario} que contiene los datos
-     * actualizados del Usuario.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+
     @Override
     public boolean updateUsuario(Usuario usuario) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
@@ -159,14 +120,7 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Elimina un Usuario.
-     *
-     * @param id Identificador del Usuario a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
+
     @Override
     public boolean deleteUsuario(int id) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
@@ -175,14 +129,6 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
-    /**
-     * Recupera un Usuario.
-     *
-     * @param id Identificador del Usuario a eliminar.
-     *
-     * @throws SQLException
-     * @throws Exception
-     */
     @Override
     public boolean undeleteUsuario(int id) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
@@ -191,7 +137,26 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return true;
     }
 
+       @Override
+    public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.getPaises();
+    }
+           @Override
+    public ArrayList<AuxiliarCombo> getRoles() throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.getRoles();
+    }
+    
+    public ArrayList<AuxiliarCombo> getIdiomas() throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.getIdiomas();
+    }
 
+    public ArrayList<AuxiliarCombo> getUniversidades() throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.getUniversidades();
+    }
 //*********************************AULA**********************************
     @Override
     public ArrayList<Aula> getAulas() throws SQLException, Exception {
@@ -426,13 +391,13 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
      * @return
      * @throws SQLException
      * @throws Exception
-     */
+   
     @Override
     public int checkGruposUsuario(int id) throws SQLException, Exception {
         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
         return gu.checkGruposAssigned(id);
     }
-
+  */
     /**
      *
      * @param id

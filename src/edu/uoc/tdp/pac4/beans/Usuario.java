@@ -9,20 +9,27 @@ import java.util.Date;
  */
 public class Usuario extends IdentifiableObject implements java.io.Serializable
 {
+   private int usuari_id;
    private String nom_usuari;
    private String contrasenya;
+   private String noms;
+   private String cognoms;
+   private String nif; 
+   private int pais_nif;
+   private int pais;
+   private String adreca;
+   private String CP;
+   private String poblacio;
+   private int idioma;
    private Date data_alta;
    private String email;
    private String telf;
-   private String noms;
-   private String cognoms;
    private boolean activo;
    private Date data_baixa;
-   private String nif;
    private int rol;
    private String descrol;
    private int universidadId;
-   private int usuari_id;
+
    
    //===========================================
    // Constructors
@@ -45,6 +52,14 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
       this.nif = "";
       this.rol = 1;
       this.descrol ="Administrador";
+      this.universidadId=0;
+      this.adreca="";
+      this.poblacio="";
+      this.CP="";
+      this.pais=1;
+      this.pais_nif=1;
+      this.idioma=1;
+         
    }
 
    //===========================================
@@ -76,7 +91,7 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
 
    public void setPwd(String pwd) 
    {
-      this.contrasenya = contrasenya;
+      this.contrasenya = pwd;
    }
 
    public Date getFechaAlta()
@@ -116,7 +131,7 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
 
    public void setNombre(String nombre) 
    {
-      this.noms = noms;
+      this.noms = nombre;
    }
 
    public String getApellidos() 
@@ -214,4 +229,49 @@ public class Usuario extends IdentifiableObject implements java.io.Serializable
     public void setUniversidadId(int universidadId) {
         this.universidadId = universidadId;
     }
+    
+    public String getAdreca(){
+        return adreca;
+    }
+    public void setAdreca(String adr){
+        this.adreca=adr;
+    }
+    
+    public String getPoblacio(){
+        return poblacio;
+    }
+    public void setPoblacio(String poble){
+        this.poblacio=poble;
+    }
+    
+   
+    public String getCP(){
+        return CP;
+    }
+    
+    public void setCP(String cop){
+        this.CP=cop;
+    }
+    
+    public int getPais(){
+        return pais;
+    }
+    public void setPais(int ps){
+        this.pais=ps;
+    }
+  
+    public int getPaisNIF(){
+        return pais_nif;
+    }
+    public void setPaisNIF(int psnif){
+        this.pais_nif=psnif;
+    }
+
+    public int getIdioma(){
+        return idioma;
+    }
+    public void setIdioma(int id){
+        this.idioma=id;
+    }
+    
 }

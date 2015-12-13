@@ -6,6 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -23,50 +24,79 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDate" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPwd" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblDNI" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cmdNIFsearch" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="cmdNIFclear" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSn1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSn2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTlf" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblMail" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblType" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="fldLogin" max="32767" attributes="0"/>
-                          <Component id="fldPwd" max="32767" attributes="0"/>
-                          <Component id="fldDate" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldDNI" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldSn1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldSn2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldTlf" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fldMail" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cbxType" alignment="0" pref="166" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="105" max="32767" attributes="0"/>
                       <Component id="cmdAccept" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblUni" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="comboUni" min="-2" pref="166" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="lblPais" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="comboPais" min="-2" pref="166" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPwd" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSn1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTlf" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDNI" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPaisNIF" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPoblacion" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSn2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCP" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMail" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblRol" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="fldCP" max="32767" attributes="0"/>
+                                      <Component id="fldLogin" max="32767" attributes="0"/>
+                                      <Component id="fldPwd" max="32767" attributes="0"/>
+                                      <Component id="fldName" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldSn1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldSn2" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldTlf" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldDNI" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldDireccion" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fldPoblacion" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="comboPaisNIF" pref="166" max="32767" attributes="0"/>
+                                      <Component id="fldMail" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="comboRol" alignment="1" min="-2" pref="166" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblIdioma" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDate" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblBaja" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="comboIdioma" pref="166" max="32767" attributes="0"/>
+                                  <Component id="fldDate" max="32767" attributes="0"/>
+                                  <Component id="fldBaja" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,60 +115,89 @@
                   <Component id="fldPwd" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblName" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldName" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblSn1" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldSn1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblSn2" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldSn2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldDNI" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDNI" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPaisNIF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboPaisNIF" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fldPoblacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPoblacion" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="fldCP" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCP" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblPais" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboPais" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fldTlf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTlf" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fldMail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMail" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="comboRol" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRol" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="comboUni" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUni" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="comboIdioma" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblIdioma" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblDate" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="fldDate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblDNI" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="fldDNI" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="cmdNIFclear" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fldName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblSn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fldSn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblSn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fldSn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTlf" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fldTlf" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblMail" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fldMail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblType" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxType" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="38" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmdAccept" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="cmdNIFsearch" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fldBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cmdClose" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmdAccept" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -211,9 +270,9 @@
         <Property name="text" type="java.lang.String" value="e-mail"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblType">
+    <Component class="javax.swing.JLabel" name="lblRol">
       <Properties>
-        <Property name="text" type="java.lang.String" value="tipologia"/>
+        <Property name="text" type="java.lang.String" value="Rol"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="fldPwd">
@@ -232,13 +291,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fldMail">
     </Component>
-    <Component class="javax.swing.JComboBox" name="cbxType">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="cmdAccept">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -250,25 +302,88 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAcceptActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cmdNIFsearch">
+    <Component class="javax.swing.JComboBox" name="comboPais">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/refresh_002_16.gif"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdNIFsearchActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cmdNIFclear">
+    <Component class="javax.swing.JLabel" name="lblPaisNIF">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/eraser.png"/>
+        <Property name="text" type="java.lang.String" value="PaisNIF"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblDireccion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Direccion"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldDireccion">
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldPoblacion">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPoblacion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Poblacion"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldCP">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCP">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CP"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboPaisNIF">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdNIFclearActionPerformed"/>
-      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPais">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pais"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboRol">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboUni">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblUni">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Universidad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboIdioma">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblIdioma">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Idioma"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblBaja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="fechaBaja"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fldBaja">
     </Component>
   </SubComponents>
 </Form>

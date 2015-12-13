@@ -10,20 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author JavaBeginers
- */
+/**********************************************************************
+ ******************** @author JavaBeginers - Cristian******************
+ *********************************************************************/
+
 public class PnlMantenimientoUsuarios extends javax.swing.JDialog 
 {
     private Mantenimiento      manager;
     private LanguageUtils      language;
     private ArrayList<Usuario> usuarios;
-
-    private java.util.HashMap RolesDesc;
-    private java.util.HashMap RolesID             = new java.util.HashMap();
-    private java.util.HashMap VariableDescriptors = new java.util.HashMap();
-    
     private boolean dofilter   = false;
     
     private Usuario activeUser;
@@ -40,12 +35,10 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         this.manager        = manager;
         
         initComponents();
-      
         setLocationRelativeTo(null);
-
-        addaptToPreferences();
-        
-        listData();
+        prepararTextos();
+        setCombos();
+        listarUsuarios();
     }
 
    /**
@@ -61,15 +54,15 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         cmdClose = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
-        cbxType = new javax.swing.JComboBox();
+        comboRol = new javax.swing.JComboBox();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        fldname = new javax.swing.JTextField();
-        lblname = new javax.swing.JLabel();
+        fldNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
         lblRol = new javax.swing.JLabel();
-        fldsurname = new javax.swing.JTextField();
-        lblsurname = new javax.swing.JLabel();
+        fldApellidos = new javax.swing.JTextField();
+        lblApellidos = new javax.swing.JLabel();
         cmdFilter = new javax.swing.JButton();
         cmdClearFilter = new javax.swing.JButton();
         btnExplore = new javax.swing.JButton();
@@ -78,7 +71,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
 
         jToolBar1.setRollover(true);
 
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
         cmdClose.setText("Cerrar");
         cmdClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +91,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         ));
         jScrollPane1.setViewportView(tblData);
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user--plus.png"))); // NOI18N
         btnAdd.setText("Nuevo");
         btnAdd.setFocusable(false);
         btnAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -110,7 +101,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user--pencil.png"))); // NOI18N
         btnEdit.setText("Editar");
         btnEdit.setFocusable(false);
         btnEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -121,7 +111,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user--minus.png"))); // NOI18N
         btnDelete.setText("Eliminar");
         btnDelete.setFocusable(false);
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -132,13 +121,12 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
-        lblname.setText("Nombre");
+        lblNombre.setText("Nombre");
 
-        lblRol.setText("Tipologia");
+        lblRol.setText("rol");
 
-        lblsurname.setText("Apellidos");
+        lblApellidos.setText("Apellidos");
 
-        cmdFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/refresh_002_16.gif"))); // NOI18N
         cmdFilter.setText("Filtrar");
         cmdFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +134,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
-        cmdClearFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/eraser.png"))); // NOI18N
         cmdClearFilter.setText("Limpiar Filtro");
         cmdClearFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +141,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             }
         });
 
-        btnExplore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user--exclamation.png"))); // NOI18N
         btnExplore.setText("Explorar");
         btnExplore.setFocusable(false);
         btnExplore.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -184,7 +170,7 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(cmdClose))
@@ -192,15 +178,15 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                 .addGap(5, 5, 5)
                                 .addComponent(lblRol, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblname)
+                                .addComponent(lblNombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fldname, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblsurname, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fldsurname, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(fldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,12 +209,12 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fldname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblname)
+                    .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre)
                     .addComponent(lblRol)
-                    .addComponent(fldsurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblsurname))
+                    .addComponent(fldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblApellidos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdFilter)
@@ -241,90 +227,46 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
-   private void addaptToPreferences() {
+//Establece los textos segun idioma seleccionado      
+   private void prepararTextos() {
        
-       this.setTitle(language.getProperty("mantenimiento.main.title") + ". " + 
-                     language.getProperty("mantenimiento.main.user"));
-       
-       this.initComboBox();
-       this.setLabelsLanguage();
-
-       this.fldname.setText("");
-       this.fldsurname.setText("");
+       this.setTitle(language.getProperty("mantenimiento.usermain.title"));
+       this.btnAdd.setText         (language.getProperty("mantenimiento.Nueva"));
+       this.btnEdit.setText        (language.getProperty("mantenimiento.Editar"));
+       this.btnDelete.setText      (language.getProperty("mantenimiento.Eliminar"));
+       this.btnExplore.setText     (language.getProperty("mantenimiento.Ver"));
+       this.cmdClose.setText       (language.getProperty("mantenimiento.usermain.back"));
+       this.lblRol.setText         (language.getProperty("mantenimiento.usermain.tipo"));
+       this.lblNombre.setText        (language.getProperty("mantenimiento.usermain.name"));
+       this.lblApellidos.setText     (language.getProperty("mantenimiento.usermain.surname"));
+       this.cmdFilter.setText      (language.getProperty("mantenimiento.usermain.dofilter"));
+       this.cmdClearFilter.setText (language.getProperty("mantenimiento.usermain.clearfilter"));
+       this.fldNombre.setText("");
+       this.fldApellidos.setText("");
    }
-   
-   private void initComboBox() {
+
+//Carga los combos de la pantalla 
+   private void setCombos() {
         /*
          * Intentamos capturar los posibles roles definidos por la base de datos para añadirlos
          * al combobox. Si no se puede, no podremos abrir este panel, pues algo pasa con la connexión
          * a la DB o al rmi.
          */
-        try {
-            this.RolesDesc = manager.getRolesByDesc();
-            
-            java.util.Set roles = this.RolesDesc.entrySet();
+        
 
-            String[] possibleRoles = new String[roles.size()+1];
-            possibleRoles[0] = language.getProperty("rol.all");
-            java.util.Iterator iter  = roles.iterator();
-            while (iter.hasNext()) {
-                java.util.Map.Entry role = (java.util.Map.Entry)iter.next();
-                Integer rolID = new Integer(role.getValue().toString());
-                RolesID.put(role.getValue(), role.getKey());
-                VariableDescriptors.put(language.getProperty(role.getKey().toString()),
-                                        role.getKey().toString());
-                possibleRoles[rolID] = language.getProperty(role.getKey().toString());
-            }
-            cbxType.setModel(new javax.swing.DefaultComboBoxModel(possibleRoles));
-        }
-        catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-         this.dispose();
-        }
-        catch (NoRolesException ex) {
-            JOptionPane.showMessageDialog(null, 
-                                          language.getProperty("err.sql") + "\n" + language.getProperty("mantenimiento.err.norole") + ":\n\n" + ex.getMessage(), 
-                                          language.getProperty("app.title"), 
-                                          JOptionPane.ERROR_MESSAGE);
-        }
-        catch (Exception ex) {
-         JOptionPane.showMessageDialog(null, 
-                                       language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
-                                       language.getProperty("app.title"), 
-                                       JOptionPane.ERROR_MESSAGE);
-         this.dispose();
-        }
-    }
-    
-    private void setLabelsLanguage() {
-        this.btnAdd.setText         (language.getProperty("mantenimiento.usermain.newUser"));
-        this.btnEdit.setText        (language.getProperty("mantenimiento.usermain.modUser"));
-        this.btnDelete.setText      (language.getProperty("mantenimiento.usermain.delUser"));
-        this.btnExplore.setText     (language.getProperty("mantenimiento.usermain.explore"));
-        this.cmdClose.setText       (language.getProperty("mantenimiento.usermain.back"));
-        this.lblRol.setText         (language.getProperty("mantenimiento.usermain.tipo"));
-        this.lblname.setText        (language.getProperty("mantenimiento.usermain.name"));
-        this.lblsurname.setText     (language.getProperty("mantenimiento.usermain.surname"));
-        this.cmdFilter.setText      (language.getProperty("mantenimiento.usermain.dofilter"));
-        this.cmdClearFilter.setText (language.getProperty("mantenimiento.usermain.clearfilter"));
     }
    
+//Se escoge 'Alta de Usuario'  
    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       
            PnlMantenimientoUsuarioGestor form = new PnlMantenimientoUsuarioGestor(null, true ,manager, language, "Add", 0);
            form.setLocationRelativeTo(null);
            form.setVisible(true);
-
-
-       listData();
+           listarUsuarios();
    }//GEN-LAST:event_btnAddActionPerformed
 
+//Se escoge 'Edición de Usuario'  
    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-
+       //No hay fila seleccionada
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
@@ -333,18 +275,15 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
-
-      // Obtiene el ID del grupo a editar
+      //Hay fila seleccionada
       Usuario usuario = usuarios.get(tblData.getSelectedRow());
-
       PnlMantenimientoUsuarioGestor form = new PnlMantenimientoUsuarioGestor(null, true, manager, language, "Edit", usuario.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
-
-      listData();
-
+      listarUsuarios();
    }//GEN-LAST:event_btnEditActionPerformed
 
+//Cerrar el Formulario
    private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCloseActionPerformed
 
       // Cierra el formulario
@@ -352,8 +291,9 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
 
    }//GEN-LAST:event_cmdCloseActionPerformed
 
+//Se escoge Desactivar Usuario
    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      
+      //No hay fila seleccionada
       if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
@@ -362,9 +302,10 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
-      
+      //Hay fila seleccionada
       Usuario usuario = usuarios.get(tblData.getSelectedRow());
       
+      //El usuario seleccionado es el propio usuario
       if (usuario.getId() == this.activeUser.getId()) {
           JOptionPane.showMessageDialog(null,
                                        language.getProperty("mantenimiento.err.deown"),
@@ -373,25 +314,14 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
          return;
       }
       
+      //Se desactivará usuario si se responde afirmativamente
       Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
       int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimientomsg.dele.usuario"), 
                                                language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, 
                                                JOptionPane.QUESTION_MESSAGE, null, options, usuario);
       if (reply == 0) {
         try {
-            int grupos_profesor = manager.checkGruposUsuario(usuario.getId());
-            if (grupos_profesor == 0) {
-                if (manager.deleteUsuario(usuario.getId())) {
-                    manager.liberarMatriculasUsuario(usuario.getId());
-                }
-            }
-            else {
-                JOptionPane.showMessageDialog(null,
-                                              language.getProperty("mantenimiento.err.link.usuario"),
-                                              language.getProperty("app.title"),
-                                              JOptionPane.WARNING_MESSAGE);
-            }
-          
+            manager.deleteUsuario(usuario.getId());
         
       }
       catch (SQLException ex) {
@@ -407,30 +337,33 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                           JOptionPane.ERROR_MESSAGE);
       }
       
-      listData();
+      listarUsuarios();
       }
    }//GEN-LAST:event_btnDeleteActionPerformed
 
+//Botón Filtrar  
     private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
         // TODO add your handling code here:
-        if (!this.cbxType.getSelectedItem().toString().equals(language.getProperty("rol.all")) ||
-            !this.fldname.getText().equals("") || !this.fldsurname.getText().equals("")) {
+        if (!this.comboRol.getSelectedItem().toString().equals(language.getProperty("rol.all")) ||
+            !this.fldNombre.getText().equals("") || !this.fldApellidos.getText().equals("")) {
             this.dofilter = true;
-            listData();
+            listarUsuarios();
         }
     }//GEN-LAST:event_cmdFilterActionPerformed
 
+//Botón Limpiar Filtro
     private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
         // TODO add your handling code here:
-        this.cbxType.setSelectedIndex(0);
-        this.fldname.setText("");
-        this.fldsurname.setText("");
+        this.comboRol.setSelectedIndex(0);
+        this.fldNombre.setText("");
+        this.fldApellidos.setText("");
         this.dofilter = false;
-        listData();
+        listarUsuarios();
     }//GEN-LAST:event_cmdClearFilterActionPerformed
 
+//Consultar Usuario 
     private void btnExploreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExploreActionPerformed
-        // TODO add your handling code here:
+        // No hay fila seleccionada
         if (tblData.getSelectedRow() < 0)
       {
          JOptionPane.showMessageDialog(null,
@@ -439,27 +372,22 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        JOptionPane.WARNING_MESSAGE);
          return;
       }
-
-      // Obtiene el ID del grupo a editar
+      //Hay fila seleccionada
       Usuario usuario = usuarios.get(tblData.getSelectedRow());
-
       PnlMantenimientoUsuarioGestor form = new PnlMantenimientoUsuarioGestor(null, true, manager, language, "Explore", usuario.getId());
       form.setLocationRelativeTo(null);
       form.setVisible(true);
     }//GEN-LAST:event_btnExploreActionPerformed
 
-   
-   /**
-    * Rellena la tabla de usuarios.
-    */
-    private void listFullUsersData() throws SQLException, RemoteException, Exception {
+//Cargar todas las Aulas
+    private void todosUsuarios() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.usermain.login"));
         header.add(language.getProperty("mantenimiento.usermain.DNI"));
         header.add(language.getProperty("mantenimiento.usermain.name"));
         header.add(language.getProperty("mantenimiento.usermain.surname"));
-        header.add(language.getProperty("mantenimiento.usermain.tipo"));
+        header.add(language.getProperty("mantenimiento.usermain.rol"));
         
         String[][] gridData;
         
@@ -472,7 +400,7 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             gridData[i][1] = usuario.getNif();
             gridData[i][2] = usuario.getNombre();
             gridData[i][3] = usuario.getApellidos();
-            gridData[i][4] = language.getProperty(this.RolesID.get(usuario.getIdRol()).toString());
+            gridData[i][4] = "" + usuario.getIdRol();
             i++;
         }
         
@@ -482,21 +410,21 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
             });
     }
     
-    private void listFilteredUsersData() throws SQLException, RemoteException, Exception {
+    private void filtrarUsuarios() throws SQLException, RemoteException, Exception {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
       
         header.add(language.getProperty("mantenimiento.usermain.login"));
         header.add(language.getProperty("mantenimiento.usermain.DNI"));
         header.add(language.getProperty("mantenimiento.usermain.name"));
         header.add(language.getProperty("mantenimiento.usermain.surname"));
-        header.add(language.getProperty("mantenimiento.usermain.tipo"));
+        header.add(language.getProperty("mantenimiento.usermain.rol"));
       
         String[][] gridData;
-        
+        /*
         String rolDescriptor = "";
-        if (!this.cbxType.getSelectedItem().toString().equals(language.getProperty("rol.all"))) {
-            System.err.print(VariableDescriptors.get(this.cbxType.getSelectedItem().toString()).toString());
-            usuarios = manager.getUsuariosByRolDesc(VariableDescriptors.get(this.cbxType.getSelectedItem().toString()).toString());
+        if (!this.comboRol.getSelectedItem().toString().equals(language.getProperty("rol.all"))) {
+            System.err.print(VariableDescriptors.get(this.comboRol.getSelectedItem().toString()).toString());
+            usuarios = manager.getUsuariosByRolDesc(VariableDescriptors.get(this.comboRol.getSelectedItem().toString()).toString());
         }
         else {
             usuarios = manager.getUsuarios();
@@ -505,11 +433,11 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         
         int i = 0;
         for (Usuario usuario : usuarios) {
-            System.err.print(this.fldsurname.getText() + "\n");
+            System.err.print(this.fldApellidos.getText() + "\n");
             System.err.print(usuario.getPrimerApellido() + "\n");
-            if ((this.fldname.getText().equals("")    || this.fldname.getText().equalsIgnoreCase(usuario.getNombre())) &&
-                (this.fldsurname.getText().equals("") || this.fldsurname.getText().equalsIgnoreCase(usuario.getPrimerApellido())
-                                                      || this.fldsurname.getText().equalsIgnoreCase(usuario.getSegundoApellido()))) {
+            if ((this.fldNombre.getText().equals("")    || this.fldNombre.getText().equalsIgnoreCase(usuario.getNombre())) &&
+                (this.fldApellidos.getText().equals("") || this.fldApellidos.getText().equalsIgnoreCase(usuario.getPrimerApellido())
+                                                      || this.fldApellidos.getText().equalsIgnoreCase(usuario.getSegundoApellido()))) {
                 gridData[i][0] = usuario.getLogin();
                 gridData[i][1] = usuario.getNif();
                 gridData[i][2] = usuario.getNombre();
@@ -522,17 +450,17 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
         this.tblData.setModel(new javax.swing.table.DefaultTableModel(gridData, header.toArray())
             {@Override public boolean isCellEditable(int row, int column)
                 { return false; } 
-            });
+            });*/
     }
     
-   private void listData()
+   private void listarUsuarios()
    {
       try {
           if (!this.dofilter) {
-              this.listFullUsersData();
+              todosUsuarios();
           }
           else {
-              this.listFilteredUsersData();
+              filtrarUsuarios();
           }
       } 
       catch (SQLException ex)
@@ -541,9 +469,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
       catch (RemoteException ex)
       {
@@ -551,9 +476,7 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        language.getProperty("err.rmi") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
+
       }
       catch (Exception ex) 
       {
@@ -561,9 +484,6 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
                                        language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
                                        language.getProperty("app.title"), 
                                        JOptionPane.ERROR_MESSAGE);
-         
-         // Registra el error en un archivo de LOG
-         // Logger.getLogger(FrmResourcesRequest.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
    
@@ -572,17 +492,17 @@ public class PnlMantenimientoUsuarios extends javax.swing.JDialog
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExplore;
-    private javax.swing.JComboBox cbxType;
     private javax.swing.JButton cmdClearFilter;
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdFilter;
-    private javax.swing.JTextField fldname;
-    private javax.swing.JTextField fldsurname;
+    private javax.swing.JComboBox comboRol;
+    private javax.swing.JTextField fldApellidos;
+    private javax.swing.JTextField fldNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRol;
-    private javax.swing.JLabel lblname;
-    private javax.swing.JLabel lblsurname;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 }
