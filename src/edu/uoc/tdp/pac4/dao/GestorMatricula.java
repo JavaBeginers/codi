@@ -110,9 +110,9 @@ public class GestorMatricula extends GestorDisco
          // Comprueba que no exista otra matricula para el mismo grupo y turno
          sql = "SELECT Count(*) As nItems " +
                "FROM matricula " +
-               "WHERE matricula.usuarioid = " + matricula.getUsuarioId() + " And " +
-               "      matricula.actividadid = " + matricula.getActividadId()     + " And " +
-               "      matricula.grupoid = " + matricula.getGrupoId() ;
+               "WHERE matricula.usuari_id = " + matricula.getUsuarioId() + " And " +
+               "      matricula.activitat_id = " + matricula.getActividadId()     + " And ";
+              
          
          if (executeScalar(sql) > 0)
          {
@@ -122,11 +122,11 @@ public class GestorMatricula extends GestorDisco
       try 
       {
          // Agrega la petición (peticionid = 1, alta)
-         sql = "INSERT INTO matricula (peticionid, actividadid, grupoid, estadoid, usuarioid, fechaalta) " +
+         sql = "INSERT INTO matricula (actividadid, estat, usuari_id, data) " +
                "VALUES " +
                "(1, "                               +
                "  " + matricula.getActividadId() + ", " +  
-               "  " + matricula.getGrupoId() + ", " +
+              
                "  " + matricula.getEstado() + ", " +
                "  " + matricula.getUsuarioId() + ", " +
                "      current_timestamp)";
@@ -164,12 +164,11 @@ public class GestorMatricula extends GestorDisco
          
          // Agrega la petición
          sql = "UPDATE matricula " +
-               "SET actividadid           = " + matricula.getActividadId() + ", " +
-                   "grupoid           = " + matricula.getGrupoId() + ", " +
-                   "estadoid          = " + matricula.getEstado() + ", " +
-                   "usuarioid         = " + matricula.getUsuarioId() + ", " +
-                   "fechamodificacion =     current_timestamp " +
-               "WHERE matriculaid = " + matricula.getId();
+               "SET actividad_id           = " + matricula.getActividadId() + ", " +
+                   "estat          = " + matricula.getEstado() + ", " +
+                   "usuari_id         = " + matricula.getUsuarioId() + ", " +
+                   
+               "WHERE id = " + matricula.getId();
 
          execute(sql);
       } 
@@ -208,15 +207,14 @@ public class GestorMatricula extends GestorDisco
          // Formaliza la petición
          sql = "UPDATE matricula " +
                "SET    estadoid          = " + Matricula.MATRICULA_ESTADO_ACEPTADA + ", " +
-               "       grupoid           = " + matricula.getGrupoId() + ", " +
                "       fechamodificacion =     current_timestamp " +
                "WHERE  matriculaid       = " + matricula.getId();
          execute(sql);
          
          // Resta una plaza libre al grupo
          sql = "UPDATE grupo " +
-               "SET    plazasdisponibles = plazasdisponibles - 1 " +
-               "WHERE  grupoid           = " + matricula.getGrupoId();
+               "SET    plazasdisponibles = plazasdisponibles - 1 " ;
+               
          execute(sql);
       } 
       catch (SQLException ex) 
@@ -947,7 +945,7 @@ public class GestorMatricula extends GestorDisco
    {
       matricula.setId(rs.getInt("matriculaid"));
       matricula.setactividadId(rs.getInt("actividadid"));
-      matricula.setGrupoId(rs.getInt("grupoid"));
+      
       matricula.setEstado(rs.getInt("estadoid"));
       matricula.setUsuarioId(rs.getInt("usuarioid"));
       matricula.setFechaModificacion(rs.getDate("fechamodificacion"));
@@ -978,11 +976,11 @@ public class GestorMatricula extends GestorDisco
       try 
       {
          oldreg = this.get(matricula.getId());
-         if (oldreg.getEstado() == Matricula.MATRICULA_ESTADO_ACEPTADA && matricula.getGrupoId() != oldreg.getGrupoId())
+         if (oldreg.getEstado() == Matricula.MATRICULA_ESTADO_ACEPTADA )
          {
             sql = "UPDATE grupo " +
-                  "SET    plazasdisponibles = plazasdisponibles + 1 " +
-                  "WHERE  grupoid           = " + oldreg.getGrupoId();
+                  "SET    plazasdisponibles = plazasdisponibles + 1 ";
+                  
             execute(sql);
          }
       } 
