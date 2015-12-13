@@ -27,7 +27,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="105" max="32767" attributes="0"/>
+                      <EmptySpace pref="229" max="32767" attributes="0"/>
                       <Component id="cmdAccept" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
@@ -185,9 +185,9 @@
                   <Component id="lblIdioma" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblDate" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="fldDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fldDate" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -214,9 +214,6 @@
     </Container>
     <Component class="javax.swing.JButton" name="cmdClose">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/arrow-curve-180.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Cerrar"/>
       </Properties>
       <Events>
@@ -293,9 +290,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="cmdAccept">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/resources/ok_st_obj.gif"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Acceptar"/>
       </Properties>
       <Events>

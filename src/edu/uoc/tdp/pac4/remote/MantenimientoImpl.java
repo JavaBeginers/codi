@@ -102,6 +102,10 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         return gu.get(id);
     }
 
+        public int existeUsuario(String username) throws SQLException, Exception {
+        GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.existeUsuario(username);
+    }
 
     @Override
     public boolean addUsuario(Usuario usuario) throws SQLException, Exception {

@@ -123,7 +123,6 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
         jToolBar1.setRollover(true);
 
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/arrow-curve-180.png"))); // NOI18N
         cmdClose.setText("Cerrar");
         cmdClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +150,6 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
         lblRol.setText("Rol");
 
-        cmdAccept.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ok_st_obj.gif"))); // NOI18N
         cmdAccept.setText("Acceptar");
         cmdAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,7 +181,7 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(105, Short.MAX_VALUE)
+                        .addContainerGap(229, Short.MAX_VALUE)
                         .addComponent(cmdAccept)
                         .addGap(45, 45, 45)
                         .addComponent(cmdClose))
@@ -310,7 +308,7 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
                     .addComponent(comboIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIdioma))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDate)
                     .addComponent(fldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -390,6 +388,9 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
        fldDate.setText     (df.format(this.now));
        fldDate.setEditable (false);
        fldBaja.setVisible(false);
+        this.fldBaja.setVisible(false);
+        this.lblBaja.setVisible(false);
+ 
             
        this.cmdAccept.setText(language.getProperty("mantenimiento.usermain.newUser"));
        
@@ -416,8 +417,16 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
        fldTlf.setText      (user.getTelf());
        fldMail.setText     (user.getEmail());
        fldDate.setText     (user.getFechaAlta().toString());
+        if(user.getFechaInactividad()==null){
+            this.fldBaja.setText ("");  
+            }else{
+            this.fldBaja.setText  (""+user.getFechaInactividad());
+            }
        fldDate.setEditable (false);
        fldBaja.setVisible(false);
+              this.fldBaja.setVisible(true);
+        this.lblBaja.setVisible(true);
+        this.fldBaja.setEditable(false);
        
             for (int i=0;i<comboIdioma.getItemCount();i++){
               if (user.getIdioma()==((ComboItem)comboIdioma.getItemAt(i)).getId())  {
@@ -469,7 +478,11 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
 //Prepara el formulario para Consulta de Usuario  
     private void adaptarConsulta() {
+        
         this.adaptarEdicion();
+                
+            this.setTitle(language.getProperty("mantenimiento.Ver") + " - " + 
+                      language.getProperty("mantenimiento.main.user"));
         fldLogin.setEditable(false);
         fldPwd.setEditable  (false);
         fldDate.setEditable (false);
@@ -482,7 +495,15 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
         fldCP.setEditable(false);
         fldPoblacion.setEditable(false);
         fldDireccion.setEditable(false);
+        this.comboIdioma.setEnabled(false);
+        this.comboPais.setEnabled(false);
+        this.comboPaisNIF.setEnabled(false);
+        this.comboRol.setEnabled(false);
+        this.comboUni.setEnabled(false);
         this.cmdAccept.setVisible(false);
+        this.fldBaja.setVisible(true);
+        this.lblBaja.setVisible(true);
+        this.fldBaja.setEditable(false);
         
     }
 
@@ -602,6 +623,12 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
                                           language.getProperty("app.title"), 
                                           JOptionPane.ERROR_MESSAGE);
         } else {
+            if(existeUsuario()){
+                            JOptionPane.showMessageDialog(null, 
+                                          language.getProperty("mantenimiento.err.UsuarioExiste"), 
+                                          language.getProperty("app.title"), 
+                                          JOptionPane.ERROR_MESSAGE);
+            }else{
             if (this.ActionType.equalsIgnoreCase("Add")) {
                 this.guardarNuevoUsuario();
             }
@@ -610,7 +637,7 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
             }
         }
     }//GEN-LAST:event_cmdAcceptActionPerformed
-   
+    }
     
         //Carga los distintos Combos
     private void setCombos() {
@@ -672,23 +699,50 @@ public class PnlMantenimientoUsuarioGestor extends javax.swing.JDialog
 
 //Comprueba que los campos se han escrito correctamente
     private boolean CompruebaCampos() {
-        /*
-         * Tanto para añadir  un usuario deberemos tener toda la información.
-         * Para modificarlo, toda excepto el password, que es opcional
-         * Esta función se encarga de asegurarse de que así sea.
-         
+
         if (fldLogin.getText().isEmpty() || fldLogin.getText().equals("")) {return false;}
         if (fldDNI.getText().isEmpty()   || fldDNI.getText().equals(""))   {return false;}
         if (fldName.getText().isEmpty()  || fldName.getText().equals(""))  {return false;}
         if (fldSn1.getText().isEmpty()   || fldSn1.getText().equals(""))   {return false;}
         if (fldSn2.getText().isEmpty()   || fldSn2.getText().equals(""))   {return false;}
-        
-        if (this.ActionType.equalsIgnoreCase("Add") && !this.reactivate) {
-            if (fldPwd.getText().isEmpty() || fldPwd.getText().equals("")) {return false;}
-        }
-        */
+        if (fldPwd.getText().isEmpty()   || fldPwd.getText().equals("")) {return false;}
+        if (fldDNI.getText().isEmpty()   || fldDNI.getText().equals("")) {return false;}
+        if (fldDireccion.getText().isEmpty()   || fldDireccion.getText().equals("")) {return false;}
+        if (fldPoblacion.getText().isEmpty()   || fldPoblacion.getText().equals("")) {return false;}
+        if (fldCP.getText().isEmpty()   || fldCP.getText().equals("")) {return false;}
+        if (fldTlf.getText().isEmpty()   || fldTlf.getText().equals("")) {return false;}
+        if (fldMail.getText().isEmpty()   || fldMail.getText().equals("")) {return false;}        
         return true;
     }
+    
+        private boolean existeUsuario() {
+            try{
+          if (this.ActionType.equalsIgnoreCase("Add")) {
+           if(manager.existeUsuario(fldLogin.getText())>0){
+               return true;
+           }
+        } else if (this.ActionType.equalsIgnoreCase("Edit")) {
+           if(!(user.getLogin().equals(fldLogin.getText()) ) && manager.existeUsuario(fldLogin.getText())>0){
+               return true;
+           }
+        } 
+        
+            }
+        catch (SQLException ex) {
+                 JOptionPane.showMessageDialog(null, 
+                                               language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                               language.getProperty("app.title"), 
+                                               JOptionPane.ERROR_MESSAGE);
+        }
+        catch (Exception ex) {
+                 JOptionPane.showMessageDialog(null, 
+                                               language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(), 
+                                               language.getProperty("app.title"), 
+                                               JOptionPane.ERROR_MESSAGE);
+        }
+            return false;
+        }
+    
     
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

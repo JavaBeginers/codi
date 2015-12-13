@@ -65,6 +65,8 @@ public interface Mantenimiento extends Remote {
 
     //public int checkGruposUsuario(int id) throws SQLException, Exception;
 
+    public int existeUsuario(String username) throws SQLException, Exception;
+    
     public boolean liberarMatriculasUsuario(int id) throws SQLException, Exception;
     
     public ArrayList<AuxiliarCombo> getPaises() throws SQLException, Exception;

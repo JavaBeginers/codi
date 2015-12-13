@@ -45,7 +45,7 @@ public class GestorUsuario extends GestorDisco
     //Tabla Rol
     private static final String ROLTABLE               = "rol";
     private static final String ROLTABLE_ID            = "id";
-    private static final String ROLTABLE_DESCRIPTION   = "descripcion";
+    private static final String ROLTABLE_DESCRIPTION   = "descripcio";
     
     
     //Tabla Matricula
@@ -98,6 +98,8 @@ public class GestorUsuario extends GestorDisco
         usuario.setIdioma           (rs.getInt     (USERTABLE_IDIOMA));
         usuario.setCP               (rs.getString     (USERTABLE_CP));
         
+        usuario.setDescrol(getNombreRol(usuario.getIdRol()));
+        
         return usuario;
     }
      
@@ -120,6 +122,27 @@ public class GestorUsuario extends GestorDisco
         catch (Exception ex)    {throw ex;}
 
         return usuario;
+    }
+   
+        //Obtener Usuario por nombre
+    public int existeUsuario(String username) throws SQLException, Exception {
+        String sql;
+        int i =0;
+      
+        sql = "SELECT * FROM " + USERTABLE        + " "    +
+              "WHERE "         + USERTABLE_LOGIN    + " = '"  + username+"'";
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+                i++;
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+
+        return i;
     }
    
  /*
@@ -213,7 +236,7 @@ public class GestorUsuario extends GestorDisco
         ArrayList<Usuario> users = new ArrayList<Usuario>();
       
         sql = "SELECT * FROM " + USERTABLE         + " "    +
-              "WHERE "         + USERTABLE_ACTIVE  + " = '" + 0 + "' " +
+              "WHERE "         + USERTABLE_INACTIVEDATE + " IS NOT NULL " +
               "ORDER BY "      + USERTABLE_SURNAME + ","    + USERTABLE_NAME;
 
         try {
@@ -671,5 +694,24 @@ public class GestorUsuario extends GestorDisco
         catch (Exception ex)    {throw ex;}
       
         return idiomas;
+    }
+       public String getNombreRol(int idrol) throws SQLException, Exception {
+        String sql;
+        String nombrerol="";
+      
+        sql = "SELECT descripcio FROM rol where id= " + idrol;
+
+        try {
+            Statement objStt = (Statement) getConnection().createStatement();
+            ResultSet rs = objStt.executeQuery(sql);
+            while (rs.next()) {
+
+                        nombrerol=         (rs.getString  ("descripcio"));
+            }
+        } 
+        catch (SQLException ex) {throw ex;} 
+        catch (Exception ex)    {throw ex;}
+      
+        return nombrerol;
     }
 }
