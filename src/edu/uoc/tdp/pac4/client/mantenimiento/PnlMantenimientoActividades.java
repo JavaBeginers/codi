@@ -424,7 +424,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
         header.add(language.getProperty("mantenimiento.actividad.fechaend"));
 
         String[][] gridData;
-        if (usuario.getIdRol() == ROL_SECRETARIA) {
+        if (usuario.getIdRol() == ROL_SECRETARIA || usuario.getIdRol() == ROL_ADMINISTRADOR) {
             actividades = manager.getActividadesByUniversidadId(usuario.getUniversidadId());
             gridData = new String[actividades.size()][5];
             int i = 0;

@@ -35,6 +35,7 @@ public class Actividad implements Serializable {
     private double preu;
     private double minimPercentatge;
     private boolean cancelada;
+    private int numPlazas;
 
     // Definición de tipos
     public static final int ACTIVIDAD_TIPO_NO_DEFINIDO_ID = 0;
@@ -369,6 +370,21 @@ public class Actividad implements Serializable {
         this.preu = 0;
         this.minimPercentatge = 0;
         this.cancelada = false;
+        this.numPlazas=0;
+    }
+
+    /**
+     * @return the numPlazas
+     */
+    public int getNumPlazas() {
+        return numPlazas;
+    }
+
+    /**
+     * @param numPlazas the numPlazas to set
+     */
+    public void setNumPlazas(int numPlazas) {
+        this.numPlazas = numPlazas;
     }
 
 }

@@ -65,6 +65,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private final String ERROR_EXCEPTION_MESSAGE = "actividad.error.excepcion";
     private final int ERROR_INI_MAYOR_FIN_ID = 12;
     private final String ERROR_INI_MAYOR_FIN_MESSAGE = "actividad.error.ini.mayor.fin";
+    private final int ERROR_NUMPLAZAS_ID = 13;
+    private final String ERROR_NUMPLAZAS_MESSAGE = "actividad.error.num.plazas";
+    private final int ERROR_NUMPLAZAS_TOO_MUCH_ID = 14;
+    private final String ERROR_NUMPLAZAS_TOO_MUCH_MESSAGE = "actividad.error.num.plazas.too.much";
     /**
      * Creates new form PnlGroupGestor
      *
@@ -128,6 +132,8 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         fldAreaConocimiento = new javax.swing.JTextField();
         lblDateFin = new javax.swing.JLabel();
         fldDateFin = new javax.swing.JFormattedTextField();
+        lblNumPlazas = new javax.swing.JLabel();
+        fldNumPlazas = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -224,19 +230,21 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         fldDateFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         fldDateFin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        lblNumPlazas.setText("Precio");
+
+        fldNumPlazas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        fldNumPlazas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdAccept)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdClose)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbCancelada)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCentro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -261,27 +269,34 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                                 .addGap(81, 81, 81))
                             .addComponent(lblCambios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblDateIni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDateMaximaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                            .addComponent(lblDateMaximaInscripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(lblNumPlazas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(216, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbCancelada)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cmdAccept)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmdClose))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fldNumPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboCentro, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cboSitio, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldEspecializacion, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldDecanatura, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldInvestigador, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldAreaConocimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fldDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 210, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,8 +359,12 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                     .addComponent(fldDateMaximaInscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDateMaximaInscripcion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbCancelada)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumPlazas)
+                    .addComponent(fldNumPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbCancelada)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdClose)
                     .addComponent(cmdAccept))
@@ -397,6 +416,18 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         if(endActividad.getTime()<iniActividad.getTime()) {
             return ERROR_INI_MAYOR_FIN_ID;
         }
+        if(fldNumPlazas.getText().isEmpty() || fldNumPlazas.getText().equals("0")){
+            return ERROR_NUMPLAZAS_ID;
+        }
+        int capacidad=0;
+        try {
+            capacidad = manager.getCapacidadByAulaId(Math.toIntExact(((ComboItem) cboSitio.getSelectedItem()).getId()));
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(new Integer(fldNumPlazas.getText())>capacidad) {
+            return ERROR_NUMPLAZAS_TOO_MUCH_ID;
+        }
         try {
             if (this.actionType.equalsIgnoreCase("Add")) {
                 if (!manager.canAddActivity(tipusActivitat, centreId, iniActividad, endActividad)) {
@@ -434,6 +465,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         lblDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
         lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechaend"));
         lblDateMaximaInscripcion.setText(language.getProperty("mantenimiento.actividad.fechamaximainscripcion"));
+        lblNumPlazas.setText(language.getProperty("mantenimiento.actividad.numplazas"));
         cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
 
         if (this.actionType.equalsIgnoreCase("Add")) {
@@ -486,6 +518,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         fldInvestigador.setText("");
         fldCambios.setText("");
         fldPrecio.setText("");
+        fldNumPlazas.setText("");
         cbCancelada.setSelected(false);
 
         fldDateIni.setText("");
@@ -537,6 +570,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             } else {
                 this.fldDateMaximaInscripcion.setText("");
             }
+            this.fldNumPlazas.setText(String.valueOf(actividad.getNumPlazas()));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
@@ -627,8 +661,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             actividad.setDataInici(iniActividad);
             actividad.setDataFi(endActividad);
             actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            try {
+                actividad.setNumPlazas(new Integer(fldNumPlazas.getText()));
+            } catch (NumberFormatException ex) {
+            }
             actividad.setCancelada(cbCancelada.isSelected());
-
             ArrayList<Actividad> actividades = manager.getActividadesInactivas();
 
             for (Actividad oldActividad : actividades) {
@@ -715,8 +752,11 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
             new_actividad.setDataInici(iniActividad);
             new_actividad.setDataFi(endActividad);
             new_actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
+            try {
+                new_actividad.setNumPlazas(new Integer(this.fldNumPlazas.getText()));
+            } catch (NumberFormatException ex) {
+            }
             new_actividad.setCancelada(cbCancelada.isSelected());
-
             Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
             int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, now);
             if (reply == 0) {
@@ -952,7 +992,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cboUniversidad.removeAll();
         cboUniversidad.setModel(new DefaultComboBoxModel(universidadesCB.toArray()));
         cboUniversidad.setSelectedIndex(seleccionada);
-        
 
     }
     
@@ -983,6 +1022,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
                 return ERROR_EXCEPTION_MESSAGE;
             case ERROR_INI_MAYOR_FIN_ID:
                 return ERROR_INI_MAYOR_FIN_MESSAGE;
+            case ERROR_NUMPLAZAS_ID:
+                return ERROR_NUMPLAZAS_MESSAGE;
+            case ERROR_NUMPLAZAS_TOO_MUCH_ID:
+                return ERROR_NUMPLAZAS_TOO_MUCH_MESSAGE;
             default:
                 return "";
         }
@@ -1004,6 +1047,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private javax.swing.JTextField fldDecanatura;
     private javax.swing.JTextField fldEspecializacion;
     private javax.swing.JTextField fldInvestigador;
+    private javax.swing.JFormattedTextField fldNumPlazas;
     private javax.swing.JFormattedTextField fldPrecio;
     private javax.swing.JTextField fldTitulo;
     private javax.swing.JToolBar jToolBar1;
@@ -1016,6 +1060,7 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private javax.swing.JLabel lblDecanatura;
     private javax.swing.JLabel lblEspecialización;
     private javax.swing.JLabel lblInvestigador;
+    private javax.swing.JLabel lblNumPlazas;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblSitio;
     private javax.swing.JLabel lblTipoActividad;

@@ -158,6 +158,7 @@ CREATE TABLE ACTIVIDAD
  data_max_inscripcio date NOT NULL,
  preu double precision,
  minim_percentatge double precision NOT NULL,
+ numero_plazas integer NOT NULL,
  cancelada smallint, -- Indica si la activitat estÃ  cancelÂ·lada o no
  CONSTRAINT ACTIVITIES_PK PRIMARY KEY (id)
 )

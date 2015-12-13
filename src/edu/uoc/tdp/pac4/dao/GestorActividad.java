@@ -39,6 +39,7 @@ public class GestorActividad extends GestorDisco {
     private static final String ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO = "data_max_inscripcio";
     private static final String ACTIVIDADTABLE_PREU = "preu";
     private static final String ACTIVIDADTABLE_MINIM_PERCENTAGE = "minim_percentatge";
+    private static final String ACTIVIDADTABLE_NUM_PLAZAS = "numero_plazas";
     private static final String ACTIVIDADTABLE_CANCELADA = "cancelada";
 
 //    /*
@@ -328,6 +329,7 @@ public class GestorActividad extends GestorDisco {
             sql.append(ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO + ",");
             sql.append(ACTIVIDADTABLE_PREU + ",");
             sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE + ",");
+            sql.append(ACTIVIDADTABLE_NUM_PLAZAS + ",");
             sql.append(ACTIVIDADTABLE_CANCELADA + ") ");
             sql.append("VALUES ");
             sql.append("(");
@@ -349,6 +351,7 @@ public class GestorActividad extends GestorDisco {
             }
             sql.append(actividad.getPreu()).append(", ");
             sql.append(actividad.getMinimPercentatge()).append(", ");
+            sql.append(actividad.getNumPlazas()).append(", ");
             sql.append(actividad.isCancelada() ? "1" : "0");
             sql.append(")");
 
@@ -432,6 +435,10 @@ public class GestorActividad extends GestorDisco {
             sql.append(ACTIVIDADTABLE_MINIM_PERCENTAGE);
             sql.append(" = ");
             sql.append(actividad.getMinimPercentatge());
+            sql.append(", ");
+            sql.append(ACTIVIDADTABLE_NUM_PLAZAS);
+            sql.append(" = ");
+            sql.append(actividad.getNumPlazas());
             sql.append(", ");
             sql.append(ACTIVIDADTABLE_CANCELADA);
             sql.append(" = ");
@@ -561,6 +568,7 @@ public class GestorActividad extends GestorDisco {
         actividad.setDataMaxInscripcio(rs.getDate(ACTIVIDADTABLE_DATA_MAX_INSCRIPCIO));
         actividad.setPreu(rs.getDouble(ACTIVIDADTABLE_PREU));
         actividad.setMinimPercentatge(rs.getDouble(ACTIVIDADTABLE_MINIM_PERCENTAGE));
+        actividad.setNumPlazas(rs.getInt(ACTIVIDADTABLE_NUM_PLAZAS));
         actividad.setCancelada(rs.getBoolean(ACTIVIDADTABLE_CANCELADA));
 
     }
