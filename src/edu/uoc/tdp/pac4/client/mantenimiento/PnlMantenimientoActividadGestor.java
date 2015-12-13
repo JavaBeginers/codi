@@ -23,7 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
