@@ -13,36 +13,36 @@ INSERT INTO ROL(id, descripcio) VALUES(3, 'professor');
 INSERT INTO ROL(id, descripcio) VALUES(4, 'usuari');
 
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (1, 'jdominguez', '1234', 'Joan Antoni', 'Dominguez', '12345678A', 'ES', 'Carrer 1', 'Ciutat 1', '54321', 'ES', 'jdominguez@uoc.edu', '01/12/2015', 2, 'true');
+VALUES (1, 'jdominguez', '1234', 'Joan Antoni', 'Dominguez', '12345678A', 4, 'Carrer 1', 'Ciutat 1', '54321', 4, 'jdominguez@uoc.edu', '01/12/2015', 2, 'true');
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (2, 'cceballos', '1111', 'Cristian', 'Ceballos', '23456789B', 'ES', 'Carrer 2', 'Ciutat 2', '12345', 'ES', 'cceballos@uoc.edu', '01/12/2015', 1, 'true');
+VALUES (2, 'cceballos', '1111', 'Cristian', 'Ceballos', '23456789B', 4, 'Carrer 2', 'Ciutat 2', '12345', 4, 'cceballos@uoc.edu', '01/12/2015', 1, 'true');
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (3, 'imargarit', '4321', 'Ivan', 'Margarit', '34567890C', 'ES', 'Carrer 3', 'Ciutat 3', '12121', 'ES', 'imargarit@uoc.edu', '01/12/2015', 1, 'true');
+VALUES (3, 'imargarit', '4321', 'Ivan', 'Margarit', '34567890C', 4, 'Carrer 3', 'Ciutat 3', '12121', 4, 'imargarit@uoc.edu', '01/12/2015', 1, 'true');
 INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (4, 'mperez', '2222', 'Marc', 'Perez', '45678901D', 'ES', 'Carrer 4', 'Ciutat 4', '23232', 'ES', 'mperezcalm@uoc.edu', '01/12/2015', 2, 'true');
+VALUES (4, 'mperez', '2222', 'Marc', 'Perez', '45678901D', 4, 'Carrer 4', 'Ciutat 4', '23232', 4, 'mperezcalm@uoc.edu', '01/12/2015', 2, 'true');
 
 INSERT INTO UNIVERSITAT(universitat_id, acronim, nom, adreca, poblacio, codi_postal, pais, email, data_alta)
-VALUES(1, 'UOC', 'Universitat Oberta de Catalunya', 'Adreça 1', 'Població 1', '01234', 'ES', 'uoc@uoc.edu', '01/12/2015');
+VALUES(1, 'UOC', 'Universitat Oberta de Catalunya', 'Adreça 1', 'Població 1', '01234', 4, 'uoc@uoc.edu', '01/12/2015');
 INSERT INTO UNIVERSITAT(universitat_id, acronim, nom, adreca, poblacio, codi_postal, pais, email, data_alta)
-VALUES(2, 'UAB', 'Universitat Autònoma de Barcelona', 'Adreça 2', 'Població 2', '12345', 'ES', 'uab@uab.edu', '01/12/2015');
+VALUES(2, 'UAB', 'Universitat Autònoma de Barcelona', 'Adreça 2', 'Població 2', '12345', 4, 'uab@uab.edu', '01/12/2015');
 INSERT INTO UNIVERSITAT(universitat_id, acronim, nom, adreca, poblacio, codi_postal, pais, email, data_alta)
-VALUES(3, 'UPC', 'Universitat Politècnica de Catalunya', 'Adreça 3', 'Població 3', '23456', 'ES', 'upc@upc.edu', '01/12/2015');
+VALUES(3, 'UPC', 'Universitat Politècnica de Catalunya', 'Adreça 3', 'Població 3', '23456', 4, 'upc@upc.edu', '01/12/2015');
 INSERT INTO UNIVERSITAT(universitat_id, acronim, nom, adreca, poblacio, codi_postal, pais, email, data_alta)
-VALUES(4, 'UPF', 'Universitat Pompeu Fabra', 'Adreça 4', 'Població 4', '34567', 'ES', 'upf@upf.edu', '01/12/2015');
+VALUES(4, 'UPF', 'Universitat Pompeu Fabra', 'Adreça 4', 'Població 4', '34567', 4, 'upf@upf.edu', '01/12/2015');
 
-INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(1, 1,'ES', 'Universitat Oberta de Catalunya');
-INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(2, 2,'ES', 'Universitat Autònoma de Barcelona');
-INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(3, 3,'ES', 'Universitat Politècnica de Catalunya');
-INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(4, 4,'ES', 'Universitat Pompeu Fabra');
+INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(1, 1,4, 'Universitat Oberta de Catalunya');
+INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(2, 2,4, 'Universitat Autònoma de Barcelona');
+INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(3, 3,4, 'Universitat Politècnica de Catalunya');
+INSERT INTO NOM_UNIVERSITAT(nom_universitat_id, universitat_id, codi_idioma, nom) VALUES(4, 4,4, 'Universitat Pompeu Fabra');
 
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
-VALUES(1, 1, 'Centre 1', 'Adreça 1', 'Poblacio 1', '01234', 'ES', 'centre1@centre1.edu', '01/12/2015');
+VALUES(1, 1, 'Centre 1', 'Adreça 1', 'Poblacio 1', '01234', 4, 'centre1@centre1.edu', '01/12/2015');
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
-VALUES(2, 2, 'Centre 2', 'Adreça 2', 'Poblacio 2', '12345', 'ES', 'centre2@centre2.edu', '01/12/2015');
+VALUES(2, 2, 'Centre 2', 'Adreça 2', 'Poblacio 2', '12345', 4, 'centre2@centre2.edu', '01/12/2015');
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
-VALUES(3, 3, 'Centre 3', 'Adreça 3', 'Poblacio 3', '23456', 'ES', 'centre3@centre3.edu', '01/12/2015');
+VALUES(3, 3, 'Centre 3', 'Adreça 3', 'Poblacio 3', '23456', 4, 'centre3@centre3.edu', '01/12/2015');
 INSERT INTO CENTRE(centre_id, universitat_id, nom_centre, adreca, poblacio, codi_postal, pais, email, data_alta) 
-VALUES(4, 4, 'Centre 4', 'Adreça 4', 'Poblacio 4', '34567', 'ES', 'centre4@centre4.edu', '01/12/2015');
+VALUES(4, 4, 'Centre 4', 'Adreça 4', 'Poblacio 4', '34567', 4, 'centre4@centre4.edu', '01/12/2015');
 
 INSERT INTO AULA(aula_id, centre_id, codi_aula, nom, capacitat, ubicacio, data_alta) VALUES(1, 1, 'A1C1', 'Aula Centre 1', 50, 'Edifici Centre 1', '01/12/2015');
 INSERT INTO AULA(aula_id, centre_id, codi_aula, nom, capacitat, ubicacio, data_alta) VALUES(2, 2, 'A1C2', 'Aula Centre 2', 50, 'Edifici Centre 2', '01/12/2015');
