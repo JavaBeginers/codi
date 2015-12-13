@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Gestor de grupos del centro.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorGrupo extends GestorDisco
 {
@@ -67,12 +67,12 @@ public class GestorGrupo extends GestorDisco
       String sql;
       Grupo grupo = null;
       
-      sql = "SELECT grupo.*, usuario.nombre As pnombre, usuario.apellidos As papellidos, aula.nombre As aula, " +
+      sql = "SELECT grupo.*, usuari.noms As pnombre, usuari.cognoms As papellidos, aula.nom As aula, " +
             "       curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
             "       curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
             "FROM   grupo Inner Join curso On (grupo.idcurso = curso.id) " +
             "             Left Join aula On (grupo.idaula = aula.id_aula) " +
-            "             Left Join usuario On (grupo.idprofesor = usuario.id) " +
+            "             Left Join usuari On (grupo.idprofesor = usuari.usuari_id) " +
             "WHERE  grupo.grupoid = " + id;
       
       try 
@@ -315,12 +315,12 @@ public class GestorGrupo extends GestorDisco
       String sql;
       ArrayList<Grupo> list = new ArrayList<Grupo>();
       
-      sql = "SELECT grupo.*, usuario.nombre As pnombre, usuario.apellidos As papellidos, aula.nombre As aula, " +
+      sql = "SELECT grupo.*, usuari.noms As pnombre, usuari.cognoms As papellidos, aula.nombre As aula, " +
             "       curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
             "       curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
             "FROM   grupo Inner Join curso On (grupo.idcurso = curso.id) " +
             "             Left Join aula On (grupo.idaula = aula.id_aula) " +
-            "             Left Join usuario On (grupo.idprofesor = usuario.id) " +
+            "             Left Join usuari On (grupo.idprofesor = usuari.usuari_id) " +
             (idCurso > 0 ? "WHERE curso.id = " + idCurso + " " : "") +
             "ORDER BY grupo.nombre Asc";
 
@@ -361,11 +361,11 @@ public class GestorGrupo extends GestorDisco
       String sql;
       ArrayList<Grupo> list = new ArrayList<Grupo>();
       
-      sql = "SELECT grupo.*, usuario.nombre As pnombre, usuario.apellidos As papellidos, aula.nombre As aula, " +
+      sql = "SELECT grupo.*, usuari.noms As pnombre, usuari.cognoms As papellidos, aula.nombre As aula, " +
             "       curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
             "       curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
             "FROM   grupo, usuario, aula, curso " +
-            "WHERE  grupo.idprofesor = usuario.id And " +
+            "WHERE  grupo.idprofesor = usuari.usuari_id And " +
             "       grupo.idaula = aula.id_aula And " +
             "       grupo.idcurso = curso.id And " +
             "       grupo.idprofesor = " + idUsuario + " " +
@@ -409,8 +409,8 @@ public class GestorGrupo extends GestorDisco
       String sql;
       ArrayList<Grupo> list = new ArrayList<Grupo>();
                   
-     sql = "SELECT grupo.*, (SELECT usuario.nombre || '#' || usuario.apellidos " +
-                             "FROM grupo, usuario where grupo.idprofesor = usuario.id " + 
+     sql = "SELECT grupo.*, (SELECT usuari.noms || '#' || usuari.cognoms " +
+                             "FROM grupo, usuari where grupo.idprofesor = usuari.usuari_id " + 
        "                     AND grupo.grupoid = matriculas.grupoid) AS nombreProfesor, " +
        "aula.nombre As aula, curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
        "curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
@@ -418,8 +418,8 @@ public class GestorGrupo extends GestorDisco
        "WHERE  grupo.idaula = aula.id_aula And " +
        "       grupo.idcurso = curso.id And " +
        "       grupo.grupoid = matriculas.grupoid And  " + 
-       "       matriculas.usuarioid = usuario.id And" +
-       "       matriculas.estadoid = 1 And usuario.id =  " + idUsuario + " " +
+       "       matriculas.usuarioid = usuari.usuari_id And" +
+       "       matriculas.estadoid = 1 And usuari.usuari_id =  " + idUsuario + " " +
        (idCurso > 0 ? " And curso.id = " + idCurso + " " : " ") +
        (idTurno == Grupo.TURNO_MANANA || idTurno == Grupo.TURNO_TARDE ? " And grupo.turno = " + idTurno + " " : " ") +
        "And curso.fecha_inicio <= now() " +
@@ -466,12 +466,12 @@ public class GestorGrupo extends GestorDisco
       ArrayList<Grupo> list = new ArrayList<Grupo>();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
       
-      sql = "SELECT grupo.*, usuario.nombre As pnombre, usuario.apellidos As papellidos, aula.nombre As aula, " +
+      sql = "SELECT grupo.*, usuari.noms As pnombre, usuari.cognoms As papellidos, aula.nombre As aula, " +
             "       curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
             "       curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
             "FROM   grupo Inner Join curso On (grupo.idcurso = curso.id) " +
             "             Left Join aula On (grupo.idaula = aula.id_aula) " +
-            "             Left Join usuario On (grupo.idprofesor = usuario.id) " +
+            "             Left Join usuari On (grupo.idprofesor = usuari.usuari_id) " +
             "WHERE  grupo.grupoid > 0 " +
             (idCurso > 0 ? " And curso.id = " + idCurso + " " : "") +
             (idTurno == Grupo.TURNO_MANANA || idTurno == Grupo.TURNO_TARDE ? " And grupo.turno = " + idTurno + " " : "") +

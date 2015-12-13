@@ -63,8 +63,8 @@ public class GestorAsistencia extends GestorDisco
       {
           
          sql = "SELECT * " +
-         "FROM asistencia " +
-         "WHERE asistencia.grupoid = " + idGrupo + " " +
+         "FROM assistencia " +
+         "WHERE assistencia.grupoid = " + idGrupo + " " +
          "ORDER BY asistid DESC LIMIT 1";
                   
          ResultSet rs = executeSql(sql);
@@ -109,16 +109,16 @@ public class GestorAsistencia extends GestorDisco
       {
          // Comprueba que no exista otro recuento para la misma fecha y grupo.
          sql = "SELECT Count(*) As nItems " +
-               "FROM   asistencia " +
-               "WHERE  asistencia.fechaasist = '" + dfd.format(asistencia.getDate()) + "' And " +
-               "       asistencia.grupoid = " + asistencia.getIdGrupo();
+               "FROM   assistencia " +
+               "WHERE  assistencia.fechaasist = '" + dfd.format(asistencia.getDate()) + "' And " +
+               "       assistencia.grupoid = " + asistencia.getIdGrupo();
          if (executeScalar(sql) > 0)
          {
             throw new GroupAlreadyCountedException();
          }
          
          // Agrega la petición y actualiza la instancia con el nuevo ID
-         sql = "INSERT INTO asistencia (asistid, fechaasist, horainicio, horafin, totalasisten, totalnoasisten, grupoid) " +
+         sql = "INSERT INTO assistencia (asistid, fechaasist, horainicio, horafin, totalasisten, totalnoasisten, grupoid) " +
                "VALUES " +
                "(     DEFAULT, " +
                " '" + dfd.format(asistencia.getDate()) + "', " +
@@ -190,11 +190,11 @@ public class GestorAsistencia extends GestorDisco
          nPresentes = executeScalar(sql);
          
          // Actualiza el recuento
-         sql = "UPDATE asistencia " +
+         sql = "UPDATE assistencia " +
                "SET    horafin            = '" + dft.format(asistencia.getHoraFin()) + "', " +
                "       totalasisten       =  " + nPresentes + ", " +
                "       totalnoasisten      =  " + (nAlumnos - nPresentes) + " " +
-               "WHERE  asistencia.asistid = " + asistencia.getId();
+               "WHERE  assistencia.asistid = " + asistencia.getId();
          execute(sql);
       } 
       catch (SQLException ex) 
@@ -225,14 +225,14 @@ public class GestorAsistencia extends GestorDisco
       try 
       {
          // Agrega la petición
-         sql = "UPDATE asistencia " +
+         sql = "UPDATE assistencia " +
                "SET    fechaasist    = '" + dfd.format(asistencia.getDate()) + "', " +
                "       horainicio    = '" + dft.format(asistencia.getHoraInicio()) + "', " +
                "       horafin       = '" + dft.format(asistencia.getHoraFin()) + "', " +
                "       totalasisten  =  " + asistencia.getTotalAssistencia() + ", " +
                "       totalnoasisten =  " + asistencia.getTotalFaltas() + ", " +
                "       grupoid       =  " + asistencia.getIdGrupo() + " " +
-               "WHERE  asistencia.asistid = " + asistencia.getId();
+               "WHERE  assistencia.asistid = " + asistencia.getId();
 
          execute(sql);
       } 

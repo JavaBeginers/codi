@@ -18,7 +18,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 /**
  * Formulario de recuento de asistencia.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlAsistencia extends javax.swing.JDialog 
 {

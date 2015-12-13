@@ -11,6 +11,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
  */
 public class Grupo extends IdentifiableObject implements java.io.Serializable 
 {
+   
    private String nombre;
    private int maxAlumnos;
    private int plazasDisponibles;
