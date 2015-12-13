@@ -6,7 +6,7 @@ pais_id integer default nextval('paisos_id_seq') not null,
 codi_pais char(2),
 codi_idioma char(2),
 nom varchar(255),
-CONSTRAINT pais_idioma PRIMARY KEY (codi_pais, codi_idioma)
+CONSTRAINT PK_PAIS PRIMARY KEY (pais_id)
 );
 
 DROP SEQUENCE IF EXISTS idioma_id_seq CASCADE;
