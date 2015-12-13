@@ -12,14 +12,14 @@ INSERT INTO ROL(id, descripcio) VALUES(2, 'secretaria');
 INSERT INTO ROL(id, descripcio) VALUES(3, 'professor');
 INSERT INTO ROL(id, descripcio) VALUES(4, 'usuari');
 
-INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (1, 'jdominguez', '1234', 'Joan Antoni', 'Dominguez', '12345678A', 4, 'Carrer 1', 'Ciutat 1', '54321', 4, 'jdominguez@uoc.edu', '01/12/2015', 2, 'true');
-INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (2, 'cceballos', '1111', 'Cristian', 'Ceballos', '23456789B', 4, 'Carrer 2', 'Ciutat 2', '12345', 4, 'cceballos@uoc.edu', '01/12/2015', 1, 'true');
-INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (3, 'imargarit', '4321', 'Ivan', 'Margarit', '34567890C', 4, 'Carrer 3', 'Ciutat 3', '12121', 4, 'imargarit@uoc.edu', '01/12/2015', 1, 'true');
-INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, idioma_id, actiu)
-VALUES (4, 'mperez', '2222', 'Marc', 'Perez', '45678901D', 4, 'Carrer 4', 'Ciutat 4', '23232', 4, 'mperezcalm@uoc.edu', '01/12/2015', 2, 'true');
+INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, rol, idioma_id, actiu)
+VALUES (1, 'jdominguez', '1234', 'Joan Antoni', 'Dominguez', '12345678A', 4, 'Carrer 1', 'Ciutat 1', '54321', 4, 'jdominguez@uoc.edu', '01/12/2015', 1, 2, 'true');
+INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, rol, idioma_id, actiu)
+VALUES (2, 'cceballos', '1111', 'Cristian', 'Ceballos', '23456789B', 4, 'Carrer 2', 'Ciutat 2', '12345', 4, 'cceballos@uoc.edu', '01/12/2015', 1, 1, 'true');
+INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, rol, idioma_id, actiu)
+VALUES (3, 'imargarit', '4321', 'Ivan', 'Margarit', '34567890C', 4, 'Carrer 3', 'Ciutat 3', '12121', 4, 'imargarit@uoc.edu', '01/12/2015', 1, 1, 'true');
+INSERT INTO USUARI(usuari_id, nom_usuari, contrasenya, noms, cognoms, nombre_doc_identif, pais_doc_identif, adreca, poblacio, codi_postal, pais_residencia, email, data_alta, rol, idioma_id, actiu)
+VALUES (4, 'mperez', '2222', 'Marc', 'Perez', '45678901D', 4, 'Carrer 4', 'Ciutat 4', '23232', 4, 'mperezcalm@uoc.edu', '01/12/2015', 1, 2, 'true');
 
 INSERT INTO UNIVERSITAT(universitat_id, acronim, nom, adreca, poblacio, codi_postal, pais, email, data_alta)
 VALUES(1, 'UOC', 'Universitat Oberta de Catalunya', 'Adreça 1', 'Població 1', '01234', 4, 'uoc@uoc.edu', '01/12/2015');
