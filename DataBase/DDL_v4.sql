@@ -6,7 +6,7 @@ pais_id integer default nextval('paisos_id_seq') not null,
 codi_pais char(2),
 codi_idioma char(2),
 nom varchar(255),
-CONSTRAINT pais_idioma PRIMARY KEY (codi_pais, codi_idioma)
+CONSTRAINT PK_PAIS PRIMARY KEY (pais_id)
 );
 
 DROP SEQUENCE IF EXISTS idioma_id_seq CASCADE;
@@ -96,14 +96,15 @@ nom_centre varchar(255) NOT NULL,
 adreca varchar(255) NOT NULL,
 poblacio varchar(255) NOT NULL,
 codi_postal varchar(32) NOT NULL,
-pais varchar(2) NOT NULL,
+pais integer NOT NULL,
 telefono varchar(16),
 email varchar(128) NOT NULL,
 url varchar(255),
 data_alta date NOT NULL,
 data_baixa date,
 CONSTRAINT PK_CENTRE PRIMARY KEY(centre_id),
-CONSTRAINT FK_CENTRE_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id)
+CONSTRAINT FK_CENTRE_UNIVERSITAT FOREIGN KEY (universitat_id) REFERENCES UNIVERSITAT(universitat_id),
+CONSTRAINT FK_CENTRE_PAIS FOREIGN KEY(pais) REFERENCES PAISOS(pais_id)
 );
 
 DROP SEQUENCE IF EXISTS aula_id_seq CASCADE;
@@ -220,7 +221,7 @@ CREATE TABLE curso
   idaula integer,
   CONSTRAINT curso_pkey PRIMARY KEY (id),
   CONSTRAINT curso_idaula_fkey FOREIGN KEY (idaula)
-      REFERENCES aula (id_aula) MATCH SIMPLE
+      REFERENCES aula (aula_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT curso_idprofesor_fkey FOREIGN KEY (idprofesor)
       REFERENCES usuari (usuari_id) MATCH SIMPLE
@@ -245,7 +246,7 @@ CREATE TABLE grupo
   idcurso integer,
   CONSTRAINT grupo_pkey PRIMARY KEY (grupoid),
   CONSTRAINT grupo_idaula_fkey FOREIGN KEY (idaula)
-      REFERENCES aula (id_aula) MATCH SIMPLE
+      REFERENCES aula (aula_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT grupo_idcurso_fkey FOREIGN KEY (idcurso)
       REFERENCES curso (id) MATCH SIMPLE

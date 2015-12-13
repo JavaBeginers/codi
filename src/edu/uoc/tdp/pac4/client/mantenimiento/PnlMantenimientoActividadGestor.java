@@ -31,7 +31,6 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private final Mantenimiento manager;
     private final LanguageUtils language;
     private List<ComboItem> tiposActividad;
-    private List<ComboItem> universidades;
 
     private final String actionType;
 
@@ -926,38 +925,34 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
 
     }
 
-    private void setUniversidades(int universidad) {
+    private void setUniversidades(int universidadId) {
 
-        int index;
-        if (universidades == null) {
-            universidades = new ArrayList<ComboItem>();
-        }
-        //Buscar todas las universidades
-        universidades.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID));
-        universidades.add(new ComboItem(Actividad.getUniversidadName(Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID, language), Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID));
-        switch (universidad) {
-            case Actividad.ACTIVIDAD_UNIVERSIDAD_UOC_ID:
-                index = 1;
-                break;
-            case Actividad.ACTIVIDAD_UNIVERSIDAD_UAB_ID:
-                index = 2;
-                break;
-            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPC_ID:
-                index = 3;
-                break;
-            case Actividad.ACTIVIDAD_UNIVERSIDAD_UPF_ID:
-                index = 4;
-                break;
-            default:
-                index = 0;
+        List<ComboItem> universidadesCB;
+        universidadesCB = new ArrayList<ComboItem>();
+        List<Universitat> universidades = new ArrayList<Universitat>();
+        int index=0;
+        int seleccionada = 0;
+        
+        try {
+            universidades = manager.getUniversidadesRaw();
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        universidadesCB.add(new ComboItem(language.getProperty(eAcademiaEU.FORM_PNLACTIVIDAD_UNIVERSIDAD_SELECCIONA), -1));
+        for (Universitat universidad : universidades) {
+            if(usuario.getUniversidadId()==universidad.getUniversitat_id()) {
+                index++;
+                universidadesCB.add(new ComboItem(universidad.getNom(), universidad.getUniversitat_id()));
+                if(universidadId==universidad.getUniversitat_id()) {
+                    seleccionada = index;
+                }
+            }
+        }
         cboUniversidad.removeAll();
-        cboUniversidad.setModel(new DefaultComboBoxModel(universidades.toArray()));
-        cboUniversidad.setSelectedIndex(index);
+        cboUniversidad.setModel(new DefaultComboBoxModel(universidadesCB.toArray()));
+        cboUniversidad.setSelectedIndex(seleccionada);
+        
 
     }
     
