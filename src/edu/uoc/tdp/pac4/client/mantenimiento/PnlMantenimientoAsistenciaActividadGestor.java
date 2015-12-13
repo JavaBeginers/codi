@@ -6,13 +6,11 @@ import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
 
-import edu.uoc.tdp.pac4.util.ComboItem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +38,10 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
      * @param parent
      * @param modal
      * @param manager
+     * @param language
+     * @param actionType
+     * @param actividadID
+     * @param usuario
      */
     public PnlMantenimientoAsistenciaActividadGestor(PnlMantenimientoActividades parent, boolean modal, Mantenimiento manager, LanguageUtils language, String actionType, int actividadID, Usuario usuario) {
         super(parent, modal);
@@ -162,22 +164,8 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         /*
          * Definimos el texto de las labels del panel en función del idioma seleccionado
          */
-//        lblTipoActividad.setText(language.getProperty("mantenimiento.actividad.tipo.actividad"));
-//        lblUniversidad.setText(language.getProperty("mantenimiento.actividad.universidad"));
-//        lblCentro.setText(language.getProperty("mantenimiento.actividad.centro"));
-//        lblSitio.setText(language.getProperty("mantenimiento.actividad.sitio"));
-//        lblAreaConocimiento.setText(language.getProperty("mantenimiento.actividad.area.conocimiento"));
-//        lblEspecialización.setText(language.getProperty("mantenimiento.actividad.area.especializacion"));
-//        lblTitulo.setText(language.getProperty("mantenimiento.actividad.titulo"));
-//        lblDecanatura.setText(language.getProperty("mantenimiento.actividad.decanatura"));
-//        lblInvestigador.setText(language.getProperty("mantenimiento.actividad.investigador"));
-//        lblCambios.setText(language.getProperty("mantenimiento.actividad.cambios"));
-//        lblPrecio.setText(language.getProperty("mantenimiento.actividad.precio"));
-//        lblDateIni.setText(language.getProperty("mantenimiento.actividad.fechaini"));
-//        lblDateFin.setText(language.getProperty("mantenimiento.actividad.fechaend"));
-//        lblDateMaximaInscripcion.setText(language.getProperty("mantenimiento.actividad.fechamaximainscripcion"));
-//        cbCancelada.setText(language.getProperty("mantenimiento.actividad.cancelada"));
-
+        cmdAsistido.setText(language.getProperty("mantenimiento.asististencia.ha.asistido"));
+        cmdNoAsistido.setText(language.getProperty("mantenimiento.asististencia.no.ha.asistido"));
         this.cmdClose.setText(language.getProperty("mantenimiento.usermain.back"));
     }
 
@@ -246,7 +234,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
 
    }//GEN-LAST:event_cmdCloseActionPerformed
 
-   private void fillAsistencias() {
+    private void fillAsistencias() {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
 
         header.add(language.getProperty("mantenimiento.asistencia.alumno"));
@@ -299,7 +287,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
             Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.edit.asistente"),
-            "Información", JOptionPane.INFORMATION_MESSAGE);
+                "Información", JOptionPane.INFORMATION_MESSAGE);
 
         fillAsistencias();
     }//GEN-LAST:event_cmdAsistidoActionPerformed
@@ -308,7 +296,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         // Mirar si hi ha un alumne seleccionat
         if (tblData.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null,
-                    language.getProperty("mantenimiento.msg.asistente"),
+                    language.getProperty("mantenimiento.msg.sele.asistente"),
                     language.getProperty("app.title"),
                     JOptionPane.WARNING_MESSAGE);
             return;
@@ -323,7 +311,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         }
         fillAsistencias();
         JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.edit.asistente"),
-            "Información", JOptionPane.INFORMATION_MESSAGE);
+                "Información", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_cmdNoAsistidoActionPerformed
 

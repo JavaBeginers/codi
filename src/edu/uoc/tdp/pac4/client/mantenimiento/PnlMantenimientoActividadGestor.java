@@ -42,6 +42,30 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
     private final int NAME_LENGTH = 50;
     private final Usuario usuario;
 
+    private final int ERROR_TIPO_ID = 1;
+    private final String ERROR_TIPO_MESSAGE = "actividad.error.tipo";
+    private final int ERROR_UNIVERSIDAD_ID = 2;
+    private final String ERROR_UNIVERSIDAD_MESSAGE = "actividad.error.universidad";
+    private final int ERROR_CENTRO_ID = 3;
+    private final String ERROR_CENTRO_MESSAGE = "actividad.error.centro";
+    private final int ERROR_SITIO_ID = 4;
+    private final String ERROR_SITIO_MESSAGE = "actividad.error.sitio";
+    private final int ERROR_TITULO_ID = 5;
+    private final String ERROR_TITULO_MESSAGE = "actividad.error.titulo";
+    private final int ERROR_DATE_INI_ID = 6;
+    private final String ERROR_DATE_INI_MESSAGE = "actividad.error.fecha.ini";
+    private final int ERROR_DATE_FIN_ID = 7;
+    private final String ERROR_DATE_FIN_MESSAGE = "actividad.error.fecha.fin";
+    private final int ERROR_DATE_MAX_ID = 8;
+    private final String ERROR_DATE_MAX_MESSAGE = "actividad.error.fecha.max";
+    private final int ERROR_SOLAPA_ID = 9;
+    private final String ERROR_SOLAPA_MESSAGE = "actividad.error.solapa";
+    private final int ERROR_SQL_ID = 10;
+    private final String ERROR_SQL_MESSAGE = "actividad.error.sql";
+    private final int ERROR_EXCEPTION_ID = 11;
+    private final String ERROR_EXCEPTION_MESSAGE = "actividad.error.excepcion";
+    private final int ERROR_INI_MAYOR_FIN_ID = 12;
+    private final String ERROR_INI_MAYOR_FIN_MESSAGE = "actividad.error.ini.mayor.fin";
     /**
      * Creates new form PnlGroupGestor
      *
@@ -332,62 +356,65 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean allDataFilled() {
-        //TODO: validate
+    private int allDataFilled() {
+
         //Tipo de actividad no puede ser vacía
         if (cboTipoActividad.getSelectedIndex() < 1) {
-            return false;
+            return ERROR_TIPO_ID;
         }
         //Universidad no puede ser vacía
         if (cboUniversidad.getSelectedIndex() < 1) {
-            return false;
+            return ERROR_UNIVERSIDAD_ID;
         }
         //Centro no puede ser vacío
         if (cboCentro.getSelectedIndex() < 1) {
-            return false;
+            return ERROR_CENTRO_ID;
         }
         //Aula no puede ser vacía
         if (cboSitio.getSelectedIndex() < 1) {
-            return false;
+            return ERROR_CENTRO_ID;
         }
         //Titulo no puede ser vacía
         if (fldTitulo.getText().isEmpty()) {
-            return false;
+            return ERROR_TITULO_ID;
         }
         //Fecha inicio inscripción no puede ser vacía
         if (fldDateIni.getText().isEmpty()) {
-            return false;
+            return ERROR_DATE_INI_ID;
         }
         //Fecha fin inscripción no puede ser vacía
         if (fldDateFin.getText().isEmpty()) {
-            return false;
+            return ERROR_DATE_FIN_ID;
         }
         //Fecha maxima inscripción no puede ser vacía
         if (fldDateMaximaInscripcion.getText().isEmpty()) {
-            return false;
+            return ERROR_DATE_MAX_ID;
         }
         //No se pueden solapar activitats del mateix tipus en el mateix centre docent
         int tipusActivitat = ((ComboItem) cboTipoActividad.getSelectedItem()).getId();
         int centreId = ((ComboItem) cboCentro.getSelectedItem()).getId();
         Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
         Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
+        if(endActividad.getTime()<iniActividad.getTime()) {
+            return ERROR_INI_MAYOR_FIN_ID;
+        }
         try {
             if (this.actionType.equalsIgnoreCase("Add")) {
                 if (!manager.canAddActivity(tipusActivitat, centreId, iniActividad, endActividad)) {
-                    return false;
+                    return ERROR_SOLAPA_ID;
                 }
             } else {
                 if (!manager.canUpdateActivity(actividadID, tipusActivitat, centreId, iniActividad, endActividad)) {
-                    return false;
+                    return ERROR_SOLAPA_ID;
                 }
             }
         } catch(SQLException sqlex) {
-            return false;
+            return ERROR_SQL_ID;
         } catch(Exception ex) {
-            return false;
+            return ERROR_EXCEPTION_ID;
         }
 
-        return true;
+        return 0;
     }
 
     private void setLabelsLanguage() {
@@ -717,9 +744,10 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         /*
          * Las acciones sólo se llevaran a cabo si tenemos TODOS los campos llenos
          */
-        if (!this.allDataFilled()) {
+        int cercaErrors = this.allDataFilled();
+        if (cercaErrors>0) {
             JOptionPane.showMessageDialog(null,
-                    language.getProperty("mantenimiento.err.fields"),
+                    language.getProperty(getErrorMessage(cercaErrors)),
                     language.getProperty("app.title"),
                     JOptionPane.ERROR_MESSAGE);
         } else if (this.actionType.equalsIgnoreCase("Add")) {
@@ -932,7 +960,39 @@ public class PnlMantenimientoActividadGestor extends javax.swing.JDialog {
         cboUniversidad.setSelectedIndex(index);
 
     }
-
+    
+    private String getErrorMessage(int clauError) {
+        
+        switch (clauError) {
+            case ERROR_TIPO_ID:
+                return ERROR_TIPO_MESSAGE;
+            case ERROR_UNIVERSIDAD_ID:
+                return ERROR_UNIVERSIDAD_MESSAGE;
+            case ERROR_CENTRO_ID:
+                return ERROR_CENTRO_MESSAGE;
+            case ERROR_SITIO_ID:
+                return ERROR_SITIO_MESSAGE;
+            case ERROR_TITULO_ID:
+                return ERROR_TITULO_MESSAGE;
+            case ERROR_DATE_INI_ID:
+                return ERROR_DATE_INI_MESSAGE;
+            case ERROR_DATE_FIN_ID:
+                return ERROR_DATE_FIN_MESSAGE;
+            case ERROR_DATE_MAX_ID:
+                return ERROR_DATE_MAX_MESSAGE;
+            case ERROR_SOLAPA_ID:
+                return ERROR_SOLAPA_MESSAGE;
+            case ERROR_SQL_ID:
+                return ERROR_SQL_MESSAGE;
+            case ERROR_EXCEPTION_ID:
+                return ERROR_EXCEPTION_MESSAGE;
+            case ERROR_INI_MAYOR_FIN_ID:
+                return ERROR_INI_MAYOR_FIN_MESSAGE;
+            default:
+                return "";
+        }
+    }
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbCancelada;
     private javax.swing.JComboBox cboCentro;
