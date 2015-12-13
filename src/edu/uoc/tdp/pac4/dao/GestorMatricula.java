@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Implementa el gestor de matriculas del centro.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class GestorMatricula extends GestorDisco
 {

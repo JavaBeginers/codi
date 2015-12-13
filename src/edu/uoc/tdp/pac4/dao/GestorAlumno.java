@@ -59,10 +59,10 @@ public class GestorAlumno extends GestorDisco
       Alumno alumno;
       
       sql = "SELECT * " +
-            "FROM usuario " +
-            "WHERE id    = " + id + " And " +
-                  "idrol = " + Alumno.ROL_ALUMNO +
-                  "AND activo = '" + 1 + "'";
+            "FROM usuari " +
+            "WHERE usuari_id    = " + id + " And " +
+                  "rol = " + Alumno.ROL_ALUMNO +
+                  "AND actiu = '" + 1 + "'";
 
       try 
       {
@@ -71,18 +71,18 @@ public class GestorAlumno extends GestorDisco
          if (rs.next()) 
          {
             alumno = new Alumno();
-            alumno.setId(rs.getInt("id"));
-            alumno.setLogin(rs.getString("login"));
-            alumno.setLogin(rs.getString("pwd"));
-            alumno.setFechaAlta(rs.getDate("fechaalta"));
+            alumno.setId(rs.getInt("usuari_id"));
+            alumno.setLogin(rs.getString("nom_usuari"));
+            alumno.setLogin(rs.getString("contrasenya"));
+            alumno.setFechaAlta(rs.getDate("data_alta"));
             alumno.setEmail(rs.getString("email"));
-            alumno.setTelf(rs.getString("telf"));
-            alumno.setNombre(rs.getString("nombre"));
-            alumno.setApellidos(rs.getString("apellidos"));
-            alumno.setActivo(rs.getBoolean("activo"));
-            alumno.setFechaInactividad(rs.getDate("fechainactividad"));
-            alumno.setNif(rs.getString("nif"));
-            alumno.setIdRol(rs.getInt("idrol"));
+            alumno.setTelf(rs.getString("telefono"));
+            alumno.setNombre(rs.getString("noms"));
+            alumno.setApellidos(rs.getString("cognoms"));
+            alumno.setActivo(rs.getBoolean("actiu"));
+            alumno.setFechaInactividad(rs.getDate("data_baixa"));
+            alumno.setNif(rs.getString("nombre_doc_identif"));
+            alumno.setIdRol(rs.getInt("rol"));
             alumno.setUniversidadId(rs.getInt("universitat_id"));
 
 
@@ -122,10 +122,10 @@ public class GestorAlumno extends GestorDisco
       ArrayList<Alumno> users = new ArrayList<Alumno>();
       
       sql = "SELECT * " +
-            "FROM usuario " +
-            "WHERE idrol = " + Alumno.ROL_ALUMNO + " " +
-            "AND activo = '" + 1 + "' " +
-            "ORDER BY apellidos, nombre";
+            "FROM usuari " +
+            "WHERE rol = " + Alumno.ROL_ALUMNO + " " +
+            "AND actiu = '" + 1 + "' " +
+            "ORDER BY cognoms, noms";
 
       try 
       {
@@ -134,18 +134,18 @@ public class GestorAlumno extends GestorDisco
          while (rs.next()) 
          {
             alumno = new Alumno();
-            alumno.setId(rs.getInt("id"));
-            alumno.setLogin(rs.getString("login"));
-            alumno.setLogin(rs.getString("pwd"));
-            alumno.setFechaAlta(rs.getDate("fechaalta"));
+            alumno.setId(rs.getInt("usuari_id"));
+            alumno.setLogin(rs.getString("nom_usuari"));
+            alumno.setLogin(rs.getString("contrasenya"));
+            alumno.setFechaAlta(rs.getDate("data_alta"));
             alumno.setEmail(rs.getString("email"));
-            alumno.setTelf(rs.getString("telf"));
-            alumno.setNombre(rs.getString("nombre"));
-            alumno.setApellidos(rs.getString("apellidos"));
-            alumno.setActivo(rs.getBoolean("activo"));
-            alumno.setFechaInactividad(rs.getDate("fechainactividad"));
-            alumno.setNif(rs.getString("nif"));
-            alumno.setIdRol(rs.getInt("idrol"));
+            alumno.setTelf(rs.getString("telefono"));
+            alumno.setNombre(rs.getString("noms"));
+            alumno.setApellidos(rs.getString("cognoms"));
+            alumno.setActivo(rs.getBoolean("actiu"));
+            alumno.setFechaInactividad(rs.getDate("data_baixa"));
+            alumno.setNif(rs.getString("nombre_doc_identif"));
+            alumno.setIdRol(rs.getInt("rol"));
 
             users.add(alumno);
          }

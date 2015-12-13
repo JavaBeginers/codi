@@ -26,7 +26,7 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
  *       y obliga a pedir estos datos. Si se modifica la estructura de la BBDD, el
  *       formulario está preparado para permitir crear grupos sin PROFESOR ni AULA.
  * 
- * @author eSupport Netbeans
+ * @author JavaBeginers
  */
 public class PnlGroup extends javax.swing.JDialog 
 {

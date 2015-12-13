@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  *
- * @author J
+ * @author JavaBeginers
  */
 public class GestorUsuario extends GestorDisco
 {
