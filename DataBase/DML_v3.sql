@@ -68,3 +68,13 @@ INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Com
 INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Compte) VALUES(2, 2, 2, '01/12/2015', '2', '0', 1212);
 INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Compte) VALUES(3, 3, 3, '01/12/2015', '2', '0', 3434);
 INSERT INTO MATRICULA(id, usuari_id, activitat_id, data, estat, beca, numero_Compte) VALUES(4, 4, 4, '01/12/2015', '2', '0', 4321);
+
+INSERT INTO CURSO(id, nombre, minasistencia, activo, fecha_inicio, fecha_finalizacion) VALUES(1, 'Curso 1', 100, '1', '01/12/2015', '01/06/2016');
+INSERT INTO CURSO(id, nombre, minasistencia, activo, fecha_inicio, fecha_finalizacion) VALUES(2, 'Curso 2', 100, '1', '01/12/2015', '01/06/2016');
+INSERT INTO CURSO(id, nombre, minasistencia, activo, fecha_inicio, fecha_finalizacion) VALUES(3, 'Curso 3', 100, '1', '01/12/2015', '01/06/2016');
+INSERT INTO CURSO(id, nombre, minasistencia, activo, fecha_inicio, fecha_finalizacion) VALUES(4, 'Curso 4', 100, '1', '01/12/2015', '01/06/2016');
+
+INSERT INTO GRUPO(grupoid, nombre, maxalumnos, plazasdisponibles, fechainicio, fechafin, grupovigente, turno) VALUES(1, 'Grupo 1', 50, 50, '01/12/2015', '01/06/2016', '1', 1);
+INSERT INTO GRUPO(grupoid, nombre, maxalumnos, plazasdisponibles, fechainicio, fechafin, grupovigente, turno) VALUES(2, 'Grupo 2', 50, 50, '01/12/2015', '01/06/2016', '1', 1);
+INSERT INTO GRUPO(grupoid, nombre, maxalumnos, plazasdisponibles, fechainicio, fechafin, grupovigente, turno) VALUES(3, 'Grupo 3', 50, 50, '01/12/2015', '01/06/2016', '1', 1);
+INSERT INTO GRUPO(grupoid, nombre, maxalumnos, plazasdisponibles, fechainicio, fechafin, grupovigente, turno) VALUES(4, 'Grupo 4', 50, 50, '01/12/2015', '01/06/2016', '1', 1);

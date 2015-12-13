@@ -217,7 +217,7 @@ CREATE TABLE curso
   idaula integer,
   CONSTRAINT curso_pkey PRIMARY KEY (id),
   CONSTRAINT curso_idaula_fkey FOREIGN KEY (idaula)
-      REFERENCES aula (id_aula) MATCH SIMPLE
+      REFERENCES aula (aula_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT curso_idprofesor_fkey FOREIGN KEY (idprofesor)
       REFERENCES usuari (usuari_id) MATCH SIMPLE
@@ -242,7 +242,7 @@ CREATE TABLE grupo
   idcurso integer,
   CONSTRAINT grupo_pkey PRIMARY KEY (grupoid),
   CONSTRAINT grupo_idaula_fkey FOREIGN KEY (idaula)
-      REFERENCES aula (id_aula) MATCH SIMPLE
+      REFERENCES aula (aula_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT grupo_idcurso_fkey FOREIGN KEY (idcurso)
       REFERENCES curso (id) MATCH SIMPLE
