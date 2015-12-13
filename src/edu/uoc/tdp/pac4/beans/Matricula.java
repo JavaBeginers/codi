@@ -13,12 +13,12 @@ import edu.uoc.tdp.pac4.eAcademiaEU;
 public class Matricula extends IdentifiableObject implements java.io.Serializable 
 {
    // peticionid ???
-   private int actividadId;
-   private int grupoId;
-   private int estadoId;
-   private int usuarioId;
+   private int id;
+   private int activitat_id;
+   private int estat;
+   private int usuari_id;
    private Date fechaModificacion;
-   private Date fechaAlta;
+   private Date data;
    
    // Propiedades de solo lectura
    private String actividadNombre;
@@ -50,13 +50,13 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
     */
    public Matricula()
    {
-      this.actividadId = 0;
-      this.grupoId = 0;
-      this.estadoId = 0;
-      this.usuarioId = 0;
+      this.id = 0;
+      //this.grupoid = 0;
+      this.estat = 0;
+      this.usuari_id = 0;
       this.solapado = 0;
       this.fechaModificacion = null;
-      this.fechaAlta = new Date();
+      this.data = new Date();
       
       this.actividadNombre = "";
       this.grupoNombre = "";
@@ -70,42 +70,34 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
 
    public int getActividadId() 
    {
-      return actividadId;
+      return activitat_id;
    }
 
    public void setactividadId(int actividadId) 
    {
-      this.actividadId = actividadId;
+      this.activitat_id = actividadId;
    }
 
-   public int getGrupoId() 
-   {
-      return grupoId;
-   }
-
-   public void setGrupoId(int grupoId) 
-   {
-      this.grupoId = grupoId;
-   }
+   
 
    public int getEstado() 
    {
-      return estadoId;
+      return estat;
    }
 
    public void setEstado(int estado) 
    {
-      this.estadoId = estado;
+      this.estat = estado;
    }
 
    public int getUsuarioId() 
    {
-      return usuarioId;
+      return usuari_id;
    }
 
    public void setUsuarioId(int usuarioId) 
    {
-      this.usuarioId = usuarioId;
+      this.usuari_id = usuarioId;
    }
 
    public Date getFechaModificacion() 
@@ -120,12 +112,12 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
 
    public Date getFechaAlta() 
    {
-      return fechaAlta;
+      return data;
    }
 
    public void setFechaAlta(Date fechaAlta) 
    {
-      this.fechaAlta = fechaAlta;
+      this.data = fechaAlta;
    }
 
    public String getActividadNombre() 
@@ -267,14 +259,14 @@ public class Matricula extends IdentifiableObject implements java.io.Serializabl
      * @return the idMatricula
      */
     public int getIdMatricula() {
-        return idMatricula;
+        return id;
     }
 
     /**
      * @param idMatricula the idMatricula to set
      */
     public void setIdMatricula(int idMatricula) {
-        this.idMatricula = idMatricula;
+        this.id = idMatricula;
     }
     
        /**
