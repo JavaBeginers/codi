@@ -1,0 +1,19 @@
+create table peticion_recurso (
+    id_recurso integer NOT NULL,
+    id_aula integer NOT NULL,
+    fecha_alta_peticion date NOT NULL,
+    cantidad integer NOT NULL,
+    fecha_aceptacion date,
+    PRIMARY KEY (id_recurso,id_aula,fecha_alta_peticion),
+    FOREIGN KEY (id_recurso) REFERENCES recurso (id_recurso),
+    FOREIGN KEY (id_aula) REFERENCES aula (id_aula)
+);
+
+create table recursosaula 
+  ( 
+     idaula	integer, 
+     idrecurso	integer, 
+     constraint	idaula_idrecurso primary key(idaula, idrecurso), 
+     foreign key (idaula) references aula(id_aula), 
+     foreign key (idrecurso) references recurso(id_recurso) 
+  ); 
