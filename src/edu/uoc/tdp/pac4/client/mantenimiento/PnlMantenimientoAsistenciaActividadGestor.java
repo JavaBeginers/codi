@@ -1,15 +1,11 @@
 package edu.uoc.tdp.pac4.client.mantenimiento;
 
-import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
 import edu.uoc.tdp.pac4.beans.Asistencia;
-import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
-import edu.uoc.tdp.pac4.util.FieldLimit;
 
-import edu.uoc.tdp.pac4.eAcademiaEU;
 import edu.uoc.tdp.pac4.util.ComboItem;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -19,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,8 +25,6 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
 
     private final Mantenimiento manager;
     private final LanguageUtils language;
-    private List<ComboItem> tiposActividad;
-    private List<ComboItem> universidades;
 
     private final String actionType;
 
@@ -40,7 +33,6 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
     private Actividad actividad = null;
     private final int actividadID;
     private ArrayList<Asistencia> asistencias;
-    private final Usuario usuario;
 
     /**
      * Creates new form PnlGroupGestor
@@ -64,12 +56,10 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
             Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.usuario = usuario;
-
         //Llenar el grid con los alumnos matriculados y su asistencia,
         //Si todavia no se ha definido sale sin definir
         fillAsistencias();
-        
+
         addaptToPreferences();
 
     }
@@ -87,8 +77,8 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         cmdClose = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
-        cmdClearFilter = new javax.swing.JButton();
-        cmdFilter = new javax.swing.JButton();
+        cmdAsistido = new javax.swing.JButton();
+        cmdNoAsistido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -115,19 +105,19 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         ));
         jScrollPane1.setViewportView(tblData);
 
-        cmdClearFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/action_001.png"))); // NOI18N
-        cmdClearFilter.setText("Ha asistido");
-        cmdClearFilter.addActionListener(new java.awt.event.ActionListener() {
+        cmdAsistido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/action_001.png"))); // NOI18N
+        cmdAsistido.setText("Ha asistido");
+        cmdAsistido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdClearFilterActionPerformed(evt);
+                cmdAsistidoActionPerformed(evt);
             }
         });
 
-        cmdFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/object_delete.gif"))); // NOI18N
-        cmdFilter.setText("No ha asistido");
-        cmdFilter.addActionListener(new java.awt.event.ActionListener() {
+        cmdNoAsistido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/object_delete.gif"))); // NOI18N
+        cmdNoAsistido.setText("No ha asistido");
+        cmdNoAsistido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdFilterActionPerformed(evt);
+                cmdNoAsistidoActionPerformed(evt);
             }
         });
 
@@ -138,22 +128,16 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
-                        .addContainerGap())
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cmdClearFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdClose)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(cmdAsistido, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmdNoAsistido, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmdClose, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -164,8 +148,8 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdFilter)
-                    .addComponent(cmdClearFilter))
+                    .addComponent(cmdNoAsistido)
+                    .addComponent(cmdAsistido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(cmdClose)
                 .addContainerGap())
@@ -204,8 +188,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
          */
         this.setLabelsLanguage();
 
-//        this.fldTitulo.setDocument(new FieldLimit(NAME_LENGTH));
-
+        // this.fldTitulo.setDocument(new FieldLimit(NAME_LENGTH));
         // Cambios Vinculados al tipo de llamada
         if (this.actionType.equalsIgnoreCase("Add")) {
             this.addaptToAddActividad();
@@ -222,7 +205,6 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
                 + language.getProperty("mantenimiento.usermain.newUser"));
 
         //Inicializamos el combo de tipo de actividad
-
     }
 
     private void addaptToEditActividad() {
@@ -264,151 +246,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
 
    }//GEN-LAST:event_cmdCloseActionPerformed
 
-    private void cmdAddActividadAction() {
-        /*
-         * Gestión de Añadir Nuevo Usuario
-         * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
-         * para que la incluya en la BD
-         * 
-         * Si añadimos correctamente se cierra el panel
-         */
-
-//        try {
-//            this.actividad = new Actividad();
-//
-//            actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
-//            actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
-//            actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
-//            actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
-//            actividad.setArea(fldAreaConocimiento.getText());
-//            actividad.setEspecialitat(fldEspecializacion.getText());
-//            actividad.setTitol(fldTitulo.getText());
-//            actividad.setDecanatura(fldDecanatura.getText());
-//            actividad.setInvestigator(fldInvestigador.getText());
-//            try {
-//                actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
-//            } catch (NumberFormatException ex) {
-//            }
-//            try {
-//                actividad.setPreu(new Double(fldPrecio.getText()));
-//            } catch (NumberFormatException ex) {
-//            }
-//            actividad.setDataInici(iniActividad);
-//            actividad.setDataFi(endActividad);
-//            actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
-//            actividad.setCancelada(cbCancelada.isSelected());
-//
-//            ArrayList<Actividad> actividades = manager.getActividadesInactivas();
-//
-//            for (Actividad oldActividad : actividades) {
-//                if (actividad.getTitol().equalsIgnoreCase(oldActividad.getTitol())) {
-//                    if (manager.undeleteActividad(oldActividad.getId())) {
-//                        JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.oldcurs"),
-//                                "Información", JOptionPane.INFORMATION_MESSAGE);
-//                        this.dispose();
-//                        return;
-//                    }
-//                }
-//            }
-//
-//            if (manager.addActividad(actividad)) {
-//                JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.add.curs"),
-//                        "Información", JOptionPane.INFORMATION_MESSAGE);
-//                this.dispose();
-//            }
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
-    }
-
-    private void cmdModActividadAction() {
-        /*
-         * Gestión de modificar Usuario
-         * Creamos una instancia Usuario con toda la info recibida y luego la pasamos al manager
-         * para que la actualize la BD (no se accede al UserID)
-         * 
-         * Para la modificacion solicitaremos confirmación
-         * 
-         * Si modificamos correctamente se cierra el panel
-         */
-//        try {
-//
-//            Date iniActividad = DateTimeUtils.strToDate(this.fldDateIni.getText());
-//            Date endActividad = DateTimeUtils.strToDate(this.fldDateFin.getText());
-//
-//            if (!DateTimeUtils.isDate(this.fldDateIni.getText())
-//                    || !DateTimeUtils.isDate(this.fldDateMaximaInscripcion.getText())) {
-//                JOptionPane.showMessageDialog(null,
-//                        language.getProperty("mantenimiento.err.date.mal"),
-//                        language.getProperty("app.title"),
-//                        JOptionPane.ERROR_MESSAGE);
-//                return;
-//            } else if (endActividad.before(iniActividad)) {
-//                JOptionPane.showMessageDialog(null,
-//                        "fchas mal orden",
-//                        language.getProperty("mantenimiento.err.date.reverse"),
-//                        JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//
-//            Actividad new_actividad = new Actividad();
-//
-//            new_actividad.setId(this.actividadID);
-//
-//            new_actividad.setTipus(((ComboItem) cboTipoActividad.getSelectedItem()).getId());
-//            new_actividad.setUniversitatId(((ComboItem) cboUniversidad.getSelectedItem()).getId());
-//            new_actividad.setCentreId(((ComboItem) cboCentro.getSelectedItem()).getId());
-//            new_actividad.setAulaId(((ComboItem) cboSitio.getSelectedItem()).getId());
-//            new_actividad.setArea(fldAreaConocimiento.getText());
-//            new_actividad.setEspecialitat(fldEspecializacion.getText());
-//            new_actividad.setTitol(fldTitulo.getText());
-//            new_actividad.setDecanatura(fldDecanatura.getText());
-//            new_actividad.setInvestigator(fldInvestigador.getText());
-//            try {
-//                new_actividad.setMinimPercentatge(new Double(this.fldCambios.getText()));
-//            } catch (NumberFormatException ex) {
-//            }
-//            try {
-//                new_actividad.setPreu(new Double(fldPrecio.getText()));
-//            } catch (NumberFormatException ex) {
-//            }
-//            new_actividad.setDataInici(iniActividad);
-//            new_actividad.setDataFi(endActividad);
-//            new_actividad.setDataMaxInscripcio(DateTimeUtils.strToDate(this.fldDateMaximaInscripcion.getText()));
-//            new_actividad.setCancelada(cbCancelada.isSelected());
-//
-//            Object[] options = {language.getProperty("opt.si"), language.getProperty("opt.no")};
-//            int reply = JOptionPane.showOptionDialog(this, language.getProperty("mantenimiento.msg.confirm"), language.getProperty("app.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, now);
-//            if (reply == 0) {
-//                if (manager.updateActividad(new_actividad)) {
-//                    JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.modif"),
-//                            "Información", JOptionPane.INFORMATION_MESSAGE);
-//                }
-//            }
-//            this.dispose();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.sql") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null,
-//                    language.getProperty("err.generic") + "\n" + language.getProperty("err.detail") + ":\n\n" + ex.getMessage(),
-//                    language.getProperty("app.title"),
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
-    }
-    
-    private void fillAsistencias() {
+   private void fillAsistencias() {
         ArrayList<String> header = new ArrayList<String>();   // cabecera
 
         header.add(language.getProperty("mantenimiento.asistencia.alumno"));
@@ -422,8 +260,8 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
             for (Asistencia asistencia : asistencias) {
                 try {
                     Usuario usuariAsistencia = manager.getUsuario(asistencia.getIdUsuari());
-                    gridData[i][0] = usuariAsistencia.getNombre() + " " + usuariAsistencia.getPrimerApellido() + " " + usuariAsistencia.getSegundoApellido();
-                    gridData[i][1] = asistencia.isAsistencia()?"Si":"No";
+                    gridData[i][0] = usuariAsistencia.getNombre() + " " + usuariAsistencia.getApellidos();
+                    gridData[i][1] = asistencia.isAsistencia() ? "Si" : "No";
                     i++;
                 } catch (Exception ex) {
                     Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
@@ -440,21 +278,59 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
                 return false;
             }
         });
-        
+
     }
 
-    private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmdClearFilterActionPerformed
+    private void cmdAsistidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAsistidoActionPerformed
+        // Mirar si hi ha un alumne seleccionat
+        if (tblData.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null,
+                    language.getProperty("mantenimiento.msg.sele.asistente"),
+                    language.getProperty("app.title"),
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    private void cmdFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFilterActionPerformed
+        // Obtiene el ID de la actividad a editar
+        Asistencia asistencia = asistencias.get(tblData.getSelectedRow());
+        try {
+            manager.setAsistencia(asistencia.getIdActivitat(), asistencia.getIdUsuari(), true);
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.edit.asistente"),
+            "Información", JOptionPane.INFORMATION_MESSAGE);
 
-    }//GEN-LAST:event_cmdFilterActionPerformed
+        fillAsistencias();
+    }//GEN-LAST:event_cmdAsistidoActionPerformed
+
+    private void cmdNoAsistidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNoAsistidoActionPerformed
+        // Mirar si hi ha un alumne seleccionat
+        if (tblData.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null,
+                    language.getProperty("mantenimiento.msg.asistente"),
+                    language.getProperty("app.title"),
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtiene el ID de la actividad a editar
+        Asistencia asistencia = asistencias.get(tblData.getSelectedRow());
+        try {
+            manager.setAsistencia(asistencia.getIdActivitat(), asistencia.getIdUsuari(), false);
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fillAsistencias();
+        JOptionPane.showMessageDialog(null, language.getProperty("mantenimiento.msg.edit.asistente"),
+            "Información", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_cmdNoAsistidoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdClearFilter;
+    private javax.swing.JButton cmdAsistido;
     private javax.swing.JButton cmdClose;
-    private javax.swing.JButton cmdFilter;
+    private javax.swing.JButton cmdNoAsistido;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tblData;

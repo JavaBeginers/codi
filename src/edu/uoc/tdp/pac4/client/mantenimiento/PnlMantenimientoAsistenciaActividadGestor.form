@@ -32,9 +32,9 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="cmdClearFilter" min="-2" pref="141" max="-2" attributes="0"/>
+                              <Component id="cmdAsistido" min="-2" pref="141" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cmdFilter" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Component id="cmdNoAsistido" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                           <Component id="cmdClose" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -52,8 +52,8 @@
               <Component id="jScrollPane1" min="-2" pref="220" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cmdFilter" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmdClearFilter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmdNoAsistido" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmdAsistido" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="21" max="32767" attributes="0"/>
               <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
@@ -102,7 +102,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="cmdClearFilter">
+    <Component class="javax.swing.JButton" name="cmdAsistido">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/action_001.png"/>
@@ -110,10 +110,10 @@
         <Property name="text" type="java.lang.String" value="Ha asistido"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdClearFilterActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAsistidoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cmdFilter">
+    <Component class="javax.swing.JButton" name="cmdNoAsistido">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/object_delete.gif"/>
@@ -121,7 +121,7 @@
         <Property name="text" type="java.lang.String" value="No ha asistido"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdFilterActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdNoAsistidoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
