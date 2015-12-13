@@ -11,7 +11,7 @@ public class Asistencia implements java.io.Serializable
 {
    private int id;
    private int idActivitat;
-   private Date idUsuari;
+   private int idUsuari;
    private boolean asistencia;
    
    //==========================================
@@ -51,7 +51,7 @@ public class Asistencia implements java.io.Serializable
    {
        this.setId(0);
        this.setIdActivitat(0);
-       this.setIdUsuari(null);
+       this.setIdUsuari(0);
        this.setAsistencia(false);
    }
 
@@ -72,14 +72,14 @@ public class Asistencia implements java.io.Serializable
     /**
      * @return the idUsuari
      */
-    public Date getIdUsuari() {
+    public int getIdUsuari() {
         return idUsuari;
     }
 
     /**
      * @param idUsuari the idUsuari to set
      */
-    public void setIdUsuari(Date idUsuari) {
+    public void setIdUsuari(int idUsuari) {
         this.idUsuari = idUsuari;
     }
 

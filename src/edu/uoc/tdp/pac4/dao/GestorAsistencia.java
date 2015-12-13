@@ -1,7 +1,6 @@
 package edu.uoc.tdp.pac4.dao;
 
 import edu.uoc.tdp.pac4.beans.Asistencia;
-import edu.uoc.tdp.pac4.exceptions.AssistanceAlreadyCountedException;
 import edu.uoc.tdp.pac4.exceptions.GroupAlreadyCountedException;
 import edu.uoc.tdp.pac4.exceptions.StudentAssistanceAlreadyCountedException;
 import edu.uoc.tdp.pac4.util.LanguageUtils;
@@ -110,18 +109,40 @@ public class GestorAsistencia extends GestorDisco {
         }
     }
 
+    public ArrayList<Asistencia> getAsistenciasByActividadId(int idActivitat) throws SQLException, Exception {
+        Asistencia asistencia;
+        String sql;
+        ArrayList<Asistencia> list = new ArrayList<Asistencia>();
+
+        sql = "SELECT m.*, a.* FROM MATRICULA M " +
+                "LEFT JOIN ASSISTENCIA A ON A.ACTIVITAT_ID = M.ACTIVITAT_ID AND A.USUARI_ID=M.USUARI_ID " +
+                "WHERE M.ACTIVITAT_ID="+idActivitat;
+
+        try {
+            ResultSet rs = executeSql(sql);
+            while (rs.next()) {
+                asistencia = new Asistencia();
+                readAsistencia(asistencia, rs);
+                list.add(asistencia);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return list;
+
+    }
+        
     //===========================================
     // Private members
     //===========================================
-    private void readAsistencia(Asistencia asistencia, ResultSet rs) throws SQLException {
+    private void readAsistencia(Asistencia asistencia, ResultSet rs) throws SQLException, Exception {
         // Propiedades nativas de la entidad
-//        asistencia.setId(rs.getInt("asistid"));
-//        asistencia.setDate(rs.getDate("fechaasist"));
-//        asistencia.setHoraInicio(rs.getDate("horainicio"));
-//        asistencia.setHoraFin(rs.getDate("horafin"));
-//        asistencia.setTotalAssistencia(rs.getInt("totalasisten"));
-//        asistencia.setTotalFaltas(rs.getInt("totalnoasisten"));
-//        asistencia.setIdGrupo(rs.getInt("grupoid"));
-
+        asistencia.setId(rs.getInt("id"));
+        asistencia.setIdActivitat(rs.getInt("activitat_id"));
+        asistencia.setIdUsuari(rs.getInt("usuari_id"));
+        asistencia.setAsistencia(rs.getBoolean("assistencia"));
     }
 }

@@ -2,6 +2,7 @@ package edu.uoc.tdp.pac4.client.mantenimiento;
 
 import edu.uoc.tdp.pac4.util.DateTimeUtils;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Asistencia;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.remote.Mantenimiento;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,6 +39,7 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
     private final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     private Actividad actividad = null;
     private final int actividadID;
+    private ArrayList<Asistencia> asistencias;
     private final Usuario usuario;
 
     /**
@@ -55,8 +58,18 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
         this.language = language;
         this.actionType = actionType;
         this.actividadID = actividadID;
+        try {
+            this.actividad = manager.getActividad(actividadID);
+        } catch (Exception ex) {
+            Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         this.usuario = usuario;
 
+        //Llenar el grid con los alumnos matriculados y su asistencia,
+        //Si todavia no se ha definido sale sin definir
+        fillAsistencias();
+        
         addaptToPreferences();
 
     }
@@ -393,6 +406,41 @@ public class PnlMantenimientoAsistenciaActividadGestor extends javax.swing.JDial
 //                    language.getProperty("app.title"),
 //                    JOptionPane.ERROR_MESSAGE);
 //        }
+    }
+    
+    private void fillAsistencias() {
+        ArrayList<String> header = new ArrayList<String>();   // cabecera
+
+        header.add(language.getProperty("mantenimiento.asistencia.alumno"));
+        header.add(language.getProperty("mantenimiento.asistencia.estado"));
+
+        String[][] gridData;
+        try {
+            asistencias = manager.getAsistenciasByActividadId(actividad.getId());
+            gridData = new String[asistencias.size()][2];
+            int i = 0;
+            for (Asistencia asistencia : asistencias) {
+                try {
+                    Usuario usuariAsistencia = manager.getUsuario(asistencia.getIdUsuari());
+                    gridData[i][0] = usuariAsistencia.getNombre() + " " + usuariAsistencia.getPrimerApellido() + " " + usuariAsistencia.getSegundoApellido();
+                    gridData[i][1] = asistencia.isAsistencia()?"Si":"No";
+                    i++;
+                } catch (Exception ex) {
+                    Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (Exception ex) {
+            gridData = new String[0][2];
+            Logger.getLogger(PnlMantenimientoAsistenciaActividadGestor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Modificamos la tabla para que no sea editable
+        this.tblData.setModel(new DefaultTableModel(gridData, header.toArray()) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        
     }
 
     private void cmdClearFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdClearFilterActionPerformed
