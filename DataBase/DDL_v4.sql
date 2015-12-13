@@ -1,4 +1,5 @@
 CREATE TABLE PAISOS (
+pais_id int,
 codi_pais char(2),
 codi_idioma char(2),
 nom varchar(255),
@@ -199,4 +200,57 @@ SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
 )
 WITH (
  OIDS=FALSE
+);
+
+CREATE TABLE curso
+(
+  id serial NOT NULL,
+  nombre character varying(50),
+  minasistencia integer,
+  plandocente text,
+  bibliografia text,
+  activo bit(1),
+  fecha_inicio date,
+  fecha_finalizacion date,
+  fechainactividad date,
+  idprofesor integer,
+  idaula integer,
+  CONSTRAINT curso_pkey PRIMARY KEY (id),
+  CONSTRAINT curso_idaula_fkey FOREIGN KEY (idaula)
+      REFERENCES aula (id_aula) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT curso_idprofesor_fkey FOREIGN KEY (idprofesor)
+      REFERENCES usuari (usuari_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE grupo
+(
+  grupoid integer NOT NULL,
+  nombre character varying(30),
+  maxalumnos integer,
+  plazasdisponibles integer,
+  fechainicio date,
+  fechafin date,
+  grupovigente bit(1),
+  turno integer,
+  idaula integer,
+  idprofesor integer,
+  idcurso integer,
+  CONSTRAINT grupo_pkey PRIMARY KEY (grupoid),
+  CONSTRAINT grupo_idaula_fkey FOREIGN KEY (idaula)
+      REFERENCES aula (id_aula) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT grupo_idcurso_fkey FOREIGN KEY (idcurso)
+      REFERENCES curso (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT grupo_idprofesor_fkey FOREIGN KEY (idprofesor)
+      REFERENCES usuari (usuari_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
 );
