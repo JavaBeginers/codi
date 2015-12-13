@@ -154,7 +154,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
             }
         });
 
-        btnAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/projection-screen-presentation.png"))); // NOI18N
+        btnAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/asistencia.png"))); // NOI18N
         btnAsistencia.setText("Asistencia");
         btnAsistencia.setFocusable(false);
         btnAsistencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -240,15 +240,16 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFiltroTipoActividad)
-                    .addComponent(cboFiltroTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFiltroDateEnd)
+                        .addComponent(fldFiltroDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblFiltroDateIni)
-                        .addComponent(fldFiltroDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFiltroDateEnd)
-                            .addComponent(fldFiltroDateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(fldFiltroDateIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFiltroTipoActividad)
+                        .addComponent(cboFiltroTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdFilter)
@@ -304,7 +305,7 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
            return;
        }
 
-       // Obtiene el ID del grupo a editar
+       // Obtiene el ID de la actividad a editar
        Actividad actividad = actividades.get(tblData.getSelectedRow());
 
        PnlMantenimientoActividadGestor form = new PnlMantenimientoActividadGestor(null, true, manager, language, "Edit", actividad.getId(), usuario);
@@ -383,7 +384,22 @@ public class PnlMantenimientoActividades extends javax.swing.JDialog {
     }//GEN-LAST:event_cmdClearFilterActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
-        // TODO add your handling code here:
+       if (tblData.getSelectedRow() < 0) {
+           JOptionPane.showMessageDialog(null,
+                   language.getProperty("mantenimiento.msg.sele.actividad"),
+                   language.getProperty("app.title"),
+                   JOptionPane.WARNING_MESSAGE);
+           return;
+       }
+
+       // Obtiene el ID de la actividad
+       Actividad actividad = actividades.get(tblData.getSelectedRow());
+
+       PnlMantenimientoAsistenciaActividadGestor form = new PnlMantenimientoAsistenciaActividadGestor(null, true, manager, language, "Edit", actividad.getId(), usuario);
+       form.setLocationRelativeTo(null);
+       form.setVisible(true);
+
+       listData();
     }//GEN-LAST:event_btnAsistenciaActionPerformed
 
     private void cboFiltroTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFiltroTipoActividadActionPerformed

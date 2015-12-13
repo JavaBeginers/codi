@@ -174,21 +174,6 @@ public class ConexionImpl extends UnicastRemoteObject implements Conexion, Seria
       GestorMatricula gm = new GestorMatricula(gestorDisco.getConnection());
       return gm.getMatriculas(name, nif, estado, fechainicio, fechafin);
    }
-
-  /**
-    * Obtiene la última asistencia registrada para el conjunto del @link @Grupo
-    * @param grupoid
-    * @return la última entrada de asistencia para el grupo. Null si no se encuentra.
-    * @throws SQLException
-    * @throws Exception 
-    */
-   @Override
-   public Asistencia getLastAssistance(int grupoid) throws SQLException, Exception 
-   {
-      GestorAsistencia gm = new GestorAsistencia(gestorDisco.getConnection());
-      return gm.getLastAssistance(grupoid);
-   }
-
    
   /**
     * Agrega una nueva matricula al centro.
@@ -216,7 +201,7 @@ public class ConexionImpl extends UnicastRemoteObject implements Conexion, Seria
    public void addAsistenciaAlumno(int asistid, int alumnoid) throws SQLException, AssistanceAlreadyCountedException, Exception {
       
       GestorAsistencia gm = new GestorAsistencia(gestorDisco.getConnection());
-      gm.addAsistenciaAlumno(asistid, alumnoid);
+      //gm.addAsistenciaAlumno(asistid, alumnoid);
       
    }
    

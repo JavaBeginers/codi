@@ -3,13 +3,16 @@ package edu.uoc.tdp.pac4.remote;
 import edu.uoc.tdp.pac4.beans.Usuario;
 import edu.uoc.tdp.pac4.beans.Aula;
 import edu.uoc.tdp.pac4.beans.Actividad;
+import edu.uoc.tdp.pac4.beans.Asistencia;
 import edu.uoc.tdp.pac4.beans.AuxiliarCombo;
 import edu.uoc.tdp.pac4.beans.Centro;
 import edu.uoc.tdp.pac4.beans.Recurso;
+import edu.uoc.tdp.pac4.beans.Universitat;
 import edu.uoc.tdp.pac4.dao.GestorDisco;
 import edu.uoc.tdp.pac4.dao.GestorUsuario;
 import edu.uoc.tdp.pac4.dao.GestorAulas;
 import edu.uoc.tdp.pac4.dao.GestorActividad;
+import edu.uoc.tdp.pac4.dao.GestorAsistencia;
 import edu.uoc.tdp.pac4.dao.GestorCentro;
 import edu.uoc.tdp.pac4.dao.GestorMatricula;
 import java.io.Serializable;
@@ -446,5 +449,17 @@ public class MantenimientoImpl extends UnicastRemoteObject implements Mantenimie
         GestorActividad gc = new GestorActividad(gestorDisc.getConnection());
         return gc.canUpdateActivity(activitatId, tipusActivitat, centreId, iniActividad, endActividad);
     }
+
+    @Override
+    public ArrayList<Asistencia> getAsistenciasByActividadId(int activitatId) throws SQLException, Exception {
+        GestorAsistencia ga = new GestorAsistencia(gestorDisc.getConnection());
+        return ga.getAsistenciasByActividadId(activitatId);
+    }
+
+    @Override
+    public ArrayList<Universitat> getUniversidadesRaw() throws SQLException, Exception {
+         GestorUsuario gu = new GestorUsuario(gestorDisc.getConnection());
+        return gu.getUniversidadesRaw();
+   }
         
 }

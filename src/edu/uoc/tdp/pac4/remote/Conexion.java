@@ -54,16 +54,7 @@ public interface Conexion extends Remote
     * @throws Exception 
     */
    ArrayList<Matricula> getMatriculas(String name, String nif, int estado, Date fechainicio, Date fechafin) throws SQLException, Exception;
-   
-  /**
-    * Obtiene la última asistencia registrada para el conjunto del @link @Grupo
-    * @param grupoid
-    * @return la última entrada de asistencia para el grupo. Null si no se encuentra.
-    * @throws SQLException
-    * @throws Exception 
-    */  
-   Asistencia getLastAssistance(int grupoid) throws SQLException, Exception; 
-   
+      
   /**
     * Agrega una nueva matricula al centro.
     * 
