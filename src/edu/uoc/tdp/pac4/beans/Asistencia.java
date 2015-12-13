@@ -1,6 +1,5 @@
 package edu.uoc.tdp.pac4.beans;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -11,12 +10,9 @@ import java.util.Date;
 public class Asistencia implements java.io.Serializable 
 {
    private int id;
-   private int idGrupo;
-   private Date date;
-   private Date horaInicio;
-   private Date horaFin;
-   private Integer totalAssistencia;
-   private Integer totalFaltas;
+   private int idActivitat;
+   private Date idUsuari;
+   private boolean asistencia;
    
    //==========================================
    // Constructors
@@ -44,81 +40,6 @@ public class Asistencia implements java.io.Serializable
       this.id = id;
    }
 
-   public int getIdGrupo() 
-   {
-      return idGrupo;
-   }
-
-   public void setIdGrupo(int idGrupo) 
-   {
-      this.idGrupo = idGrupo;
-   }
-
-   public Date getDate()
-   {
-      return date;
-   }
-
-   public void setDate(Date date) 
-   {
-      this.date = date;
-   }
-
-   public Date getHoraInicio()
-   {
-      return horaInicio;
-   }
-
-   public void setHoraInicio(Date horaInicio)
-   {
-      this.horaInicio = horaInicio;
-   }
-
-   public Date getHoraFin()
-   {
-      return horaFin;
-   }
-
-   public void setHoraFin(Date horaFin) 
-   {
-      this.horaFin = horaFin;
-   }
-
-   public Integer getTotalAssistencia() 
-   {
-      return totalAssistencia;
-   }
-
-   public void setTotalAssistencia(Integer totalAssistencia)
-   {
-      this.totalAssistencia = totalAssistencia;
-   }
-
-   public Integer getTotalFaltas() 
-   {
-      return totalFaltas;
-   }
-
-   public void setTotalFaltas(Integer totalFaltas) 
-   {
-      this.totalFaltas = totalFaltas;
-   }
-   
-   //==========================================
-   // Methods
-   //==========================================
-   
-   /**
-    * Convierte la instancia en una cadena que representa el objeto.
-    */
-   @Override
-   public String toString()
-   {
-      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-      
-      return sdf.format(this.date);
-   }
-   
    //==========================================
    // Private members
    //==========================================
@@ -128,12 +49,51 @@ public class Asistencia implements java.io.Serializable
     */
    private void initialize()
    {
-      this.id = 0;
-      this.idGrupo = 0;
-      this.date = null;
-      this.horaInicio = null;
-      this.horaFin = null;
-      this.totalAssistencia = 0;
-      this.totalFaltas = 0;
+       this.setId(0);
+       this.setIdActivitat(0);
+       this.setIdUsuari(null);
+       this.setAsistencia(false);
    }
+
+    /**
+     * @return the idActivitat
+     */
+    public int getIdActivitat() {
+        return idActivitat;
+    }
+
+    /**
+     * @param idActivitat the idActivitat to set
+     */
+    public void setIdActivitat(int idActivitat) {
+        this.idActivitat = idActivitat;
+    }
+
+    /**
+     * @return the idUsuari
+     */
+    public Date getIdUsuari() {
+        return idUsuari;
+    }
+
+    /**
+     * @param idUsuari the idUsuari to set
+     */
+    public void setIdUsuari(Date idUsuari) {
+        this.idUsuari = idUsuari;
+    }
+
+    /**
+     * @return the asistencia
+     */
+    public boolean isAsistencia() {
+        return asistencia;
+    }
+
+    /**
+     * @param asistencia the asistencia to set
+     */
+    public void setAsistencia(boolean asistencia) {
+        this.asistencia = asistencia;
+    }
 }
