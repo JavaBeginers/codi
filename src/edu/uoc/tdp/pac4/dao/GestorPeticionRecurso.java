@@ -131,9 +131,9 @@ public class GestorPeticionRecurso extends GestorDisco
       PeticionRecursoDetalle peticion;
       List<PeticionRecursoDetalle> peticiones = new ArrayList<PeticionRecursoDetalle>();
       
-      sSQL = "SELECT peticion_recurso.id_recurso, nombre_recurso, cantidad_stock, aula.id_aula, descripcion_aula, fecha_alta_peticion, cantidad, fecha_aceptacion " +
+      sSQL = "SELECT peticion_recurso.id_recurso, nombre_recurso, cantidad_stock, aula.aula_id, descripcion_aula, fecha_alta_peticion, cantidad, fecha_aceptacion " +
              "FROM peticion_recurso " +
-             "     Left Join aula On peticion_recurso.id_aula = aula.id_aula " +
+             "     Left Join aula On peticion_recurso.id_aula = aula.aula_id " +
              "     Left Join recurso on peticion_recurso.id_recurso = recurso.id_recurso " +
              "WHERE fecha_aceptacion is null " +
              "ORDER BY fecha_alta_peticion Asc";

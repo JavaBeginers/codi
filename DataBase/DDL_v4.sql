@@ -31,7 +31,7 @@ DROP SEQUENCE IF EXISTS usuari_id_seq CASCADE;
 CREATE SEQUENCE usuari_id_seq ;
 
 CREATE TABLE USUARI (
-usuari_id integer default nextval('usuari_id_seq') not null,
+usuari_id seriala not null,
 nom_usuari varchar(64) NOT NULL,
 contrasenya text NOT NULL,
 noms varchar(128) NOT NULL,
@@ -197,6 +197,7 @@ CREATE TABLE MATRICULA
  estat int NOT NULL, -- Estat de la matricula
  beca bit NOT NULL, -- Flag per si hi ha beca
  numero_Compte bigint NOT NULL, -- Numero de compte de pagament
+grupoid integer,
  CONSTRAINT MATRICULA_PK PRIMARY KEY (id),
  CONSTRAINT MATRICULA_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVIDAD
 (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
@@ -245,6 +246,7 @@ CREATE TABLE grupo
   idaula integer,
   idprofesor integer,
   idcurso integer,
+  idactividad integer,
   CONSTRAINT grupo_pkey PRIMARY KEY (grupoid),
   CONSTRAINT grupo_idaula_fkey FOREIGN KEY (idaula)
       REFERENCES aula (aula_id) MATCH SIMPLE
@@ -254,7 +256,8 @@ CREATE TABLE grupo
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT grupo_idprofesor_fkey FOREIGN KEY (idprofesor)
       REFERENCES usuari (usuari_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT FK_GRUPO_ACTIVIDAD FOREIGN KEY (idactividad) REFERENCES ACTIVIDAD(id)
 )
 WITH (
   OIDS=FALSE
