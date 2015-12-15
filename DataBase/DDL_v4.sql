@@ -31,7 +31,7 @@ DROP SEQUENCE IF EXISTS usuari_id_seq CASCADE;
 CREATE SEQUENCE usuari_id_seq ;
 
 CREATE TABLE USUARI (
-usuari_id seriala not null,
+usuari_id integer not null,
 nom_usuari varchar(64) NOT NULL,
 contrasenya text NOT NULL,
 noms varchar(128) NOT NULL,
@@ -198,6 +198,8 @@ CREATE TABLE MATRICULA
  beca bit NOT NULL, -- Flag per si hi ha beca
  numero_Compte bigint NOT NULL, -- Numero de compte de pagament
 grupoid integer,
+fechaalta date,
+fechamodificacion date,
  CONSTRAINT MATRICULA_PK PRIMARY KEY (id),
  CONSTRAINT MATRICULA_FK1 FOREIGN KEY (activitat_id) REFERENCES ACTIVIDAD
 (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,

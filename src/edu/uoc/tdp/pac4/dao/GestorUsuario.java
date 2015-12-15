@@ -49,7 +49,7 @@ public class GestorUsuario extends GestorDisco {
     
     
     //Tabla Matricula
-    private static final String MATRICTABLE = "matriculas";
+    private static final String MATRICTABLE = "matricula";
     private static final String MATRICTABLE_USER = "usuarioid";
 
     //Variables

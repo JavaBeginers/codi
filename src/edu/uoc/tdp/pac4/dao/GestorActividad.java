@@ -281,9 +281,9 @@ public class GestorActividad extends GestorDisco {
 
             // Obtiene el número de plazas libres
             sql = "SELECT Count(*) As nPlazas "
-                    + "FROM   actividad Inner Join matriculas On (actividad.id = matriculas.actividadid) "
+                    + "FROM   actividad Inner Join matriculas On (actividad.id = matriculas.activitat_id) "
                     + "             Inner Join grupo      On (grupo.grupoid = matriculas.grupoid) "
-                    + "WHERE  matriculas.estadoid = " + Matricula.MATRICULA_ESTADO_ACEPTADA + " And "
+                    + "WHERE  matriculas.estat = " + Matricula.MATRICULA_ESTADO_ACEPTADA + " And "
                     + "       grupo.turno         = " + turno + " And "
                     + "       actividad.id            = " + idActividad;
 

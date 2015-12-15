@@ -262,8 +262,8 @@ public class GestorGrupo extends GestorDisco
       {
          // Comprueba que el grupo no tenga ninguna matricula asignada
          sql = "SELECT Count(*) As nItems " +
-               "FROM matriculas " +
-               "WHERE matriculas.grupoid = " + id;
+               "FROM matricula " +
+               "WHERE matricula.grupoid = " + id;
          if (executeScalar(sql) > 0)
          {
             throw new GroupNotEmptyException();
@@ -408,16 +408,15 @@ public class GestorGrupo extends GestorDisco
       Grupo grupo;
       String sql;
       ArrayList<Grupo> list = new ArrayList<Grupo>();
-                  
      sql = "SELECT grupo.*, (SELECT usuari.noms || '#' || usuari.cognoms " +
                              "FROM grupo, usuari where grupo.idprofesor = usuari.usuari_id " + 
-       "                     AND grupo.grupoid = matriculas.grupoid) AS nombreProfesor, " +
+       "                     AND grupo.grupoid = matricula.grupoid) AS nombreProfesor, " +
        "aula.nom As aula, curso.nombre As curso, curso.plandocente AS plandocente, curso.bibliografia AS bibliografia, " +
        "curso.minasistencia as minasistencia, curso.fecha_inicio, curso.fecha_finalizacion " +
-       "FROM   grupo, usuari, aula, curso, matriculas " +
+       "FROM   grupo, usuari, aula, curso, matricula " +
        "WHERE  grupo.idaula = aula.aula_id And " +
        "       grupo.idcurso = curso.id And " +
-       "       grupo.grupoid = matriculas.grupoid And  " + 
+       "       grupo.grupoid = matricula.grupoid And  " + 
        "       matricula.usuari_id = usuari.usuari_id And" +
        "       matricula.estat = 1 And usuari.usuari_id =  " + idUsuario + " " +
        (idCurso > 0 ? " And curso.id = " + idCurso + " " : " ") +

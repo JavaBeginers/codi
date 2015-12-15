@@ -64,12 +64,12 @@ public class GestorMatricula extends GestorDisco
       String sql;
       Matricula matricula = null;
       
-      sql = "SELECT matriculas.*, actividad.data_inici As fechaInicio, actividad.data_fi As fechaFin, " +
+      sql = "SELECT matricula.*, actividad.data_inici As fechaInicio, actividad.data_fi As fechaFin, " +
             "       grupo.nombre As grupoNombre, actividad.titol As actividadNombre, usuario.nombre As usrNombre, " +
             "       usuario.cognoms As usrApellidos, usuario.nif as usrNif " +
-            "FROM   matriculas, usuario, grupo, actividad " +
-            "WHERE  matriculas.usuarioid = usuario.id And " +
-                   "matriculas.grupoid = grupo.grupoid And " + 
+            "FROM   matricula, usuario, grupo, actividad " +
+            "WHERE  matricula.usuari_id = usuario.id And " +
+                   "matricula.grupoid = grupo.grupoid And " + 
                    "grupo.idactividad = actividad.id And " + 
                    "matricula.id = " + id;
       
@@ -122,7 +122,7 @@ public class GestorMatricula extends GestorDisco
       try 
       {
          // Agrega la petición (peticionid = 1, alta)
-         sql = "INSERT INTO matricula (actividadid, estat, usuari_id, data) " +
+         sql = "INSERT INTO matricula (activitat_id, estat, usuari_id, data) " +
                "VALUES " +
                "(1, "                               +
                "  " + matricula.getActividadId() + ", " +  
@@ -206,7 +206,7 @@ public class GestorMatricula extends GestorDisco
 
          // Formaliza la petición
          sql = "UPDATE matricula " +
-               "SET    estadoid          = " + Matricula.MATRICULA_ESTADO_ACEPTADA + ", " +
+               "SET    estat          = " + Matricula.MATRICULA_ESTADO_ACEPTADA + ", " +
                "       fechamodificacion =     current_timestamp " +
                "WHERE  id       = " + matricula.getId();
          execute(sql);
@@ -820,7 +820,7 @@ public class GestorMatricula extends GestorDisco
       SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
       Date hoy = new Date(System.currentTimeMillis());
       
-      sql = "select usuari.usuari_id as usuarioId, " +
+      sql = "select usuari.usuari_id, " +
                 "usuari.nombre_doc_identif as nif, " + 
                 "matricula.id as matriculaId, " +
                 "grupo.turno as turno, " +
@@ -942,11 +942,11 @@ public class GestorMatricula extends GestorDisco
     */
    private void getMatriculaValues(Matricula matricula, ResultSet rs) throws SQLException
    {
-      matricula.setId(rs.getInt("matriculaid"));
-      matricula.setactividadId(rs.getInt("actividadid"));
+      matricula.setId(rs.getInt("id"));
+      matricula.setactividadId(rs.getInt("activitat_id"));
       
-      matricula.setEstado(rs.getInt("estadoid"));
-      matricula.setUsuarioId(rs.getInt("usuarioid"));
+      matricula.setEstado(rs.getInt("estat"));
+      matricula.setUsuarioId(rs.getInt("usuari_id"));
       matricula.setFechaModificacion(rs.getDate("fechamodificacion"));
       matricula.setFechaAlta(rs.getDate("fechaalta"));
             
