@@ -66,7 +66,7 @@ public class GestorMatricula extends GestorDisco
       
       sql = "SELECT matriculas.*, actividad.data_inici As fechaInicio, actividad.data_fi As fechaFin, " +
             "       grupo.nombre As grupoNombre, actividad.titol As actividadNombre, usuario.nombre As usrNombre, " +
-            "       usuario.apellidos As usrApellidos, usuario.nif as usrNif " +
+            "       usuario.cognoms As usrApellidos, usuario.nif as usrNif " +
             "FROM   matriculas, usuario, grupo, actividad " +
             "WHERE  matriculas.usuarioid = usuario.id And " +
                    "matriculas.grupoid = grupo.grupoid And " + 

@@ -57,10 +57,10 @@ public class GestorProfesor extends GestorDisco
       Profesor profesor = null;
       
       sql = "SELECT * " +
-            "FROM usuario " +
+            "FROM usuari " +
             "WHERE id    = " + id + " And " +
-                  "idrol = " + Profesor.ROL_PROFESOR + " " +
-                  "AND activo = '" + 1 + "'";
+                  "rol = " + Profesor.ROL_PROFESOR + " " +
+                  "AND actiu = '" + 1 + "'";
 
       try 
       {
@@ -76,11 +76,11 @@ public class GestorProfesor extends GestorDisco
             profesor.setEmail(rs.getString("email"));
             profesor.setTelf(rs.getString("telf"));
             profesor.setNombre(rs.getString("nombre"));
-            profesor.setApellidos(rs.getString("apellidos"));
-            profesor.setActivo(rs.getBoolean("activo"));
+            profesor.setApellidos(rs.getString("cognoms"));
+            profesor.setActivo(rs.getBoolean("actiu"));
             profesor.setFechaInactividad(rs.getDate("fechainactividad"));
             profesor.setNif(rs.getString("nif"));
-            profesor.setIdRol(rs.getInt("idrol"));
+            profesor.setIdRol(rs.getInt("rol"));
             profesor.setUniversidadId(rs.getInt("universitat_id"));
 
 
@@ -114,10 +114,10 @@ public class GestorProfesor extends GestorDisco
       ArrayList<Profesor> profesores = new ArrayList<Profesor>();
       
       sql = "SELECT * " +
-            "FROM usuario " +
-            "WHERE idrol = " + Profesor.ROL_PROFESOR + " " +
-            "AND activo = '" + 1 + "' " +
-            "ORDER BY apellidos, nombre";
+            "FROM usuari " +
+            "WHERE rol = " + Profesor.ROL_PROFESOR + " " +
+            "AND actiu = '" + 1 + "' " +
+            "ORDER BY cognoms, noms";
 
       try 
       {
@@ -133,11 +133,11 @@ public class GestorProfesor extends GestorDisco
             profesor.setEmail(rs.getString("email"));
             profesor.setTelf(rs.getString("telf"));
             profesor.setNombre(rs.getString("nombre"));
-            profesor.setApellidos(rs.getString("apellidos"));
-            profesor.setActivo(rs.getBoolean("activo"));
+            profesor.setApellidos(rs.getString("cognoms"));
+            profesor.setActivo(rs.getBoolean("actiu"));
             profesor.setFechaInactividad(rs.getDate("fechainactividad"));
             profesor.setNif(rs.getString("nif"));
-            profesor.setIdRol(rs.getInt("idrol"));
+            profesor.setIdRol(rs.getInt("rol"));
             profesor.setUniversidadId(rs.getInt("universitat_id"));
 
             profesores.add(profesor);
