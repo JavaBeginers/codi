@@ -65,10 +65,10 @@ public class GestorMatricula extends GestorDisco
       Matricula matricula = null;
       
       sql = "SELECT matricula.*, actividad.data_inici As fechaInicio, actividad.data_fi As fechaFin, " +
-            "       grupo.nombre As grupoNombre, actividad.titol As actividadNombre, usuario.nombre As usrNombre, " +
-            "       usuario.cognoms As usrApellidos, usuario.nif as usrNif " +
-            "FROM   matricula, usuario, grupo, actividad " +
-            "WHERE  matricula.usuari_id = usuario.id And " +
+            "       grupo.nombre As grupoNombre, actividad.titol As actividadNombre, usuari.noms As usrNombre, " +
+            "       usuari.cognoms As usrApellidos, usuari.nombre_doc_identif as usrNif " +
+            "FROM   matricula, usuari, grupo, actividad " +
+            "WHERE  matricula.usuari_id = usuari.usuari_id And " +
                    "matricula.grupoid = grupo.grupoid And " + 
                    "grupo.idactividad = actividad.id And " + 
                    "matricula.id = " + id;
@@ -279,7 +279,7 @@ public class GestorMatricula extends GestorDisco
       
       sql = "SELECT   matricula.*, actividad.data_inici As fechaInicio, actividad.data_fi As fechaFin, " +
             "         grupo.nombre As grupoNombre, actividad.titol As actividadNombre, usuari.noms As usrNombre, " +
-            "         usuari.cognoms As usrApellidos, usuario.nombre_doc_identif as usrNif " +
+            "         usuari.cognoms As usrApellidos, usuari.nombre_doc_identif as usrNif " +
             "FROM     matricula, usuari, grupo, actividad " +
             "WHERE    matricula.usuari_id = usuari.usuari_id And " +
                      "matricula.grupoid = grupo.grupoid And " + 

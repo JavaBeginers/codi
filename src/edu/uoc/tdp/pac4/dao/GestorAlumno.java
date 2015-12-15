@@ -62,7 +62,7 @@ public class GestorAlumno extends GestorDisco
             "FROM usuari " +
             "WHERE usuari_id    = " + id + " And " +
                   "rol = " + Alumno.ROL_ALUMNO +
-                  "AND actiu = '" + 1 + "'";
+                  " AND actiu = '" + 1 + "'";
 
       try 
       {
